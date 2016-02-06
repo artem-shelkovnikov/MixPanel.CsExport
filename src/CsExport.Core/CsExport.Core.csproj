@@ -40,6 +40,12 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Exceptions\MixPanelClientException.cs" />
+    <Compile Include="IJsonSerializer.cs" />
+    <Compile Include="IMixPanelClient.cs" />
+    <Compile Include="IMixPanelEndpointConfiguration.cs" />
+    <Compile Include="IWebClient.cs" />
+    <Compile Include="MixPanelClient.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
