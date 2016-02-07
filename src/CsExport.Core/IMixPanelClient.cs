@@ -4,10 +4,6 @@ namespace CsExport.Core
 {
 	public interface IMixPanelClient
 	{
-		IEnumerable<ExportResult> ExportRaw();
-	}
-
-	public class ExportResult
-	{
+		string ExportRaw();
 	}
 }

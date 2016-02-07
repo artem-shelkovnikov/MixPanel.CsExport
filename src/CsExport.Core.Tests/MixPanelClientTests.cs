@@ -10,7 +10,6 @@ namespace CsExport.Core.Tests
 	{
 		private readonly IMixPanelClient _mixPanelClient;
 		private readonly Mock<IWebClient> _webClientMock;
-		private readonly Mock<IJsonSerializer> _jsonSerializerMock;
 		private readonly Mock<IMixPanelEndpointConfiguration> _uriConfigurationMock;
 
 		private const string TestUriString = "http://google.com";
@@ -20,9 +19,8 @@ namespace CsExport.Core.Tests
 		public MixPanelClientTests()
 		{
 			_webClientMock = new Mock<IWebClient>();
-			_jsonSerializerMock = new Mock<IJsonSerializer>();
 			_uriConfigurationMock = new Mock<IMixPanelEndpointConfiguration>();
-			_mixPanelClient = new MixPanelClient(_webClientMock.Object, _jsonSerializerMock.Object, _uriConfigurationMock.Object);
+			_mixPanelClient = new MixPanelClient(_webClientMock.Object, _uriConfigurationMock.Object);
 
 			_uriConfigurationMock.Setup(x => x.RawExportUri).Returns(_testUri);
 		}  
@@ -36,23 +34,16 @@ namespace CsExport.Core.Tests
 		}
 
 		[Fact]
-		public void ExportRaw_When_called_with_valid_arguments_Then_returns_not_null_result()
+		public void ExportRaw_When_called_with_valid_arguments_Then_returns_response_from_webClient()
 		{
+			var webResponse = "test response";
+
+			_webClientMock.Setup(x => x.QueryUri(_testUri)).Returns(webResponse);
+
 			var results = _mixPanelClient.ExportRaw();
 			
-			Assert.NotNull(results);					
-		}
-
-		[Fact]
-		public void ExportRaw_When_called_with_valid_arguments_Then_uses_jsonDeserializer_for_data_received_from_webClient()
-		{
-			var webClientResponse = "web_client_response";
-			_webClientMock.Setup(x => x.QueryUri(_testUri)).Returns(webClientResponse);
-
-			var results = _mixPanelClient.ExportRaw();
-
-			_jsonSerializerMock.Verify(x=>x.Deserialize<IEnumerable<ExportResult>>(webClientResponse), Times.Once);
-		}
+			Assert.Equal(webResponse, results);					
+		} 
 
 		[Fact]
 		public void ExportRaw_When_webClient_throws_exception_Then_throws_mixPanelClientException()
@@ -75,30 +66,7 @@ namespace CsExport.Core.Tests
 			{
 				Assert.IsType<DummyWebClientException>(ex.InnerException);
 			}
-		}
-
-		[Fact]
-		public void ExportRaw_When_jsonSerializer_throws_exception_Then_throws_mixPanelClientException()
-		{
-			_webClientMock.Setup(x => x.QueryUri(_testUri)).Throws<DummyJsonSerializerException>();
-
-			Assert.Throws<MixPanelClientException>(() => _mixPanelClient.ExportRaw());
-		}
-
-		[Fact]
-		public void ExportRaw_When_jsonSerializer_throws_exception_Then_throws_mixPanelClientException_with_correct_innerException()
-		{
-			_webClientMock.Setup(x => x.QueryUri(_testUri)).Throws<DummyJsonSerializerException>();
-
-			try
-			{
-				_mixPanelClient.ExportRaw();
-			}
-			catch (Exception ex)
-			{
-				Assert.IsType<DummyJsonSerializerException>(ex.InnerException);
-			}
-		}
+		} 
 
 		[Fact]
 		public void ExportRaw_When_called_Then_uses_uri_from_uriConfiguration()
@@ -118,13 +86,7 @@ namespace CsExport.Core.Tests
 
 			_webClientMock.Verify(x=>x.QueryUri(rawExportUri), Times.Once);
 
-		} 
-
-		private class DummyJsonSerializerException : Exception
-		{
-			
 		}
-
 
 		private class DummyWebClientException : Exception
 		{
