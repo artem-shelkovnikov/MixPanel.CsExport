@@ -4,6 +4,6 @@ namespace CsExport.Core
 {
 	public interface IMixPanelClient
 	{
-		string ExportRaw();
+		string ExportRaw(Date from, Date to);
 	}
 }
