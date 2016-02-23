@@ -15,10 +15,16 @@ namespace CsExport.Core.Tests
 		private readonly Mock<ISigCalculator> _sigCalculatorMock;
 
 		private const string TestUriString = "http://google.com";
-		private const string TestClientApiKey = "client_api_key_111222333444555666";
+		private const string TestApiKeyUriParamName = "test_api_key";
+		private const string TestSigUriParamName = "test_sig";
+		private const string TestFromDateUriParamName = "test_starts_at";
+		private const string TestToDateUriParamName = "test_ends_at";
+
+		private const string TestClientApiKey = "client_api_key_111222333444555666";  
+
 		private const string TestSig = "sig123";
 		private const string TestSecret = "secret_123654987456";
-
+ 
 		private readonly Uri _testUri = new Uri(TestUriString);
 
 		public MixPanelClientTests()
@@ -30,8 +36,14 @@ namespace CsExport.Core.Tests
 			_mixPanelClient = new MixPanelClient(_webClientMock.Object, _uriConfigurationMock.Object, _clientConfigurationMock.Object, _sigCalculatorMock.Object);
 
 			_uriConfigurationMock.SetupGet(x => x.RawExportUri).Returns(_testUri);
+			_uriConfigurationMock.SetupGet(x => x.ApiKeyParamName).Returns(TestApiKeyUriParamName);
+			_uriConfigurationMock.SetupGet(x => x.SigParamName).Returns(TestSigUriParamName);
+			_uriConfigurationMock.SetupGet(x => x.FromDateParamName).Returns(TestFromDateUriParamName);
+			_uriConfigurationMock.SetupGet(x => x.ToDateParamName).Returns(TestToDateUriParamName);
+
 			_clientConfigurationMock.SetupGet(x => x.ApiKey).Returns(TestClientApiKey);
 			_clientConfigurationMock.SetupGet(x => x.Secret).Returns(TestSecret);
+
 			_sigCalculatorMock.Setup(x => x.Calculate(It.IsAny<IDictionary<string, string>>(), It.IsAny<string>())).Returns(TestSig);
 		}
 
@@ -110,7 +122,7 @@ namespace CsExport.Core.Tests
 		{
 			var result = _mixPanelClient.ExportRaw(GetDefaultStartDate(), GetDefaultEndDate());
 
-			_webClientMock.Verify(x => x.QueryUri(_testUri, It.Is<IDictionary<string, string>>(y => y.ContainsKey("apiKey") && y["apiKey"] == TestClientApiKey)), Times.Once);
+			_webClientMock.Verify(x => x.QueryUri(_testUri, It.Is<IDictionary<string, string>>(y => y.ContainsKey(TestApiKeyUriParamName) && y[TestApiKeyUriParamName] == TestClientApiKey)), Times.Once);
 		}
 
 		[Fact]
@@ -125,7 +137,7 @@ namespace CsExport.Core.Tests
 		{
 			var result = _mixPanelClient.ExportRaw(GetDefaultStartDate(), GetDefaultEndDate());
 			
-			_sigCalculatorMock.Verify(x=>x.Calculate(It.Is<IDictionary<string, string>>(y=>y["apiKey"] == TestClientApiKey), It.IsAny<string>()), Times.Once);
+			_sigCalculatorMock.Verify(x=>x.Calculate(It.Is<IDictionary<string, string>>(y=>y[TestApiKeyUriParamName] == TestClientApiKey), It.IsAny<string>()), Times.Once);
 		}
 
 		[Fact]
@@ -133,7 +145,7 @@ namespace CsExport.Core.Tests
 		{
 			var result = _mixPanelClient.ExportRaw(GetDefaultStartDate(), GetDefaultEndDate());
 
-			_webClientMock.Verify(x => x.QueryUri(_testUri, It.Is<IDictionary<string, string>>(y => y.ContainsKey("sig") && y["sig"] == TestSig)), Times.Once);
+			_webClientMock.Verify(x => x.QueryUri(_testUri, It.Is<IDictionary<string, string>>(y => y.ContainsKey(TestSigUriParamName) && y[TestSigUriParamName] == TestSig)), Times.Once);
 		}
 
 		[Fact]
@@ -155,8 +167,8 @@ namespace CsExport.Core.Tests
 			_sigCalculatorMock.Verify(
 				x =>
 					x.Calculate(
-						It.Is<IDictionary<string, string>>(y => y.ContainsKey("from_date") && y["from_date"] == from.ToString() &&
-						                                        y.ContainsKey("to_date") && y["to_date"] == to.ToString()),
+						It.Is<IDictionary<string, string>>(y => y.ContainsKey(TestFromDateUriParamName) && y[TestFromDateUriParamName] == from.ToString() &&
+						                                        y.ContainsKey(TestToDateUriParamName) && y[TestToDateUriParamName] == to.ToString()),
 						It.IsAny<string>()), Times.Once);
 		}
 
@@ -171,8 +183,8 @@ namespace CsExport.Core.Tests
 			_webClientMock.Verify(
 				x =>
 					x.QueryUri(_testUri,
-						It.Is<IDictionary<string, string>>(y => y.ContainsKey("from_date") && y["from_date"] == from.ToString() &&
-						                                        y.ContainsKey("to_date") && y["to_date"] == to.ToString())), Times.Once);
+						It.Is<IDictionary<string, string>>(y => y.ContainsKey(TestFromDateUriParamName) && y[TestFromDateUriParamName] == from.ToString() &&
+						                                        y.ContainsKey(TestToDateUriParamName) && y[TestToDateUriParamName] == to.ToString())), Times.Once);
 		}
 
 		private Date GetDefaultStartDate()

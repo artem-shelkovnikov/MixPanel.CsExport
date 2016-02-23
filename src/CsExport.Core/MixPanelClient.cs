@@ -32,17 +32,17 @@ namespace CsExport.Core
 				var apiKey = _clientConfiguration.ApiKey;
 
 				if (string.IsNullOrWhiteSpace(apiKey))
-					throw new ArgumentNullException("apiKey", "API key is not provided for client.");
+					throw new ArgumentNullException(_mixPanelEndpointConfiguration.ApiKeyParamName, "API key is not provided for client.");
 
 				var parameterDictionary = new Dictionary<string, string>();
 
-				parameterDictionary.Add("apiKey", apiKey);
-				parameterDictionary.Add("from_date", from.ToString());
-				parameterDictionary.Add("to_date", to.ToString());
+				parameterDictionary.Add(_mixPanelEndpointConfiguration.ApiKeyParamName, apiKey);
+				parameterDictionary.Add(_mixPanelEndpointConfiguration.FromDateParamName, from.ToString());
+				parameterDictionary.Add(_mixPanelEndpointConfiguration.ToDateParamName, to.ToString());
 
 				var sig = _sigCalculator.Calculate(parameterDictionary, _clientConfiguration.Secret);
 
-				parameterDictionary.Add("sig", sig);
+				parameterDictionary.Add(_mixPanelEndpointConfiguration.SigParamName, sig);
 
 				var webClientResponse = _webClient.QueryUri(uri, parameterDictionary);												  
 
