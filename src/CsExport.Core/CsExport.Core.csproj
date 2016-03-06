@@ -46,7 +46,6 @@
     <Compile Include="Exceptions\MixPanelClientException.cs" />
     <Compile Include="IClientConfiguration.cs" />
     <Compile Include="IJsonSerializer.cs" />
-    <Compile Include="ExportResult.cs" />
     <Compile Include="IMixPanelClient.cs" />
     <Compile Include="IMixPanelEndpointConfiguration.cs" />
     <Compile Include="ISigCalculator.cs" />
