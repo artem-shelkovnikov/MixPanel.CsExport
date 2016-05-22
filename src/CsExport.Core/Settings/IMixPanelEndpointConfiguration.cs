@@ -4,10 +4,10 @@ namespace CsExport.Core.Settings
 {
 	public interface IMixPanelEndpointConfiguration
 	{
-		Uri RawExportUri { get; set; }
-		string SigParamName { get; set; }
-		string ApiKeyParamName { get; set; }
-		string FromDateParamName { get; set; }
-		string ToDateParamName { get; set; }
+		Uri RawExportUri { get; }
+		string SigParamName { get; }
+		string ApiKeyParamName { get; }
+		string FromDateParamName { get; }
+		string ToDateParamName { get; }
 	}
 }
