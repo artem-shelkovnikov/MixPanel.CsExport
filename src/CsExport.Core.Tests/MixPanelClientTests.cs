@@ -1,6 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
+using CsExport.Core.Client;
 using CsExport.Core.Exceptions;
+using CsExport.Core.Settings;
 using Moq;
 using Xunit;
 

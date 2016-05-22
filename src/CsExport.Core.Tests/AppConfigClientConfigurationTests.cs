@@ -1,5 +1,7 @@
 using System;
 using System.Configuration;
+using CsExport.Core.Client;
+using CsExport.Core.Settings;
 using Xunit;
 
 namespace CsExport.Core.Tests

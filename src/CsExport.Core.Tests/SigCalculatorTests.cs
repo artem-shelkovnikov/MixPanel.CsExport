@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using CsExport.Core.Client;
 using Xunit;
 
 namespace CsExport.Core.Tests

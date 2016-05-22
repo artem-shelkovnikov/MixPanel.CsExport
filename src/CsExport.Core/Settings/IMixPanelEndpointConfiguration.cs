@@ -1,6 +1,6 @@
 using System;
 
-namespace CsExport.Core
+namespace CsExport.Core.Settings
 {
 	public interface IMixPanelEndpointConfiguration
 	{

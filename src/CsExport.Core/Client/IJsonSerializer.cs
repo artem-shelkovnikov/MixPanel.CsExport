@@ -1,4 +1,4 @@
-﻿namespace CsExport.Core
+﻿namespace CsExport.Core.Client
 {
 	public interface IJsonSerializer
 	{

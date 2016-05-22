@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 
-namespace CsExport.Core
+namespace CsExport.Core.Client
 {
 	public interface IWebClient
 	{

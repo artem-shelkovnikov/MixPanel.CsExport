@@ -1,4 +1,4 @@
-namespace CsExport.Core
+namespace CsExport.Core.Settings
 {
 	public interface IClientConfiguration
 	{

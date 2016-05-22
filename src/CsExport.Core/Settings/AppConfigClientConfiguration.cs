@@ -1,7 +1,7 @@
 using System;
 using System.Configuration;
 
-namespace CsExport.Core
+namespace CsExport.Core.Settings
 {
 	public class AppConfigClientConfiguration : IClientConfiguration
 	{

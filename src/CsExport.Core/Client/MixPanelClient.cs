@@ -1,8 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
 using CsExport.Core.Exceptions;
+using CsExport.Core.Settings;
 
-namespace CsExport.Core
+namespace CsExport.Core.Client
 {
 	public class MixPanelClient : IMixPanelClient
 	{
