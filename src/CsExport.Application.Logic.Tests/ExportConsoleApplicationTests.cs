@@ -15,7 +15,7 @@ namespace CsExport.Application.Logic.Tests
 		private readonly Mock<IResultHandler> _resultHandlerMock = new Mock<IResultHandler>();
 		private readonly Mock<IMixPanelClient> _mixPanelClientMock = new Mock<IMixPanelClient>();
 		private readonly Mock<IInputProvider> _inputProviderMock = new Mock<IInputProvider>();
-		private readonly Mock<IClientConfiguration> _clientConfigurationMock = new Mock<IClientConfiguration>();
+		private readonly Mock<ClientConfiguration> _clientConfigurationMock = new Mock<ClientConfiguration>();
 
 		private const string ValidCommandText = "dummy";
 		private const string InvalidCommandText = "invalid";

@@ -41,10 +41,9 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Settings\AppConfigClientConfiguration.cs" />
     <Compile Include="Date.cs" />
     <Compile Include="Exceptions\MixPanelClientException.cs" />
-    <Compile Include="Settings\IClientConfiguration.cs" />
+    <Compile Include="Settings\ClientConfiguration.cs" />
     <Compile Include="Client\IJsonSerializer.cs" />
     <Compile Include="Client\IMixPanelClient.cs" />
     <Compile Include="Settings\IMixPanelEndpointConfiguration.cs" />

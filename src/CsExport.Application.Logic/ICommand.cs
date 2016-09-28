@@ -10,7 +10,7 @@ namespace CsExport.Application.Logic
 
 	public class ExecutionSettings
 	{
-		 public IClientConfiguration ClientConfiguration { get; set; }
+		 public ClientConfiguration ClientConfiguration { get; set; }
 		 
 		 public IMixPanelClient MixPanelClient { get; set; }
 		 public IInputProvider InputProvider { get; set; }

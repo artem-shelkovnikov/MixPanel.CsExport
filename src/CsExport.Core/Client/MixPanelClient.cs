@@ -21,7 +21,7 @@ namespace CsExport.Core.Client
 			_sigCalculator = sigCalculator;
 		}
 
-		public string ExportRaw(IClientConfiguration clientConfiguration, Date from, Date to)
+		public string ExportRaw(ClientConfiguration clientConfiguration, Date from, Date to)
 		{
 			try
 			{

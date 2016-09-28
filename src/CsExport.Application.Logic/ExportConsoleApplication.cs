@@ -11,11 +11,11 @@ namespace CsExport.Application.Logic
 		private readonly ICommandParser _commandParser;
 		private readonly IMixPanelClient _mixPanelClient;
 		private readonly IResultHandler _resultHandler;
-		private readonly IClientConfiguration _clientConfiguration;
+		private readonly ClientConfiguration _clientConfiguration;
 
 		private readonly IInputProvider _inputProvider;	
 
-		public ExportConsoleApplication(ICommandParser commandParser, IMixPanelClient mixPanelClient, IResultHandler resultHandler, IInputProvider inputProvider, IClientConfiguration clientConfiguration)
+		public ExportConsoleApplication(ICommandParser commandParser, IMixPanelClient mixPanelClient, IResultHandler resultHandler, IInputProvider inputProvider, ClientConfiguration clientConfiguration)
 		{
 			_commandParser = commandParser;
 			_mixPanelClient = mixPanelClient;
