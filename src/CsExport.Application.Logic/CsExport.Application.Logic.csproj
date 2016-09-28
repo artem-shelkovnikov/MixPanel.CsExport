@@ -41,6 +41,14 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Commands\SetCredentialsCommand.cs" />
+    <Compile Include="ExecutionSettings.cs" />
+    <Compile Include="Parser\CommandParser.cs" />
+    <Compile Include="Parser\CommandParserConfigurationRegistry.cs" />
+    <Compile Include="Parser\Configuration\CommandParserConfigurationBase.cs" />
+    <Compile Include="Parser\Configuration\RawExportCommandConfiguration.cs" />
+    <Compile Include="Parser\Configuration\SetCredentialsCommandConfiguration.cs" />
+    <Compile Include="Parser\ICommandParserConfiguration.cs" />
+    <Compile Include="Parser\ICommandParserConfigurationRegistry.cs" />
     <Compile Include="Results\CommandNotFoundResult.cs" />
     <Compile Include="CommandResult.cs" />
     <Compile Include="Results\CommandTerminatedResult.cs" />
@@ -59,6 +67,7 @@
       <Name>CsExport.Core</Name>
     </ProjectReference>
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.
