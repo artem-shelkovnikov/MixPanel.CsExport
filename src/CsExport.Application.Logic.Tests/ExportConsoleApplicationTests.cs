@@ -2,6 +2,7 @@
 using CsExport.Application.Logic.Parser;
 using CsExport.Application.Logic.Results;
 using CsExport.Core.Client;
+using CsExport.Core.Settings;
 using Moq;
 using Xunit;
 
@@ -14,6 +15,7 @@ namespace CsExport.Application.Logic.Tests
 		private readonly Mock<IResultHandler> _resultHandlerMock = new Mock<IResultHandler>();
 		private readonly Mock<IMixPanelClient> _mixPanelClientMock = new Mock<IMixPanelClient>();
 		private readonly Mock<IInputProvider> _inputProviderMock = new Mock<IInputProvider>();
+		private readonly Mock<IClientConfiguration> _clientConfigurationMock = new Mock<IClientConfiguration>();
 
 		private const string ValidCommandText = "dummy";
 		private const string InvalidCommandText = "invalid";
@@ -22,7 +24,7 @@ namespace CsExport.Application.Logic.Tests
 		{
 			_commandParserMock.Setup(x => x.ParseCommand(ValidCommandText)).Returns(new DummyCommand());
 
-			_application = new ExportConsoleApplication(_commandParserMock.Object, _mixPanelClientMock.Object, _resultHandlerMock.Object, _inputProviderMock.Object);
+			_application = new ExportConsoleApplication(_commandParserMock.Object, _mixPanelClientMock.Object, _resultHandlerMock.Object, _inputProviderMock.Object, _clientConfigurationMock.Object);
 		}
 
 		[Fact]
@@ -66,8 +68,8 @@ namespace CsExport.Application.Logic.Tests
 		}
 
 		private class DummyCommand : ICommand
-		{
-			public CommandResult Execute(IMixPanelClient client, IInputProvider inputProvider)
+		{			 
+			public CommandResult Execute(ExecutionSettings settings)
 			{
 				return new SuccessResult();
 			}

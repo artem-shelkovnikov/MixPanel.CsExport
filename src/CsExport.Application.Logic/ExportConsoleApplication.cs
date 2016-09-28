@@ -2,6 +2,7 @@
 using CsExport.Application.Logic.Parser;
 using CsExport.Application.Logic.Results;
 using CsExport.Core.Client;
+using CsExport.Core.Settings;
 
 namespace CsExport.Application.Logic
 {
@@ -10,15 +11,17 @@ namespace CsExport.Application.Logic
 		private readonly ICommandParser _commandParser;
 		private readonly IMixPanelClient _mixPanelClient;
 		private readonly IResultHandler _resultHandler;
+		private readonly IClientConfiguration _clientConfiguration;
 
-		private readonly IInputProvider _inputProvider;
+		private readonly IInputProvider _inputProvider;	
 
-		public ExportConsoleApplication(ICommandParser commandParser, IMixPanelClient mixPanelClient, IResultHandler resultHandler, IInputProvider inputProvider)
+		public ExportConsoleApplication(ICommandParser commandParser, IMixPanelClient mixPanelClient, IResultHandler resultHandler, IInputProvider inputProvider, IClientConfiguration clientConfiguration)
 		{
 			_commandParser = commandParser;
 			_mixPanelClient = mixPanelClient;
 			_resultHandler = resultHandler;
 			_inputProvider = inputProvider;
+			_clientConfiguration = clientConfiguration;
 		}
 
 		public void ReceiveCommand()
@@ -35,7 +38,14 @@ namespace CsExport.Application.Logic
 					return;
 				}
 
-				var commandResult = command.Execute(_mixPanelClient, _inputProvider);
+				var executionSettings = new ExecutionSettings
+				{
+					InputProvider = _inputProvider,
+					MixPanelClient = _mixPanelClient,
+					ClientConfiguration = _clientConfiguration
+				};
+
+				var commandResult = command.Execute(executionSettings);
 				_resultHandler.HandleResult(commandResult);
 			}
 			catch (Exception ex)

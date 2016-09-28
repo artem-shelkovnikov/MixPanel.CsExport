@@ -1,7 +1,9 @@
-﻿namespace CsExport.Core.Client
+﻿using CsExport.Core.Settings;
+
+namespace CsExport.Core.Client
 {
 	public interface IMixPanelClient
 	{
-		string ExportRaw(Date from, Date to);
+		string ExportRaw(IClientConfiguration clientConfiguration, Date from, Date to);
 	}
 }

@@ -2,6 +2,7 @@
 using CsExport.Application.Logic.Results;
 using CsExport.Core;
 using CsExport.Core.Client;
+using CsExport.Core.Settings;
 
 namespace CsExport.Application.Logic.Commands
 {
@@ -18,10 +19,13 @@ namespace CsExport.Application.Logic.Commands
 			_from = @from;
 			_to = to;							
 		}
-
-		public CommandResult Execute(IMixPanelClient mixPanelClient, IInputProvider inputProvider)
+			 
+		public CommandResult Execute(ExecutionSettings settings)
 		{
-			mixPanelClient.ExportRaw(_from, _to);
+			var mixPanelClient = settings.MixPanelClient;
+			var clientConfiguration = settings.ClientConfiguration;
+
+			mixPanelClient.ExportRaw(clientConfiguration, _from, _to);
 
 			return new SuccessResult();
 		}

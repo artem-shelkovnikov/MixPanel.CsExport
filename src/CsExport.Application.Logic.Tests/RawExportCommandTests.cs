@@ -3,6 +3,7 @@ using CsExport.Application.Logic.Commands;
 using CsExport.Application.Logic.Results;
 using CsExport.Core;
 using CsExport.Core.Client;
+using CsExport.Core.Settings;
 using Moq;
 using Xunit;
 
@@ -18,7 +19,7 @@ namespace CsExport.Application.Logic.Tests
 		{
 			var command = GetCommand();
 
-			var result = command.Execute(_mixPanelClientMock.Object, _inputProviderMock.Object);
+			var result = command.Execute(GetExecutionSettings());
 
 			Assert.IsType<SuccessResult>(result);
 		}
@@ -28,9 +29,9 @@ namespace CsExport.Application.Logic.Tests
 		{
 			var command = GetCommand();
 
-			var result = command.Execute(_mixPanelClientMock.Object, _inputProviderMock.Object);
+			var result = command.Execute(GetExecutionSettings());
 
-			_mixPanelClientMock.Verify(x=>x.ExportRaw(It.IsAny<Date>(), It.IsAny<Date>()), Times.Once);
+			_mixPanelClientMock.Verify(x=>x.ExportRaw(It.IsAny<IClientConfiguration>(), It.IsAny<Date>(), It.IsAny<Date>()), Times.Once);
 		}
 
 		[Fact]
@@ -41,9 +42,9 @@ namespace CsExport.Application.Logic.Tests
 
 			var command = GetCommand(@from, to);
 
-			command.Execute(_mixPanelClientMock.Object, _inputProviderMock.Object);
+			command.Execute(GetExecutionSettings());
 			
-			_mixPanelClientMock.Verify(x => x.ExportRaw(@from, to), Times.Once);
+			_mixPanelClientMock.Verify(x => x.ExportRaw(It.IsAny<IClientConfiguration>(), @from, to), Times.Once);
 		}
 
 		[Fact]
@@ -66,6 +67,15 @@ namespace CsExport.Application.Logic.Tests
 			var to = new Date(2011, 12, 31);
 
 			return new RawExportCommand(from, to);
+		}
+
+		private ExecutionSettings GetExecutionSettings()
+		{
+			return new ExecutionSettings
+			{
+				MixPanelClient = _mixPanelClientMock.Object,
+				InputProvider = _inputProviderMock.Object
+			};
 		}
 	}
 }

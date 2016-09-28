@@ -8,29 +8,26 @@ namespace CsExport.Core.Client
 	public class MixPanelClient : IMixPanelClient
 	{
 		private readonly IWebClient _webClient;
-
-		private readonly IClientConfiguration _clientConfiguration;
+																	  
 		private readonly ISigCalculator _sigCalculator;
 		private readonly IMixPanelEndpointConfiguration _mixPanelEndpointConfiguration;
 
 		public MixPanelClient(IWebClient webClient,
 		 IMixPanelEndpointConfiguration mixPanelEndpointConfiguration, 
-		 IClientConfiguration clientConfiguration,
 		 ISigCalculator sigCalculator)
 		{
 			_webClient = webClient;
-			_mixPanelEndpointConfiguration = mixPanelEndpointConfiguration;
-			_clientConfiguration = clientConfiguration;
+			_mixPanelEndpointConfiguration = mixPanelEndpointConfiguration;	  
 			_sigCalculator = sigCalculator;
 		}
 
-		public string ExportRaw(Date from, Date to)
+		public string ExportRaw(IClientConfiguration clientConfiguration, Date from, Date to)
 		{
 			try
 			{
 				var uri = _mixPanelEndpointConfiguration.RawExportUri;
 
-				var apiKey = _clientConfiguration.ApiKey;
+				var apiKey = clientConfiguration.ApiKey;
 
 				if (string.IsNullOrWhiteSpace(apiKey))
 					throw new ArgumentNullException(_mixPanelEndpointConfiguration.ApiKeyParamName, "API key is not provided for client.");
@@ -41,7 +38,7 @@ namespace CsExport.Core.Client
 				parameterDictionary.Add(_mixPanelEndpointConfiguration.FromDateParamName, from.ToString());
 				parameterDictionary.Add(_mixPanelEndpointConfiguration.ToDateParamName, to.ToString());
 
-				var sig = _sigCalculator.Calculate(parameterDictionary, _clientConfiguration.Secret);
+				var sig = _sigCalculator.Calculate(parameterDictionary, clientConfiguration.Secret);
 
 				parameterDictionary.Add(_mixPanelEndpointConfiguration.SigParamName, sig);
 

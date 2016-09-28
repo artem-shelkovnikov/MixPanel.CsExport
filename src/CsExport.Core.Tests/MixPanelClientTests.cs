@@ -35,7 +35,7 @@ namespace CsExport.Core.Tests
 			_uriConfigurationMock = new Mock<IMixPanelEndpointConfiguration>();
 			_clientConfigurationMock = new Mock<IClientConfiguration>();
 			_sigCalculatorMock = new Mock<ISigCalculator>();
-			_mixPanelClient = new MixPanelClient(_webClientMock.Object, _uriConfigurationMock.Object, _clientConfigurationMock.Object, _sigCalculatorMock.Object);
+			_mixPanelClient = new MixPanelClient(_webClientMock.Object, _uriConfigurationMock.Object, _sigCalculatorMock.Object);
 
 			_uriConfigurationMock.SetupGet(x => x.RawExportUri).Returns(_testUri);
 			_uriConfigurationMock.SetupGet(x => x.ApiKeyParamName).Returns(TestApiKeyUriParamName);
@@ -52,7 +52,7 @@ namespace CsExport.Core.Tests
 		[Fact]
 		public void ExportRaw_When_called_with_valid_arguments_Then_uses_webClient_to_get_data()
 		{
-			_mixPanelClient.ExportRaw(GetDefaultStartDate(), GetDefaultEndDate());
+			_mixPanelClient.ExportRaw(_clientConfigurationMock.Object, GetDefaultStartDate(), GetDefaultEndDate());
 
 			_webClientMock.Verify(x => x.QueryUri(_testUri, It.IsAny<IDictionary<string, string>>()), Times.Once);
 		}
@@ -64,7 +64,7 @@ namespace CsExport.Core.Tests
 
 			_webClientMock.Setup(x => x.QueryUri(_testUri, It.IsAny<IDictionary<string, string>>())).Returns(webResponse);
 
-			var results = _mixPanelClient.ExportRaw(GetDefaultStartDate(), GetDefaultEndDate());
+			var results = _mixPanelClient.ExportRaw(_clientConfigurationMock.Object, GetDefaultStartDate(), GetDefaultEndDate());
 
 			Assert.Equal(webResponse, results);
 		}
@@ -74,7 +74,7 @@ namespace CsExport.Core.Tests
 		{
 			_webClientMock.Setup(x => x.QueryUri(_testUri, It.IsAny<IDictionary<string, string>>())).Throws<DummyWebClientException>();
 
-			Assert.Throws<MixPanelClientException>(() => _mixPanelClient.ExportRaw(GetDefaultStartDate(), GetDefaultEndDate()));
+			Assert.Throws<MixPanelClientException>(() => _mixPanelClient.ExportRaw(_clientConfigurationMock.Object, GetDefaultStartDate(), GetDefaultEndDate()));
 		}
 
 		[Fact]
@@ -84,7 +84,7 @@ namespace CsExport.Core.Tests
 
 			try
 			{
-				_mixPanelClient.ExportRaw(GetDefaultStartDate(), GetDefaultEndDate());
+				_mixPanelClient.ExportRaw(_clientConfigurationMock.Object, GetDefaultStartDate(), GetDefaultEndDate());
 			}
 			catch (Exception ex)
 			{
@@ -95,7 +95,7 @@ namespace CsExport.Core.Tests
 		[Fact]
 		public void ExportRaw_When_called_Then_uses_uri_from_uriConfiguration()
 		{
-			var result = _mixPanelClient.ExportRaw(GetDefaultStartDate(), GetDefaultEndDate());
+			var result = _mixPanelClient.ExportRaw(_clientConfigurationMock.Object, GetDefaultStartDate(), GetDefaultEndDate());
 
 			_uriConfigurationMock.VerifyGet(x => x.RawExportUri, Times.Once);
 
@@ -106,7 +106,7 @@ namespace CsExport.Core.Tests
 		{
 			var rawExportUri = _testUri;
 
-			var result = _mixPanelClient.ExportRaw(GetDefaultStartDate(), GetDefaultEndDate());
+			var result = _mixPanelClient.ExportRaw(_clientConfigurationMock.Object, GetDefaultStartDate(), GetDefaultEndDate());
 
 			_webClientMock.Verify(x => x.QueryUri(rawExportUri, It.IsAny<IDictionary<string, string>>()), Times.Once);
 		}
@@ -114,7 +114,7 @@ namespace CsExport.Core.Tests
 		[Fact]
 		public void ExportRaw_When_called_Then_takes_apiKey_from_clientConfiguration()
 		{
-			var result = _mixPanelClient.ExportRaw(GetDefaultStartDate(), GetDefaultEndDate());
+			var result = _mixPanelClient.ExportRaw(_clientConfigurationMock.Object, GetDefaultStartDate(), GetDefaultEndDate());
 
 			_clientConfigurationMock.VerifyGet(x => x.ApiKey, Times.Once);
 		}
@@ -122,7 +122,7 @@ namespace CsExport.Core.Tests
 		[Fact]
 		public void ExportRaw_When_called_Then_passes_client_apiKey_to_webClient_as_parameter()
 		{
-			var result = _mixPanelClient.ExportRaw(GetDefaultStartDate(), GetDefaultEndDate());
+			var result = _mixPanelClient.ExportRaw(_clientConfigurationMock.Object, GetDefaultStartDate(), GetDefaultEndDate());
 
 			_webClientMock.Verify(x => x.QueryUri(_testUri, It.Is<IDictionary<string, string>>(y => y.ContainsKey(TestApiKeyUriParamName) && y[TestApiKeyUriParamName] == TestClientApiKey)), Times.Once);
 		}
@@ -131,13 +131,13 @@ namespace CsExport.Core.Tests
 		public void ExportRaw_When_called_and_apiKey_is_null_Then_throws_exception()
 		{
 			_clientConfigurationMock.SetupGet(x => x.ApiKey).Returns((string)null);
-			Assert.Throws<MixPanelClientException>(() => _mixPanelClient.ExportRaw(GetDefaultStartDate(), GetDefaultEndDate()));
+			Assert.Throws<MixPanelClientException>(() => _mixPanelClient.ExportRaw(_clientConfigurationMock.Object, GetDefaultStartDate(), GetDefaultEndDate()));
 		}
 
 		[Fact]
 		public void ExportRaw_When_called_with_valid_parameters_Then_calculates_sig_using_sigCalculator_and_apiKey()
 		{
-			var result = _mixPanelClient.ExportRaw(GetDefaultStartDate(), GetDefaultEndDate());
+			var result = _mixPanelClient.ExportRaw(_clientConfigurationMock.Object, GetDefaultStartDate(), GetDefaultEndDate());
 			
 			_sigCalculatorMock.Verify(x=>x.Calculate(It.Is<IDictionary<string, string>>(y=>y[TestApiKeyUriParamName] == TestClientApiKey), It.IsAny<string>()), Times.Once);
 		}
@@ -145,7 +145,7 @@ namespace CsExport.Core.Tests
 		[Fact]
 		public void ExportRaw_When_called_With_valid_parameters_Then_adds_sig_to_payload_passed_to_webClient()
 		{
-			var result = _mixPanelClient.ExportRaw(GetDefaultStartDate(), GetDefaultEndDate());
+			var result = _mixPanelClient.ExportRaw(_clientConfigurationMock.Object, GetDefaultStartDate(), GetDefaultEndDate());
 
 			_webClientMock.Verify(x => x.QueryUri(_testUri, It.Is<IDictionary<string, string>>(y => y.ContainsKey(TestSigUriParamName) && y[TestSigUriParamName] == TestSig)), Times.Once);
 		}
@@ -153,7 +153,7 @@ namespace CsExport.Core.Tests
 		[Fact]
 		public void ExportRaw_When_called_with_valid_parameters_Then_passes_secret_to_sigCalculator()
 		{
-			var result = _mixPanelClient.ExportRaw(GetDefaultStartDate(), GetDefaultEndDate());
+			var result = _mixPanelClient.ExportRaw(_clientConfigurationMock.Object, GetDefaultStartDate(), GetDefaultEndDate());
 
 			_sigCalculatorMock.Verify(x=>x.Calculate(It.IsAny<IDictionary<string, string>>(), TestSecret), Times.Once);
 		}
@@ -164,7 +164,7 @@ namespace CsExport.Core.Tests
 			var from = new Date(DateTime.UtcNow.AddDays(-1));
 			var to = new Date(DateTime.UtcNow);
 
-			var result = _mixPanelClient.ExportRaw(from, to);
+			var result = _mixPanelClient.ExportRaw(_clientConfigurationMock.Object, from, to);
 
 			_sigCalculatorMock.Verify(
 				x =>
@@ -180,7 +180,7 @@ namespace CsExport.Core.Tests
 			var from = new Date(DateTime.UtcNow.AddDays(-1));
 			var to = new Date(DateTime.UtcNow);
 
-			var result = _mixPanelClient.ExportRaw(from, to);
+			var result = _mixPanelClient.ExportRaw(_clientConfigurationMock.Object, from, to);
 
 			_webClientMock.Verify(
 				x =>
