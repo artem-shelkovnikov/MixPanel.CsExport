@@ -161,7 +161,7 @@ namespace CsExport.Core.Tests
 		[Fact]
 		public void ExportRaw_When_called_with_required_parameters_Then_uses_them_in_sigCalculator_for_calculating_sig()
 		{
-			var from = new Date();
+			var from = new Date(DateTime.UtcNow.AddDays(-1));
 			var to = new Date(DateTime.UtcNow);
 
 			var result = _mixPanelClient.ExportRaw(from, to);
@@ -177,7 +177,7 @@ namespace CsExport.Core.Tests
 		[Fact]
 		public void ExportRaw_When_called_with_required_parameters_Then_passes_them_to_webClient_queryUri_method()
 		{
-			var from = new Date();
+			var from = new Date(DateTime.UtcNow.AddDays(-1));
 			var to = new Date(DateTime.UtcNow);
 
 			var result = _mixPanelClient.ExportRaw(from, to);

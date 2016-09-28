@@ -64,10 +64,22 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="ExportConsoleApplicationTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="RawExportCommandTests.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\CsExport.Application.Logic\CsExport.Application.Logic.csproj">
+      <Project>{5A7483EE-97F5-4AC8-BD4D-F4ED1313D67C}</Project>
+      <Name>CsExport.Application.Logic</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\CsExport.Core\CsExport.Core.csproj">
+      <Project>{5667461B-4989-44AA-AFB6-78AF0187B901}</Project>
+      <Name>CsExport.Core</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

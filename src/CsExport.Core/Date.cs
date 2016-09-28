@@ -2,7 +2,7 @@ using System;
 
 namespace CsExport.Core
 {
-	public struct Date
+	public class Date
 	{
 		public short Year { get; private set; }
 		public byte Month { get; private set; }
@@ -19,11 +19,16 @@ namespace CsExport.Core
 
 		public Date(short year, byte month, byte day) : this(new DateTime(year, month, day))
 		{	
-		}
+		}  
 
 		public override string ToString()
 		{
 			return $"{Year}-{Month}-{Day}";
+		}
+
+		public DateTime GetDateTime()
+		{
+			return new DateTime(Year, Month, Day, 0, 0, 0);
 		}
 	}
 }
