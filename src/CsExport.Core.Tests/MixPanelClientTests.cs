@@ -17,9 +17,7 @@ namespace CsExport.Core.Tests
 		private const string TestApiKeyUriParamName = "test_api_key";
 		private const string TestSigUriParamName = "test_sig";
 		private const string TestFromDateUriParamName = "test_starts_at";
-		private const string TestToDateUriParamName = "test_ends_at";
-
-		private const string TestClientApiKey = "client_api_key_111222333444555666";  
+		private const string TestToDateUriParamName = "test_ends_at";					  
 														  
 		private const string TestSecret = "secret_123654987456";
 
@@ -39,7 +37,7 @@ namespace CsExport.Core.Tests
 			_uriConfigurationMock.SetupGet(x => x.FromDateParamName).Returns(TestFromDateUriParamName);
 			_uriConfigurationMock.SetupGet(x => x.ToDateParamName).Returns(TestToDateUriParamName);
 
-			_clientConfiguration.UpdateCredentials(TestClientApiKey, TestSecret);													   
+			_clientConfiguration.UpdateCredentials(TestSecret);													   
 		}
 
 		[Fact]

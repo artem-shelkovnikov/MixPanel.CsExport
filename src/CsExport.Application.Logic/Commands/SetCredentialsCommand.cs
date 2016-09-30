@@ -4,19 +4,14 @@ using CsExport.Application.Logic.Results;
 namespace CsExport.Application.Logic.Commands
 {
 	public class SetCredentialsCommand: ICommand
-	{																 
-		private readonly string _apiKey;
+	{										
 		private readonly string _secret;
 
-		public SetCredentialsCommand(string apiKey, string secret)
-		{
-			if (string.IsNullOrWhiteSpace(apiKey))
-				throw new ArgumentException("ApiKey cannot be empty", nameof(apiKey));
-
+		public SetCredentialsCommand(string secret)
+		{																			   
 			if (string.IsNullOrWhiteSpace(secret))
 				throw new ArgumentException("Secret cannot be empty", nameof(secret));
-
-			_apiKey = apiKey;
+									
 			_secret = secret;
 		}
 		
@@ -24,7 +19,7 @@ namespace CsExport.Application.Logic.Commands
 		{
 			var clientConfiguration = settings.ClientConfiguration;
 
-			clientConfiguration.UpdateCredentials(_apiKey, _secret);
+			clientConfiguration.UpdateCredentials(_secret);
 
 			return new SuccessResult();
 		}
@@ -37,13 +32,12 @@ namespace CsExport.Application.Logic.Commands
 			if (target == null)
 				return false;
 
-			return source._apiKey.Equals(target._apiKey)
-				   && source._secret.Equals(target._secret);
+			return source._secret.Equals(target._secret);
 		}
 
 		public override int GetHashCode()
 		{
-			return  _apiKey.GetHashCode() * _secret.GetHashCode();
+			return  _secret.GetHashCode();
 		}
 	}
 }

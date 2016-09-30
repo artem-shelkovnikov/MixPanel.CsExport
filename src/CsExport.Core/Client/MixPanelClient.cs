@@ -23,12 +23,7 @@ namespace CsExport.Core.Client
 		{
 			try
 			{
-				var uri = _mixPanelEndpointConfiguration.RawExportUri;
-
-				var apiKey = clientConfiguration.ApiKey;
-
-				if (string.IsNullOrWhiteSpace(apiKey))
-					throw new ArgumentNullException(_mixPanelEndpointConfiguration.ApiKeyParamName, "API key is not provided for client.");
+				var uri = _mixPanelEndpointConfiguration.RawExportUri;																	   
 
 				var parameterDictionary = new Dictionary<string, string>();
 																										 
