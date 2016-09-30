@@ -29,5 +29,22 @@ namespace CsExport.Application.Logic.Commands
 
 			return new SuccessResult();
 		}
+
+		public override bool Equals(object obj)
+		{
+			var source = this;
+			var target = obj as RawExportCommand;
+
+			if (target == null)
+				return false;
+
+			return source._from.Equals(target._from)
+			       && source._to.Equals(target._to);
+		}
+
+		public override int GetHashCode()
+		{
+			return _from.GetHashCode()*17 + _to.GetHashCode()*37;
+		}
 	}
 }

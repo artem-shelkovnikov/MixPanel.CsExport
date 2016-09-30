@@ -1,14 +1,12 @@
 ﻿using System;
 using CsExport.Application.Logic.Results;
-using CsExport.Core.Client;
-using CsExport.Core.Settings;
 
 namespace CsExport.Application.Logic.Commands
 {
 	public class SetCredentialsCommand: ICommand
 	{																 
-		private string _apiKey;
-		private string _secret;
+		private readonly string _apiKey;
+		private readonly string _secret;
 
 		public SetCredentialsCommand(string apiKey, string secret)
 		{
@@ -29,6 +27,23 @@ namespace CsExport.Application.Logic.Commands
 			clientConfiguration.UpdateCredentials(_apiKey, _secret);
 
 			return new SuccessResult();
+		}
+
+		public override bool Equals(object obj)
+		{
+			var source = this;
+			var target = obj as SetCredentialsCommand;
+
+			if (target == null)
+				return false;
+
+			return source._apiKey.Equals(target._apiKey)
+				   && source._secret.Equals(target._secret);
+		}
+
+		public override int GetHashCode()
+		{
+			return  _apiKey.GetHashCode() * _secret.GetHashCode();
 		}
 	}
 }
