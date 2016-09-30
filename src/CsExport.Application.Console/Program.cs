@@ -9,37 +9,23 @@ namespace CsExport.Application.Console
 {
 	class Program
 	{
-		private const string DefaultExportDirectory = "export";
-
 		static void Main(string[] args)
-		{
-			if (Directory.Exists(DefaultExportDirectory) == false)
-				Directory.CreateDirectory(DefaultExportDirectory);
+		{															
 
-			var commandParserConfigurationRegistry = new CommandParserConfigurationRegistry();
-			commandParserConfigurationRegistry.InitializeFromAssebmlyOf<RawExportCommandConfiguration>();
-
+			var commandParserConfigurationRegistry = new CommandParserConfigurationRegistry();				
 			var commandParser = new CommandParser(commandParserConfigurationRegistry);
 
 			var webClient = new DefaultWebClient();									  
-
 			var mixPanelClient = new MixPanelClient(webClient);
 
 			var fileWriter = new FileWriter();
-
 			var input = new ConsoleInput();
 			var output = new ConsoleOutput();
-
 			var resultHandler = new ResultHandler(output);
 
-			var defaultClientConfiguration = new ClientConfiguration();
+			commandParserConfigurationRegistry.InitializeFromAssebmlyOf<RawExportCommandConfiguration>();
 
-			var defaultApplicationConfiguration = new ApplicationConfiguration
-			{
-				ExportPath = Path.GetFullPath(".") + "\\" + DefaultExportDirectory
-			};
-
-			var application = new ExportConsoleApplication(commandParser, mixPanelClient, resultHandler, fileWriter, input, defaultClientConfiguration, defaultApplicationConfiguration);
+			var application = new ExportConsoleApplication(commandParser, mixPanelClient, resultHandler, fileWriter, input);
 
 			while (true)
 			{

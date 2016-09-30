@@ -1,4 +1,5 @@
 ﻿using System;
+using System.IO;
 using CsExport.Application.Logic.Parser;
 using CsExport.Application.Logic.Results;
 using CsExport.Core.Client;
@@ -21,18 +22,19 @@ namespace CsExport.Application.Logic
 			IMixPanelClient mixPanelClient, 
 			IResultHandler resultHandler, 
 			IFileWriter fileWriter,
-			IInput input, 
-			ClientConfiguration clientConfiguration,
-			ApplicationConfiguration applicationConfiguration)
+			IInput input)
 		{
 			_commandParser = commandParser;
 			_mixPanelClient = mixPanelClient;
 			_resultHandler = resultHandler;
 			_fileWriter = fileWriter;
 			_input = input;
-			_clientConfiguration = clientConfiguration;
-			_applicationConfiguration = applicationConfiguration;
-		}
+			_clientConfiguration = new ClientConfiguration();
+			_applicationConfiguration = new ApplicationConfiguration
+			{
+				ExportPath = Directory.GetCurrentDirectory()
+			};
+		}	
 
 		public void ReceiveCommand()
 		{

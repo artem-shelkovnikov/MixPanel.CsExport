@@ -2,7 +2,6 @@
 using CsExport.Application.Logic.Parser;
 using CsExport.Application.Logic.Results;
 using CsExport.Core.Client;
-using CsExport.Core.Settings;
 using Moq;
 using Xunit;
 
@@ -15,9 +14,7 @@ namespace CsExport.Application.Logic.Tests
 		private readonly Mock<IResultHandler> _resultHandlerMock = new Mock<IResultHandler>();
 		private readonly Mock<IMixPanelClient> _mixPanelClientMock = new Mock<IMixPanelClient>();
 		private readonly Mock<IFileWriter> _fileWriterMock = new Mock<IFileWriter>();
-		private readonly Mock<IInput> _inputProviderMock = new Mock<IInput>();
-		private readonly ClientConfiguration _clientConfiguration = new ClientConfiguration();
-		private readonly ApplicationConfiguration _applicationConfiguration = new ApplicationConfiguration();
+		private readonly Mock<IInput> _inputProviderMock = new Mock<IInput>();								  
 
 		private const string ValidCommandText = "dummy";
 		private const string InvalidCommandText = "invalid";
@@ -30,9 +27,7 @@ namespace CsExport.Application.Logic.Tests
 			_mixPanelClientMock.Object, 
 			_resultHandlerMock.Object, 
 			_fileWriterMock.Object,
-			_inputProviderMock.Object,
-			_clientConfiguration,
-			_applicationConfiguration);
+			_inputProviderMock.Object);
 		}
 
 		[Fact]
