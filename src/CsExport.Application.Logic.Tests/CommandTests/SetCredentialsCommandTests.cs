@@ -1,7 +1,5 @@
 ﻿using System;
 using CsExport.Application.Logic.Commands;
-using CsExport.Core.Settings;
-using Moq;
 using Xunit;
 
 namespace CsExport.Application.Logic.Tests.CommandTests

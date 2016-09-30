@@ -1,6 +1,4 @@
-﻿using System.Collections;
-
-namespace CsExport.Application.Logic.Parser
+﻿namespace CsExport.Application.Logic.Parser
 {
 	public class CommandParser : ICommandParser
 	{

@@ -1,8 +1,6 @@
 ﻿using System;
 using CsExport.Application.Logic.Results;
 using CsExport.Core;
-using CsExport.Core.Client;
-using CsExport.Core.Settings;
 
 namespace CsExport.Application.Logic.Commands
 {

@@ -2,7 +2,6 @@
 using CsExport.Application.Logic.Commands;
 using CsExport.Application.Logic.Results;
 using CsExport.Core;
-using CsExport.Core.Settings;
 using Moq;
 using Xunit;
 
