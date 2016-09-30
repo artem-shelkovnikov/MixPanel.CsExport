@@ -48,7 +48,6 @@
     <Compile Include="Settings\ClientConfiguration.cs" />
     <Compile Include="Client\IJsonSerializer.cs" />
     <Compile Include="Client\IMixPanelClient.cs" />
-    <Compile Include="Settings\IMixPanelEndpointConfiguration.cs" />
     <Compile Include="Client\IWebClient.cs" />
     <Compile Include="Client\MixPanelClient.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

@@ -9,26 +9,24 @@ namespace CsExport.Core.Client
 	public class MixPanelClient : IMixPanelClient
 	{
 		private readonly IWebClient _webClient;
-																	  
-		private readonly IMixPanelEndpointConfiguration _mixPanelEndpointConfiguration;
+		private const string FromDateParamName = "from_date";
+		private const string ToDateParamName = "to_date";
 
-		public MixPanelClient(IWebClient webClient,
-		 IMixPanelEndpointConfiguration mixPanelEndpointConfiguration)
+		public MixPanelClient(IWebClient webClient)
 		{
-			_webClient = webClient;
-			_mixPanelEndpointConfiguration = mixPanelEndpointConfiguration;	
+			_webClient = webClient;											  
 		}
 
 		public string ExportRaw(ClientConfiguration clientConfiguration, Date from, Date to)
 		{
 			try
 			{
-				var uri = _mixPanelEndpointConfiguration.RawExportUri;																	   
+				var uri = MixPanelEndpointConfiguration.RawExportUrl;																	   
 
 				var parameterDictionary = new Dictionary<string, string>();
 																										 
-				parameterDictionary.Add(_mixPanelEndpointConfiguration.FromDateParamName, from.ToString());
-				parameterDictionary.Add(_mixPanelEndpointConfiguration.ToDateParamName, to.ToString());	 
+				parameterDictionary.Add(FromDateParamName, from.ToString());
+				parameterDictionary.Add(ToDateParamName, to.ToString());	 
 				
 				var callingUri = new Uri(uri.ToString() + "?" + string.Join("&", parameterDictionary.Select(x => x.Key + "=" + x.Value)));
 

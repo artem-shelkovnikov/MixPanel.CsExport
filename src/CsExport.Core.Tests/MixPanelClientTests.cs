@@ -10,32 +10,20 @@ namespace CsExport.Core.Tests
 	public class MixPanelClientTests
 	{
 		private readonly IMixPanelClient _mixPanelClient;
-		private readonly Mock<IWebClient> _webClientMock;
-		private readonly Mock<IMixPanelEndpointConfiguration> _uriConfigurationMock;   	  
-
-		private const string TestUriString = "http://google.com";
-		private const string TestApiKeyUriParamName = "test_api_key";
-		private const string TestSigUriParamName = "test_sig";
-		private const string TestFromDateUriParamName = "test_starts_at";
-		private const string TestToDateUriParamName = "test_ends_at";					  
+		private readonly Mock<IWebClient> _webClientMock;  
+																	 
+		private const string TestFromDateUriParamName = "from_date";
+		private const string TestToDateUriParamName = "to_date";					  
 														  
 		private const string TestSecret = "secret_123654987456";
 
 		private ClientConfiguration _clientConfiguration = new ClientConfiguration();
- 
-		private readonly Uri _testUri = new Uri(TestUriString);
+ 																	
 
 		public MixPanelClientTests()
 		{
-			_webClientMock = new Mock<IWebClient>();
-			_uriConfigurationMock = new Mock<IMixPanelEndpointConfiguration>();	   	   
-			_mixPanelClient = new MixPanelClient(_webClientMock.Object, _uriConfigurationMock.Object);
-
-			_uriConfigurationMock.SetupGet(x => x.RawExportUri).Returns(_testUri);
-			_uriConfigurationMock.SetupGet(x => x.ApiKeyParamName).Returns(TestApiKeyUriParamName);
-			_uriConfigurationMock.SetupGet(x => x.SigParamName).Returns(TestSigUriParamName);
-			_uriConfigurationMock.SetupGet(x => x.FromDateParamName).Returns(TestFromDateUriParamName);
-			_uriConfigurationMock.SetupGet(x => x.ToDateParamName).Returns(TestToDateUriParamName);
+			_webClientMock = new Mock<IWebClient>();  	   
+			_mixPanelClient = new MixPanelClient(_webClientMock.Object); 
 
 			_clientConfiguration.UpdateCredentials(TestSecret);													   
 		}
@@ -81,16 +69,7 @@ namespace CsExport.Core.Tests
 			{
 				Assert.IsType<DummyWebClientException>(ex.InnerException);
 			}
-		}
-
-		[Fact]
-		public void ExportRaw_When_called_Then_uses_uri_from_uriConfiguration()
-		{
-			var result = _mixPanelClient.ExportRaw(_clientConfiguration, GetDefaultStartDate(), GetDefaultEndDate());
-
-			_uriConfigurationMock.VerifyGet(x => x.RawExportUri, Times.Once);
-
-		}
+		}	  
 
 		[Fact]
 		public void ExportRaw_When_called_Then_passes_fromDate_and_toDate_to_webClient()
@@ -122,7 +101,7 @@ namespace CsExport.Core.Tests
 		private Uri GetExpectedUrl(Date defaultStartDate, Date defaultEndDate)
 		{
 			var stringifiedUrl = string.Format("{0}?{1}={2}&{3}={4}", 
-												_testUri, 
+												MixPanelEndpointConfiguration.RawExportUrl, 
 												TestFromDateUriParamName, defaultStartDate.ToString(), 
 												TestToDateUriParamName, defaultEndDate.ToString());
 

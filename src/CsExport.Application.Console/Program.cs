@@ -21,11 +21,9 @@ namespace CsExport.Application.Console
 
 			var commandParser = new CommandParser(commandParserConfigurationRegistry);
 
-			var webClient = new DefaultWebClient();
+			var webClient = new DefaultWebClient();									  
 
-			var mixPanelEndpointConfiguration = new MixPanelEndpointConfiguration();
-
-			var mixPanelClient = new MixPanelClient(webClient, mixPanelEndpointConfiguration);
+			var mixPanelClient = new MixPanelClient(webClient);
 
 			var fileWriter = new FileWriter();
 
