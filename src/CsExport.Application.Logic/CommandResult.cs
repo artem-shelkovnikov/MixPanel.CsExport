@@ -1,6 +1,7 @@
 ﻿namespace CsExport.Application.Logic
 {
-	public class CommandResult
+	public abstract class CommandResult
 	{
+		public abstract void Handle(IOutput output);
 	}
 }

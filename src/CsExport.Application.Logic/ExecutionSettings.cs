@@ -8,6 +8,6 @@ namespace CsExport.Application.Logic
 		public ClientConfiguration ClientConfiguration { get; set; }
 		 
 		public IMixPanelClient MixPanelClient { get; set; }
-		public IInputProvider InputProvider { get; set; }
+		public IInput Input { get; set; }
 	}
 }

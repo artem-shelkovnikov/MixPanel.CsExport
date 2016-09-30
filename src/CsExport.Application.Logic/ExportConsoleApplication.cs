@@ -13,14 +13,14 @@ namespace CsExport.Application.Logic
 		private readonly IResultHandler _resultHandler;
 		private readonly ClientConfiguration _clientConfiguration;
 
-		private readonly IInputProvider _inputProvider;	
+		private readonly IInput _input;	
 
-		public ExportConsoleApplication(ICommandParser commandParser, IMixPanelClient mixPanelClient, IResultHandler resultHandler, IInputProvider inputProvider, ClientConfiguration clientConfiguration)
+		public ExportConsoleApplication(ICommandParser commandParser, IMixPanelClient mixPanelClient, IResultHandler resultHandler, IInput input, ClientConfiguration clientConfiguration)
 		{
 			_commandParser = commandParser;
 			_mixPanelClient = mixPanelClient;
 			_resultHandler = resultHandler;
-			_inputProvider = inputProvider;
+			_input = input;
 			_clientConfiguration = clientConfiguration;
 		}
 
@@ -28,7 +28,7 @@ namespace CsExport.Application.Logic
 		{
 			try
 			{
-				var commandText = _inputProvider.GetInput();
+				var commandText = _input.GetLine();
 
 				var command = _commandParser.ParseCommand(commandText);
 
@@ -40,7 +40,7 @@ namespace CsExport.Application.Logic
 
 				var executionSettings = new ExecutionSettings
 				{
-					InputProvider = _inputProvider,
+					Input = _input,
 					MixPanelClient = _mixPanelClient,
 					ClientConfiguration = _clientConfiguration
 				};

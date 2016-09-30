@@ -14,7 +14,7 @@ namespace CsExport.Application.Logic.Tests
 		private readonly Mock<ICommandParser> _commandParserMock = new Mock<ICommandParser>();
 		private readonly Mock<IResultHandler> _resultHandlerMock = new Mock<IResultHandler>();
 		private readonly Mock<IMixPanelClient> _mixPanelClientMock = new Mock<IMixPanelClient>();
-		private readonly Mock<IInputProvider> _inputProviderMock = new Mock<IInputProvider>();
+		private readonly Mock<IInput> _inputProviderMock = new Mock<IInput>();
 		private readonly Mock<ClientConfiguration> _clientConfigurationMock = new Mock<ClientConfiguration>();
 
 		private const string ValidCommandText = "dummy";
@@ -30,7 +30,7 @@ namespace CsExport.Application.Logic.Tests
 		[Fact]
 		public void ReceiveCommand_When_called_with_a_dummy_command_Then_uses_commandParser_to_parse_command()
 		{
-			_inputProviderMock.Setup(x => x.GetInput()).Returns(ValidCommandText);
+			_inputProviderMock.Setup(x => x.GetLine()).Returns(ValidCommandText);
 
 			_application.ReceiveCommand();
 
@@ -40,7 +40,7 @@ namespace CsExport.Application.Logic.Tests
 		[Fact]
 		public void ReceiveCommand_When_called_with_a_dummy_command_Then_writes_error_message_to_output()
 		{
-			_inputProviderMock.Setup(x => x.GetInput()).Returns(ValidCommandText);
+			_inputProviderMock.Setup(x => x.GetLine()).Returns(ValidCommandText);
 
 			_application.ReceiveCommand();
 
@@ -50,7 +50,7 @@ namespace CsExport.Application.Logic.Tests
 		[Fact]
 		public void ReceiveCommand_When_called_with_unrecognized_command_Then_writes_error_message_to_output()
 		{
-			_inputProviderMock.Setup(x => x.GetInput()).Returns(InvalidCommandText);
+			_inputProviderMock.Setup(x => x.GetLine()).Returns(InvalidCommandText);
 
 			_application.ReceiveCommand();
 
@@ -60,7 +60,7 @@ namespace CsExport.Application.Logic.Tests
 		[Fact]
 		public void ReceiveCommand_When_exception_is_thrown_by_component_Then_writes_error_message_to_output()
 		{
-			_inputProviderMock.Setup(x => x.GetInput()).Throws(new NotImplementedException());
+			_inputProviderMock.Setup(x => x.GetLine()).Throws(new NotImplementedException());
 
 			_application.ReceiveCommand();
 
