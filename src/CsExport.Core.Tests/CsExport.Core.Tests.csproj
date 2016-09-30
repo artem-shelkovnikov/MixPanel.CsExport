@@ -63,7 +63,6 @@
   <ItemGroup>
     <Compile Include="MixPanelClientTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="SigCalculatorTests.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />

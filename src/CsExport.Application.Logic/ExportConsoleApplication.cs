@@ -11,17 +11,27 @@ namespace CsExport.Application.Logic
 		private readonly ICommandParser _commandParser;
 		private readonly IMixPanelClient _mixPanelClient;
 		private readonly IResultHandler _resultHandler;
+		private readonly IFileWriter _fileWriter;
 		private readonly ClientConfiguration _clientConfiguration;
+		private readonly ApplicationConfiguration _applicationConfiguration;
 
 		private readonly IInput _input;	
 
-		public ExportConsoleApplication(ICommandParser commandParser, IMixPanelClient mixPanelClient, IResultHandler resultHandler, IInput input, ClientConfiguration clientConfiguration)
+		public ExportConsoleApplication(ICommandParser commandParser, 
+			IMixPanelClient mixPanelClient, 
+			IResultHandler resultHandler, 
+			IFileWriter fileWriter,
+			IInput input, 
+			ClientConfiguration clientConfiguration,
+			ApplicationConfiguration applicationConfiguration)
 		{
 			_commandParser = commandParser;
 			_mixPanelClient = mixPanelClient;
 			_resultHandler = resultHandler;
+			_fileWriter = fileWriter;
 			_input = input;
 			_clientConfiguration = clientConfiguration;
+			_applicationConfiguration = applicationConfiguration;
 		}
 
 		public void ReceiveCommand()
@@ -42,7 +52,9 @@ namespace CsExport.Application.Logic
 				{
 					Input = _input,
 					MixPanelClient = _mixPanelClient,
-					ClientConfiguration = _clientConfiguration
+					FileWriter = _fileWriter,
+					ClientConfiguration = _clientConfiguration,
+					ApplicationConfiguration = _applicationConfiguration
 				};
 
 				var commandResult = command.Execute(executionSettings);

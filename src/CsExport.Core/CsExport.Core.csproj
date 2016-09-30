@@ -49,11 +49,9 @@
     <Compile Include="Client\IJsonSerializer.cs" />
     <Compile Include="Client\IMixPanelClient.cs" />
     <Compile Include="Settings\IMixPanelEndpointConfiguration.cs" />
-    <Compile Include="Client\ISigCalculator.cs" />
     <Compile Include="Client\IWebClient.cs" />
     <Compile Include="Client\MixPanelClient.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Client\SigCalculator.cs" />
     <Compile Include="Settings\MixPanelEndpointConfiguration.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

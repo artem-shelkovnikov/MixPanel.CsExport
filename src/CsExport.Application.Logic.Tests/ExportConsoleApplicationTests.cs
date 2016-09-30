@@ -14,8 +14,10 @@ namespace CsExport.Application.Logic.Tests
 		private readonly Mock<ICommandParser> _commandParserMock = new Mock<ICommandParser>();
 		private readonly Mock<IResultHandler> _resultHandlerMock = new Mock<IResultHandler>();
 		private readonly Mock<IMixPanelClient> _mixPanelClientMock = new Mock<IMixPanelClient>();
+		private readonly Mock<IFileWriter> _fileWriterMock = new Mock<IFileWriter>();
 		private readonly Mock<IInput> _inputProviderMock = new Mock<IInput>();
-		private readonly Mock<ClientConfiguration> _clientConfigurationMock = new Mock<ClientConfiguration>();
+		private readonly ClientConfiguration _clientConfiguration = new ClientConfiguration();
+		private readonly ApplicationConfiguration _applicationConfiguration = new ApplicationConfiguration();
 
 		private const string ValidCommandText = "dummy";
 		private const string InvalidCommandText = "invalid";
@@ -24,7 +26,13 @@ namespace CsExport.Application.Logic.Tests
 		{
 			_commandParserMock.Setup(x => x.ParseCommand(ValidCommandText)).Returns(new DummyCommand());
 
-			_application = new ExportConsoleApplication(_commandParserMock.Object, _mixPanelClientMock.Object, _resultHandlerMock.Object, _inputProviderMock.Object, _clientConfigurationMock.Object);
+			_application = new ExportConsoleApplication(_commandParserMock.Object, 
+			_mixPanelClientMock.Object, 
+			_resultHandlerMock.Object, 
+			_fileWriterMock.Object,
+			_inputProviderMock.Object,
+			_clientConfiguration,
+			_applicationConfiguration);
 		}
 
 		[Fact]

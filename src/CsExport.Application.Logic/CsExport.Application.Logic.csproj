@@ -44,6 +44,8 @@
     <Compile Include="ConsoleInput.cs" />
     <Compile Include="ConsoleOutput.cs" />
     <Compile Include="ExecutionSettings.cs" />
+    <Compile Include="FileWriter.cs" />
+    <Compile Include="IFileWriter.cs" />
     <Compile Include="IOutput.cs" />
     <Compile Include="Parser\CommandParser.cs" />
     <Compile Include="Parser\CommandParserConfigurationRegistry.cs" />

@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
 using CsExport.Core.Client;
 using CsExport.Core.Exceptions;
 using CsExport.Core.Settings;
@@ -12,8 +11,7 @@ namespace CsExport.Core.Tests
 	{
 		private readonly IMixPanelClient _mixPanelClient;
 		private readonly Mock<IWebClient> _webClientMock;
-		private readonly Mock<IMixPanelEndpointConfiguration> _uriConfigurationMock;   
-		private readonly Mock<ISigCalculator> _sigCalculatorMock;
+		private readonly Mock<IMixPanelEndpointConfiguration> _uriConfigurationMock;   	  
 
 		private const string TestUriString = "http://google.com";
 		private const string TestApiKeyUriParamName = "test_api_key";
@@ -22,8 +20,7 @@ namespace CsExport.Core.Tests
 		private const string TestToDateUriParamName = "test_ends_at";
 
 		private const string TestClientApiKey = "client_api_key_111222333444555666";  
-
-		private const string TestSig = "sig123";
+														  
 		private const string TestSecret = "secret_123654987456";
 
 		private ClientConfiguration _clientConfiguration = new ClientConfiguration();
@@ -33,9 +30,8 @@ namespace CsExport.Core.Tests
 		public MixPanelClientTests()
 		{
 			_webClientMock = new Mock<IWebClient>();
-			_uriConfigurationMock = new Mock<IMixPanelEndpointConfiguration>();	   
-			_sigCalculatorMock = new Mock<ISigCalculator>();
-			_mixPanelClient = new MixPanelClient(_webClientMock.Object, _uriConfigurationMock.Object, _sigCalculatorMock.Object);
+			_uriConfigurationMock = new Mock<IMixPanelEndpointConfiguration>();	   	   
+			_mixPanelClient = new MixPanelClient(_webClientMock.Object, _uriConfigurationMock.Object);
 
 			_uriConfigurationMock.SetupGet(x => x.RawExportUri).Returns(_testUri);
 			_uriConfigurationMock.SetupGet(x => x.ApiKeyParamName).Returns(TestApiKeyUriParamName);
@@ -43,9 +39,7 @@ namespace CsExport.Core.Tests
 			_uriConfigurationMock.SetupGet(x => x.FromDateParamName).Returns(TestFromDateUriParamName);
 			_uriConfigurationMock.SetupGet(x => x.ToDateParamName).Returns(TestToDateUriParamName);
 
-			_clientConfiguration.UpdateCredentials(TestClientApiKey, TestSecret);	
-
-			_sigCalculatorMock.Setup(x => x.Calculate(It.IsAny<IDictionary<string, string>>(), It.IsAny<string>())).Returns(TestSig);
+			_clientConfiguration.UpdateCredentials(TestClientApiKey, TestSecret);													   
 		}
 
 		[Fact]

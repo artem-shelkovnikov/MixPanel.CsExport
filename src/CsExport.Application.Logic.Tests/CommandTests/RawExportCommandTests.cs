@@ -2,6 +2,7 @@
 using CsExport.Application.Logic.Commands;
 using CsExport.Application.Logic.Results;
 using CsExport.Core;
+using CsExport.Core.Settings;
 using Moq;
 using Xunit;
 
@@ -40,6 +41,23 @@ namespace CsExport.Application.Logic.Tests.CommandTests
 			command.Execute(GetExecutionSettings());
 			
 			MixPanelClientMock.Verify(x => x.ExportRaw(ClientConfiguration, @from, to), Times.Once);
+		}
+
+		[Fact]
+		public void Execute_When_called_with_valid_parameters_Then_passes_string_received_from_mixPanelClient_to_fileWriter()
+		{
+			var exportContent = "some export content";
+			MixPanelClientMock.Setup(x => x.ExportRaw(It.IsAny<ClientConfiguration>(), It.IsAny<Date>(), It.IsAny<Date>()))
+				.Returns(exportContent);
+
+			var @from = new Date(2010, 10, 31);
+			var to = new Date(2011, 1, 1);
+
+			var command = GetCommand(@from, to);
+
+			command.Execute(GetExecutionSettings());
+
+			FileWriterMock.Verify(x=>x.WriteContent(ApplicationConfiguration.ExportPath, It.IsAny<string>(), exportContent));
 		}
 
 		[Fact]

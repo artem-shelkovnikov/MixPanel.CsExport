@@ -22,9 +22,13 @@ namespace CsExport.Application.Logic.Commands
 		{
 			var mixPanelClient = settings.MixPanelClient;
 			var clientConfiguration = settings.ClientConfiguration;
+			var applicationConfiguration = settings.ApplicationConfiguration;
+			var fileWriter = settings.FileWriter;
 
-			mixPanelClient.ExportRaw(clientConfiguration, _from, _to);
+			var content = mixPanelClient.ExportRaw(clientConfiguration, _from, _to);
 
+			fileWriter.WriteContent(applicationConfiguration.ExportPath, string.Format("{0}-raw-export.txt", DateTime.Now.ToFileTimeUtc()), content);
+			 
 			return new SuccessResult();
 		}
 

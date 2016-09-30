@@ -10,16 +10,13 @@ namespace CsExport.Core.Client
 	{
 		private readonly IWebClient _webClient;
 																	  
-		private readonly ISigCalculator _sigCalculator;
 		private readonly IMixPanelEndpointConfiguration _mixPanelEndpointConfiguration;
 
 		public MixPanelClient(IWebClient webClient,
-		 IMixPanelEndpointConfiguration mixPanelEndpointConfiguration, 
-		 ISigCalculator sigCalculator)
+		 IMixPanelEndpointConfiguration mixPanelEndpointConfiguration)
 		{
 			_webClient = webClient;
-			_mixPanelEndpointConfiguration = mixPanelEndpointConfiguration;	  
-			_sigCalculator = sigCalculator;
+			_mixPanelEndpointConfiguration = mixPanelEndpointConfiguration;	
 		}
 
 		public string ExportRaw(ClientConfiguration clientConfiguration, Date from, Date to)
