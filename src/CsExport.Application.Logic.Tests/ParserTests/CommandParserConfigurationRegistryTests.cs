@@ -12,7 +12,7 @@ namespace CsExport.Application.Logic.Tests.ParserTests
 		[Fact]
 		public void Init_When_called_Then_collects_profiles_from_calling_assembly()
 		{
-			_configurationRegistry.Initialize();
+			_configurationRegistry.InitializeFromAssebmlyOf<StubParserConfiguration>();
 
 			var existingConfigurations = _configurationRegistry.GetAll();
 			var configurationTypes = existingConfigurations.Select(x => x.GetType()).ToArray();

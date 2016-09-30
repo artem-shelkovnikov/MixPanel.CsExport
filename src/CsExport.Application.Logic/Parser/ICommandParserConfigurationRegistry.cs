@@ -4,7 +4,7 @@ namespace CsExport.Application.Logic.Parser
 {
 	public interface ICommandParserConfigurationRegistry
 	{
-		void Initialize();
+		void InitializeFromAssebmlyOf<T>() where T : ICommandParserConfiguration;
 		IEnumerable<ICommandParserConfiguration> GetAll();
 	}
 }

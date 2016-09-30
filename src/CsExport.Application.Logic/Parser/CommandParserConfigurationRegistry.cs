@@ -9,11 +9,11 @@ namespace CsExport.Application.Logic.Parser
 	{		
 		private ICollection<ICommandParserConfiguration> _configurations = new List<ICommandParserConfiguration>();
 
-		public void Initialize()
+		public void InitializeFromAssebmlyOf<T>() where T : ICommandParserConfiguration
 		{
-			_configurations = Assembly.GetCallingAssembly()
+			_configurations = typeof(T).Assembly
 				.GetTypes()
-				.Where(x => typeof(ICommandParserConfiguration).IsAssignableFrom(x))
+				.Where(x => typeof(ICommandParserConfiguration).IsAssignableFrom(x) && x.IsAbstract == false)
 				.Select(x => (ICommandParserConfiguration) Activator.CreateInstance(x))
 				.ToList();
 		}
