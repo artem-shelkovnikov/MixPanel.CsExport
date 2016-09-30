@@ -26,7 +26,7 @@ namespace CsExport.Application.Logic.Parser.Configuration
 			if (toArgument == null)
 				return null;
 
-			if (DateTime.TryParse(fromArgument.Value, out to) == false)
+			if (DateTime.TryParse(toArgument.Value, out to) == false)
 				return null;			   
 
 			return new RawExportCommand(new Date(from), new Date(to));
