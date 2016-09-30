@@ -41,6 +41,8 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Client\BasicAuthentication.cs" />
+    <Compile Include="Client\DefaultWebClient.cs" />
     <Compile Include="Date.cs" />
     <Compile Include="Exceptions\MixPanelClientException.cs" />
     <Compile Include="Settings\ClientConfiguration.cs" />

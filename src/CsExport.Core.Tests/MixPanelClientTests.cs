@@ -53,7 +53,7 @@ namespace CsExport.Core.Tests
 		{
 			_mixPanelClient.ExportRaw(_clientConfiguration, GetDefaultStartDate(), GetDefaultEndDate());
 
-			_webClientMock.Verify(x => x.QueryUri(_testUri, It.IsAny<IDictionary<string, string>>()), Times.Once);
+			_webClientMock.Verify(x => x.QueryUri(It.IsAny<Uri>(), It.IsAny<BasicAuthentication>()), Times.Once);
 		}
 
 		[Fact]
@@ -61,7 +61,7 @@ namespace CsExport.Core.Tests
 		{
 			var webResponse = "test response";
 
-			_webClientMock.Setup(x => x.QueryUri(_testUri, It.IsAny<IDictionary<string, string>>())).Returns(webResponse);
+			_webClientMock.Setup(x => x.QueryUri(It.IsAny<Uri>(), It.IsAny<BasicAuthentication>())).Returns(webResponse);
 
 			var results = _mixPanelClient.ExportRaw(_clientConfiguration, GetDefaultStartDate(), GetDefaultEndDate());
 
@@ -71,7 +71,7 @@ namespace CsExport.Core.Tests
 		[Fact]
 		public void ExportRaw_When_webClient_throws_exception_Then_throws_mixPanelClientException()
 		{
-			_webClientMock.Setup(x => x.QueryUri(_testUri, It.IsAny<IDictionary<string, string>>())).Throws<DummyWebClientException>();
+			_webClientMock.Setup(x => x.QueryUri(It.IsAny<Uri>(), It.IsAny<BasicAuthentication>())).Throws<DummyWebClientException>();
 
 			Assert.Throws<MixPanelClientException>(() => _mixPanelClient.ExportRaw(_clientConfiguration, GetDefaultStartDate(), GetDefaultEndDate()));
 		}
@@ -79,7 +79,7 @@ namespace CsExport.Core.Tests
 		[Fact]
 		public void ExportRaw_When_webClient_throws_exception_Then_throws_mixPanelClientException_with_correct_innerException()
 		{
-			_webClientMock.Setup(x => x.QueryUri(_testUri, It.IsAny<IDictionary<string, string>>())).Throws<DummyWebClientException>();
+			_webClientMock.Setup(x => x.QueryUri(It.IsAny<Uri>(), It.IsAny<BasicAuthentication>())).Throws<DummyWebClientException>();
 
 			try
 			{
@@ -101,65 +101,20 @@ namespace CsExport.Core.Tests
 		}
 
 		[Fact]
-		public void ExportRaw_When_called_Then_passes_uri_from_uriConfiguration_to_webClient()
+		public void ExportRaw_When_called_Then_passes_fromDate_and_toDate_to_webClient()
 		{
-			var rawExportUri = _testUri;
+			var fromDate = GetDefaultStartDate();
+			var toDate = GetDefaultEndDate();
 
-			var result = _mixPanelClient.ExportRaw(_clientConfiguration, GetDefaultStartDate(), GetDefaultEndDate());
+			var expectedUrl = GetExpectedUrl(fromDate, toDate);
 
-			_webClientMock.Verify(x => x.QueryUri(rawExportUri, It.IsAny<IDictionary<string, string>>()), Times.Once);
-		}							
+			var result = _mixPanelClient.ExportRaw(_clientConfiguration, fromDate, toDate);
 
-		[Fact]
-		public void ExportRaw_When_called_Then_passes_client_apiKey_to_webClient_as_parameter()
-		{
-			var result = _mixPanelClient.ExportRaw(_clientConfiguration, GetDefaultStartDate(), GetDefaultEndDate());
-
-			_webClientMock.Verify(x => x.QueryUri(_testUri, It.Is<IDictionary<string, string>>(y => y.ContainsKey(TestApiKeyUriParamName) && y[TestApiKeyUriParamName] == TestClientApiKey)), Times.Once);
+			_webClientMock.Verify(x => x.QueryUri(expectedUrl, It.IsAny<BasicAuthentication>()), Times.Once);
 		}	
 
 		[Fact]
-		public void ExportRaw_When_called_with_valid_parameters_Then_calculates_sig_using_sigCalculator_and_apiKey()
-		{
-			var result = _mixPanelClient.ExportRaw(_clientConfiguration, GetDefaultStartDate(), GetDefaultEndDate());
-			
-			_sigCalculatorMock.Verify(x=>x.Calculate(It.Is<IDictionary<string, string>>(y=>y[TestApiKeyUriParamName] == TestClientApiKey), It.IsAny<string>()), Times.Once);
-		}
-
-		[Fact]
-		public void ExportRaw_When_called_With_valid_parameters_Then_adds_sig_to_payload_passed_to_webClient()
-		{
-			var result = _mixPanelClient.ExportRaw(_clientConfiguration, GetDefaultStartDate(), GetDefaultEndDate());
-
-			_webClientMock.Verify(x => x.QueryUri(_testUri, It.Is<IDictionary<string, string>>(y => y.ContainsKey(TestSigUriParamName) && y[TestSigUriParamName] == TestSig)), Times.Once);
-		}
-
-		[Fact]
-		public void ExportRaw_When_called_with_valid_parameters_Then_passes_secret_to_sigCalculator()
-		{
-			var result = _mixPanelClient.ExportRaw(_clientConfiguration, GetDefaultStartDate(), GetDefaultEndDate());
-
-			_sigCalculatorMock.Verify(x=>x.Calculate(It.IsAny<IDictionary<string, string>>(), TestSecret), Times.Once);
-		}
-
-		[Fact]
-		public void ExportRaw_When_called_with_required_parameters_Then_uses_them_in_sigCalculator_for_calculating_sig()
-		{
-			var from = new Date(DateTime.UtcNow.AddDays(-1));
-			var to = new Date(DateTime.UtcNow);
-
-			var result = _mixPanelClient.ExportRaw(_clientConfiguration, from, to);
-
-			_sigCalculatorMock.Verify(
-				x =>
-					x.Calculate(
-						It.Is<IDictionary<string, string>>(y => y.ContainsKey(TestFromDateUriParamName) && y[TestFromDateUriParamName] == from.ToString() &&
-						                                        y.ContainsKey(TestToDateUriParamName) && y[TestToDateUriParamName] == to.ToString()),
-						It.IsAny<string>()), Times.Once);
-		}
-
-		[Fact]
-		public void ExportRaw_When_called_with_required_parameters_Then_passes_them_to_webClient_queryUri_method()
+		public void ExportRaw_When_called_Then_passes_secret_to_basic_authentication_userName_and_leaves_password_empty()
 		{
 			var from = new Date(DateTime.UtcNow.AddDays(-1));
 			var to = new Date(DateTime.UtcNow);
@@ -168,9 +123,18 @@ namespace CsExport.Core.Tests
 
 			_webClientMock.Verify(
 				x =>
-					x.QueryUri(_testUri,
-						It.Is<IDictionary<string, string>>(y => y.ContainsKey(TestFromDateUriParamName) && y[TestFromDateUriParamName] == from.ToString() &&
-						                                        y.ContainsKey(TestToDateUriParamName) && y[TestToDateUriParamName] == to.ToString())), Times.Once);
+					x.QueryUri(It.IsAny<Uri>(),
+						It.Is<BasicAuthentication>(y => y.UserName == _clientConfiguration.Secret && y.Password == null)));
+		} 
+
+		private Uri GetExpectedUrl(Date defaultStartDate, Date defaultEndDate)
+		{
+			var stringifiedUrl = string.Format("{0}?{1}={2}&{3}={4}", 
+												_testUri, 
+												TestFromDateUriParamName, defaultStartDate.ToString(), 
+												TestToDateUriParamName, defaultEndDate.ToString());
+
+			return new Uri(stringifiedUrl);
 		}
 
 		private Date GetDefaultStartDate()

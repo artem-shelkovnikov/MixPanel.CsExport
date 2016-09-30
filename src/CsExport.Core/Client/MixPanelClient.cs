@@ -1,5 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
+using System.Text;
 using CsExport.Core.Exceptions;
 using CsExport.Core.Settings;
 
@@ -33,16 +35,13 @@ namespace CsExport.Core.Client
 					throw new ArgumentNullException(_mixPanelEndpointConfiguration.ApiKeyParamName, "API key is not provided for client.");
 
 				var parameterDictionary = new Dictionary<string, string>();
-
-				parameterDictionary.Add(_mixPanelEndpointConfiguration.ApiKeyParamName, apiKey);
+																										 
 				parameterDictionary.Add(_mixPanelEndpointConfiguration.FromDateParamName, from.ToString());
-				parameterDictionary.Add(_mixPanelEndpointConfiguration.ToDateParamName, to.ToString());
+				parameterDictionary.Add(_mixPanelEndpointConfiguration.ToDateParamName, to.ToString());	 
+				
+				var callingUri = new Uri(uri.ToString() + "?" + string.Join("&", parameterDictionary.Select(x => x.Key + "=" + x.Value)));
 
-				var sig = _sigCalculator.Calculate(parameterDictionary, clientConfiguration.Secret);
-
-				parameterDictionary.Add(_mixPanelEndpointConfiguration.SigParamName, sig);
-
-				var webClientResponse = _webClient.QueryUri(uri, parameterDictionary);												  
+				var webClientResponse = _webClient.QueryUri(callingUri, new BasicAuthentication {UserName = clientConfiguration.Secret});												  
 
 				return webClientResponse;
 			}
