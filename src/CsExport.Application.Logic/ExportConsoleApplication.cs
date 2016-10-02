@@ -16,19 +16,17 @@ namespace CsExport.Application.Logic
 		private readonly ClientConfiguration _clientConfiguration;
 		private readonly ApplicationConfiguration _applicationConfiguration;
 
-		private readonly IInput _input;	
+		private readonly IInput _input;
+		private readonly IOutput _output;
 
-		public ExportConsoleApplication(ICommandParser commandParser, 
-			IMixPanelClient mixPanelClient, 
-			IResultHandler resultHandler, 
-			IFileWriter fileWriter,
-			IInput input)
+		public ExportConsoleApplication(ICommandParser commandParser, IMixPanelClient mixPanelClient, IResultHandler resultHandler, IFileWriter fileWriter, IInput input, IOutput output)
 		{
 			_commandParser = commandParser;
 			_mixPanelClient = mixPanelClient;
 			_resultHandler = resultHandler;
 			_fileWriter = fileWriter;
 			_input = input;
+			_output = output;
 			_clientConfiguration = new ClientConfiguration();
 			_applicationConfiguration = new ApplicationConfiguration
 			{
@@ -53,6 +51,7 @@ namespace CsExport.Application.Logic
 				var executionSettings = new ExecutionSettings
 				{
 					Input = _input,
+					Output = _output,
 					MixPanelClient = _mixPanelClient,
 					FileWriter = _fileWriter,
 					ClientConfiguration = _clientConfiguration,

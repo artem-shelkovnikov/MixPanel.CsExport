@@ -11,7 +11,9 @@ namespace CsExport.Application.Logic.Results
 
 		public override void Handle(IOutput output)
 		{
-			output.Notify(string.Format("Command not recognized: {0}", _commandText));
+			var message = string.Format("Command not recognized: {0} \nType \"help\" to get a list of available commands", _commandText);
+
+			output.Notify(message);
 		}
 	}
 }

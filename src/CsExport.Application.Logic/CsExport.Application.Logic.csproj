@@ -40,6 +40,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Commands\HelpCommand.cs" />
     <Compile Include="Commands\SetCredentialsCommand.cs" />
     <Compile Include="ConsoleInput.cs" />
     <Compile Include="ConsoleOutput.cs" />
@@ -50,6 +51,7 @@
     <Compile Include="Parser\CommandParser.cs" />
     <Compile Include="Parser\CommandParserConfigurationRegistry.cs" />
     <Compile Include="Parser\Configuration\CommandParserConfigurationBase.cs" />
+    <Compile Include="Parser\Configuration\HelpCommandConfiguration.cs" />
     <Compile Include="Parser\Configuration\RawExportCommandConfiguration.cs" />
     <Compile Include="Parser\Configuration\SetCredentialsCommandConfiguration.cs" />
     <Compile Include="Parser\ICommandParserConfiguration.cs" />

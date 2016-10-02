@@ -15,6 +15,7 @@ namespace CsExport.Application.Logic.Tests
 		private readonly Mock<IMixPanelClient> _mixPanelClientMock = new Mock<IMixPanelClient>();
 		private readonly Mock<IFileWriter> _fileWriterMock = new Mock<IFileWriter>();
 		private readonly Mock<IInput> _inputProviderMock = new Mock<IInput>();								  
+		private readonly Mock<IOutput> _outputMock = new Mock<IOutput>();								  
 
 		private const string ValidCommandText = "dummy";
 		private const string InvalidCommandText = "invalid";
@@ -27,7 +28,8 @@ namespace CsExport.Application.Logic.Tests
 			_mixPanelClientMock.Object, 
 			_resultHandlerMock.Object, 
 			_fileWriterMock.Object,
-			_inputProviderMock.Object);
+			_inputProviderMock.Object,
+			_outputMock.Object);
 		}
 
 		[Fact]

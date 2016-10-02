@@ -25,7 +25,7 @@ namespace CsExport.Application.Console
 
 			commandParserConfigurationRegistry.InitializeFromAssebmlyOf<RawExportCommandConfiguration>();
 
-			var application = new ExportConsoleApplication(commandParser, mixPanelClient, resultHandler, fileWriter, input);
+			var application = new ExportConsoleApplication(commandParser, mixPanelClient, resultHandler, fileWriter, input, output);
 
 			while (true)
 			{

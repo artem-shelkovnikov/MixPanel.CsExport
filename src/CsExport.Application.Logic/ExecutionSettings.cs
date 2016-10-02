@@ -10,6 +10,7 @@ namespace CsExport.Application.Logic
 		 
 		public IMixPanelClient MixPanelClient { get; set; }
 		public IInput Input { get; set; }
+		public IOutput Output { get; set; }
 		public IFileWriter FileWriter { get; set; }
 	}
 
