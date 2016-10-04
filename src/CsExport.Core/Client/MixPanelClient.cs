@@ -19,6 +19,19 @@ namespace CsExport.Core.Client
 			_webClient = webClient;											  
 		}
 
+		public bool VerifyCredentials(ClientConfiguration clientConfiguration)
+		{
+			try
+			{
+				ExportRaw(clientConfiguration, new Date(2000, 1, 1), new Date(2000, 1, 2));
+			}
+			catch
+			{
+				return false;
+			}
+			return true;
+		}
+
 		public string ExportRaw(ClientConfiguration clientConfiguration, Date from, Date to)
 		{
 			try

@@ -1,5 +1,6 @@
 ﻿using System;
 using CsExport.Application.Logic.Results;
+using CsExport.Core.Settings;
 
 namespace CsExport.Application.Logic.Commands
 {
@@ -18,10 +19,18 @@ namespace CsExport.Application.Logic.Commands
 		public CommandResult Execute(ExecutionSettings settings)
 		{
 			var clientConfiguration = settings.ClientConfiguration;
+			var mixPanelClient = settings.MixPanelClient;
 
-			clientConfiguration.UpdateCredentials(_secret);
+			var updatedConfiguration = new ClientConfiguration();
+			updatedConfiguration.UpdateCredentials(_secret);
 
-			return new SuccessResult();
+			if (mixPanelClient.VerifyCredentials(updatedConfiguration))
+			{
+				clientConfiguration.UpdateCredentials(_secret);
+				return new SuccessResult();
+			}
+
+			return new UnauthorizedResult();
 		}
 
 		public override bool Equals(object obj)
