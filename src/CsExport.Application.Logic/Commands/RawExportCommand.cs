@@ -25,6 +25,9 @@ namespace CsExport.Application.Logic.Commands
 			var applicationConfiguration = settings.ApplicationConfiguration;
 			var fileWriter = settings.FileWriter;
 
+			if (clientConfiguration == null || string.IsNullOrWhiteSpace(clientConfiguration.Secret))
+				return new UnauthorizedResult();
+
 			var content = mixPanelClient.ExportRaw(clientConfiguration, _from, _to);
 
 			fileWriter.WriteContent(applicationConfiguration.ExportPath, string.Format("{0}-raw-export.txt", DateTime.Now.ToFileTimeUtc()), content);

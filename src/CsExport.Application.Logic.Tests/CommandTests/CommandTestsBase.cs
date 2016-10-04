@@ -17,6 +17,11 @@ namespace CsExport.Application.Logic.Tests.CommandTests
 		protected Mock<IFileWriter> FileWriterMock { get { return _fileWriterMock; } }
 		protected ClientConfiguration ClientConfiguration { get { return _clientConfiguration; } }
 		protected ApplicationConfiguration ApplicationConfiguration { get { return _applicationConfiguration; } }
+
+		protected CommandTestsBase()
+		{
+			_clientConfiguration.UpdateCredentials("valid-secret");
+		}
 		
 		protected ExecutionSettings GetExecutionSettings()
 		{

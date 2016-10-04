@@ -68,6 +68,7 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Commands\RawExportCommand.cs" />
     <Compile Include="Results\SuccessResult.cs" />
+    <Compile Include="Results\UnauthorizedResult.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\CsExport.Core\CsExport.Core.csproj">

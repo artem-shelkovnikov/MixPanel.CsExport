@@ -3,6 +3,7 @@ using System.IO;
 using CsExport.Application.Logic.Parser;
 using CsExport.Application.Logic.Results;
 using CsExport.Core.Client;
+using CsExport.Core.Exceptions;
 using CsExport.Core.Settings;
 
 namespace CsExport.Application.Logic
@@ -60,6 +61,10 @@ namespace CsExport.Application.Logic
 
 				var commandResult = command.Execute(executionSettings);
 				_resultHandler.HandleResult(commandResult);
+			}
+			catch (MixPanelUnauthorizedException)
+			{
+				_resultHandler.HandleResult(new UnauthorizedResult());
 			}
 			catch (Exception ex)
 			{

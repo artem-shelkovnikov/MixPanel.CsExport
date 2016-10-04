@@ -45,6 +45,7 @@
     <Compile Include="Client\DefaultWebClient.cs" />
     <Compile Include="Date.cs" />
     <Compile Include="Exceptions\MixPanelClientException.cs" />
+    <Compile Include="Exceptions\MixPanelUnauthorizedException.cs" />
     <Compile Include="Settings\ClientConfiguration.cs" />
     <Compile Include="Client\IJsonSerializer.cs" />
     <Compile Include="Client\IMixPanelClient.cs" />

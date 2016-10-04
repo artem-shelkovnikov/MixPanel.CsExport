@@ -69,6 +69,18 @@ namespace CsExport.Application.Logic.Tests.CommandTests
 			Assert.Throws<ArgumentException>(() => GetCommand(from, to));
 		}
 
+		[Fact]
+		public void Execute_when_called_with_client_context_without_secret_specified_Then_returns_unauthorizedResult()
+		{
+			var command = GetCommand();					   
+			var executionSettings = GetExecutionSettings();
+			executionSettings.ClientConfiguration.UpdateCredentials(string.Empty);
+
+			var result = command.Execute(executionSettings);
+
+			Assert.IsType<UnauthorizedResult>(result);
+		}						
+
 		private RawExportCommand GetCommand(Date from, Date to)
 		{
 			return new RawExportCommand(from, to);

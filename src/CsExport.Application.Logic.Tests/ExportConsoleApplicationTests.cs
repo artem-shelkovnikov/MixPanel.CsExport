@@ -1,7 +1,10 @@
 ﻿using System;
 using CsExport.Application.Logic.Parser;
 using CsExport.Application.Logic.Results;
+using CsExport.Core;
 using CsExport.Core.Client;
+using CsExport.Core.Exceptions;
+using CsExport.Core.Settings;
 using Moq;
 using Xunit;
 
@@ -15,14 +18,16 @@ namespace CsExport.Application.Logic.Tests
 		private readonly Mock<IMixPanelClient> _mixPanelClientMock = new Mock<IMixPanelClient>();
 		private readonly Mock<IFileWriter> _fileWriterMock = new Mock<IFileWriter>();
 		private readonly Mock<IInput> _inputProviderMock = new Mock<IInput>();								  
-		private readonly Mock<IOutput> _outputMock = new Mock<IOutput>();								  
+		private readonly Mock<IOutput> _outputMock = new Mock<IOutput>();			
+		private	readonly Mock<ICommand> _commandMock = new Mock<ICommand>();
 
 		private const string ValidCommandText = "dummy";
 		private const string InvalidCommandText = "invalid";
 
 		public ExportConsoleApplicationTests()
 		{
-			_commandParserMock.Setup(x => x.ParseCommand(ValidCommandText)).Returns(new DummyCommand());
+			_commandMock.Setup(x => x.Execute(It.IsAny<ExecutionSettings>())).Returns(new SuccessResult());
+			_commandParserMock.Setup(x => x.ParseCommand(ValidCommandText)).Returns(_commandMock.Object);
 
 			_application = new ExportConsoleApplication(_commandParserMock.Object, 
 			_mixPanelClientMock.Object, 
@@ -72,12 +77,15 @@ namespace CsExport.Application.Logic.Tests
 			_resultHandlerMock.Verify(x=>x.HandleResult(It.IsAny<CommandTerminatedResult>()), Times.Once);
 		}
 
-		private class DummyCommand : ICommand
-		{			 
-			public CommandResult Execute(ExecutionSettings settings)
-			{
-				return new SuccessResult();
-			}
-		}
+		[Fact]
+		public void ReceiveCommand_When_unauthorized_exception_is_thrown_by_component_Then_writes_error_message_to_output()
+		{
+			_inputProviderMock.Setup(x => x.GetLine()).Returns(ValidCommandText);
+			_commandMock.Setup(x => x.Execute(It.IsAny<ExecutionSettings>())).Throws<MixPanelUnauthorizedException>();
+
+			_application.ReceiveCommand();
+
+			_resultHandlerMock.Verify(x=>x.HandleResult(It.IsAny<UnauthorizedResult>()), Times.Once);
+		} 
 	}
 }
