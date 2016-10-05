@@ -27,11 +27,11 @@ namespace CsExport.Application.Logic.Tests.CommandTests
 
 			var result = command.Execute(GetExecutionSettings());
 
-			MixPanelClientMock.Verify(x=>x.ExportRaw(ClientConfiguration, It.IsAny<Date>(), It.IsAny<Date>()), Times.Once);
+			MixPanelClientMock.Verify(x=>x.ExportRaw(ClientConfiguration, It.IsAny<Date>(), It.IsAny<Date>(), null), Times.Once);
 		}
 
 		[Fact]
-		public void Execute_When_called_with_valid_parameters_Then_passes_these_parameters_into_mixPanelClient()
+		public void Execute_When_called_with_from_and_to_Then_passes_these_parameters_into_mixPanelClient_leaving_rest_parameters_null()
 		{
 			var @from = new Date(2010, 10, 31);
 			var to = new Date(2011, 1, 1);
@@ -40,14 +40,28 @@ namespace CsExport.Application.Logic.Tests.CommandTests
 
 			command.Execute(GetExecutionSettings());
 			
-			MixPanelClientMock.Verify(x => x.ExportRaw(ClientConfiguration, @from, to), Times.Once);
+			MixPanelClientMock.Verify(x => x.ExportRaw(ClientConfiguration, @from, to, null), Times.Once);
+		}
+
+		[Fact]
+		public void Execute_When_called_with_event_parameter_Then_passes_event_into_mixPanelClient()
+		{
+			var @from = new Date(2010, 10, 31);
+			var to = new Date(2011, 1, 1);
+			var @event = "some_event";
+
+			var command = GetCommand(@from, to, new [] { @event });
+
+			command.Execute(GetExecutionSettings());
+			
+			MixPanelClientMock.Verify(x => x.ExportRaw(ClientConfiguration, It.IsAny<Date>(), It.IsAny<Date>(), It.Is<string[]>(y=>y[0] == @event)), Times.Once);
 		}
 
 		[Fact]
 		public void Execute_When_called_with_valid_parameters_Then_passes_string_received_from_mixPanelClient_to_fileWriter()
 		{
 			var exportContent = "some export content";
-			MixPanelClientMock.Setup(x => x.ExportRaw(It.IsAny<ClientConfiguration>(), It.IsAny<Date>(), It.IsAny<Date>()))
+			MixPanelClientMock.Setup(x => x.ExportRaw(It.IsAny<ClientConfiguration>(), It.IsAny<Date>(), It.IsAny<Date>(), It.IsAny<string[]>()))
 				.Returns(exportContent);
 
 			var @from = new Date(2010, 10, 31);
@@ -81,9 +95,14 @@ namespace CsExport.Application.Logic.Tests.CommandTests
 			Assert.IsType<UnauthorizedResult>(result);
 		}						
 
+		private RawExportCommand GetCommand(Date from, Date to, string[] events)
+		{
+			return new RawExportCommand(from, to, events);
+		}							
+
 		private RawExportCommand GetCommand(Date from, Date to)
 		{
-			return new RawExportCommand(from, to);
+			return GetCommand(from, to, null);
 		}	 
 
 		private RawExportCommand GetCommand()
@@ -91,7 +110,7 @@ namespace CsExport.Application.Logic.Tests.CommandTests
 			var @from = new Date(2011, 1, 1);
 			var to = new Date(2011, 12, 31);
 
-			return new RawExportCommand(from, to);
+			return GetCommand(@from, to);
 		}
 	}
 }

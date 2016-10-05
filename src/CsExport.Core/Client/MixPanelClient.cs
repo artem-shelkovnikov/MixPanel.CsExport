@@ -3,6 +3,8 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Net;
+using System.Security.Policy;
+using System.Web;
 using CsExport.Core.Exceptions;
 using CsExport.Core.Settings;
 
@@ -13,6 +15,7 @@ namespace CsExport.Core.Client
 		private readonly IWebClient _webClient;
 		private const string FromDateParamName = "from_date";
 		private const string ToDateParamName = "to_date";
+		private const string EventParamName = "event";
 
 		public MixPanelClient(IWebClient webClient)
 		{
@@ -23,7 +26,7 @@ namespace CsExport.Core.Client
 		{
 			try
 			{
-				ExportRaw(clientConfiguration, new Date(2000, 1, 1), new Date(2000, 1, 2));
+				ExportRaw(clientConfiguration, new Date(2012, 1, 1), new Date(2012, 1, 2));
 			}
 			catch
 			{
@@ -32,7 +35,7 @@ namespace CsExport.Core.Client
 			return true;
 		}
 
-		public string ExportRaw(ClientConfiguration clientConfiguration, Date from, Date to)
+		public string ExportRaw(ClientConfiguration clientConfiguration, Date from, Date to, string[] events = null)
 		{
 			try
 			{
@@ -42,6 +45,8 @@ namespace CsExport.Core.Client
 
 				parameterDictionary.Add(FromDateParamName, from.ToString());
 				parameterDictionary.Add(ToDateParamName, to.ToString());
+				if (@events != null && events.Any())
+					parameterDictionary.Add(EventParamName, StringifyEvents(events));
 
 				var callingUri =
 					new Uri(uri.ToString() + "?" + string.Join("&", parameterDictionary.Select(x => x.Key + "=" + x.Value)));
@@ -60,6 +65,11 @@ namespace CsExport.Core.Client
 			{
 				throw new MixPanelClientException(ex);
 			}
+		}
+
+		private string StringifyEvents(string[] events)
+		{
+			return string.Format("[{0}]", string.Join(",", events.Select(y => HttpUtility.UrlEncode($"\"{y}\""))));
 		}
 
 		private static void TryHandleWebException(WebException ex)

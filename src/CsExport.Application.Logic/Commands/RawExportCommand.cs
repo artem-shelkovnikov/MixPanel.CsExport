@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Linq;
 using CsExport.Application.Logic.Results;
 using CsExport.Core;
 
@@ -8,14 +9,16 @@ namespace CsExport.Application.Logic.Commands
 	{
 		private readonly Date _from;
 		private readonly Date _to;
+		private readonly string[] _events;
 
-		public RawExportCommand(Date @from, Date @to)
+		public RawExportCommand(Date @from, Date @to, string[] events = null)
 		{
 			if (@from.GetDateTime() > to.GetDateTime())
 				throw new ArgumentException("@from should represent a date less than @to", nameof(@from));
 
 			_from = @from;
-			_to = to;							
+			_to = to;
+			_events = events;
 		}
 			 
 		public CommandResult Execute(ExecutionSettings settings)
@@ -28,7 +31,7 @@ namespace CsExport.Application.Logic.Commands
 			if (clientConfiguration == null || string.IsNullOrWhiteSpace(clientConfiguration.Secret))
 				return new UnauthorizedResult();
 
-			var content = mixPanelClient.ExportRaw(clientConfiguration, _from, _to);
+			var content = mixPanelClient.ExportRaw(clientConfiguration, _from, _to, _events);
 
 			fileWriter.WriteContent(applicationConfiguration.ExportPath, string.Format("{0}-raw-export.txt", DateTime.Now.ToFileTimeUtc()), content);
 			 
@@ -44,12 +47,14 @@ namespace CsExport.Application.Logic.Commands
 				return false;
 
 			return source._from.Equals(target._from)
-			       && source._to.Equals(target._to);
+			       && source._to.Equals(target._to)
+				   && source._events.Length.Equals(target._events.Length)
+				   && source._events.All(x=>target._events.Contains(x));
 		}
 
 		public override int GetHashCode()
 		{
-			return _from.GetHashCode()*17 + _to.GetHashCode()*37;
+			return _from.GetHashCode()*17 + _to.GetHashCode()*37 + _events.Count() * 97;
 		}
 	}
 }

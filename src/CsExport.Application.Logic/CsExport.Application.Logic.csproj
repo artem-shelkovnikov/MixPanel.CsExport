@@ -56,6 +56,9 @@
     <Compile Include="Parser\Configuration\SetCredentialsCommandConfiguration.cs" />
     <Compile Include="Parser\ICommandParserConfiguration.cs" />
     <Compile Include="Parser\ICommandParserConfigurationRegistry.cs" />
+    <Compile Include="Parser\Utility\CommandArgument.cs" />
+    <Compile Include="Parser\Utility\ConsoleCommandParser.cs" />
+    <Compile Include="Parser\Utility\ArgumentParseException.cs" />
     <Compile Include="ResultHandler.cs" />
     <Compile Include="Results\CommandNotFoundResult.cs" />
     <Compile Include="CommandResult.cs" />

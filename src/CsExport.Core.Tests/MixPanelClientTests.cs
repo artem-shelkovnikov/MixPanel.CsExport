@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Web;
 using CsExport.Core.Client;
 using CsExport.Core.Exceptions;
 using CsExport.Core.Settings;
@@ -10,11 +11,8 @@ namespace CsExport.Core.Tests
 	public class MixPanelClientTests
 	{
 		private readonly IMixPanelClient _mixPanelClient;
-		private readonly Mock<IWebClient> _webClientMock;  
-																	 
-		private const string TestFromDateUriParamName = "from_date";
-		private const string TestToDateUriParamName = "to_date";					  
-														  
+		private readonly Mock<IWebClient> _webClientMock;
+
 		private const string TestSecret = "secret_123654987456";
 
 		private ClientConfiguration _clientConfiguration = new ClientConfiguration();
@@ -85,6 +83,20 @@ namespace CsExport.Core.Tests
 		}	
 
 		[Fact]
+		public void ExportRaw_When_called_with_event_Then_passes_event_as_query_parameter_to_webClient()
+		{
+			var fromDate = GetDefaultStartDate();
+			var toDate = GetDefaultEndDate();
+			var @event = "some event";
+
+			var expectedUrl = GetExpectedUrl(fromDate, toDate, @event);
+
+			var result = _mixPanelClient.ExportRaw(_clientConfiguration, fromDate, toDate, new [] { @event });
+
+			_webClientMock.Verify(x => x.QueryUri(expectedUrl, It.IsAny<BasicAuthentication>()), Times.Once);
+		}	
+
+		[Fact]
 		public void ExportRaw_When_called_Then_passes_secret_to_basic_authentication_userName_and_leaves_password_empty()
 		{
 			var from = new Date(DateTime.UtcNow.AddDays(-1));
@@ -100,10 +112,21 @@ namespace CsExport.Core.Tests
 
 		private Uri GetExpectedUrl(Date defaultStartDate, Date defaultEndDate)
 		{
-			var stringifiedUrl = string.Format("{0}?{1}={2}&{3}={4}", 
+			var stringifiedUrl = string.Format("{0}?from_date={1}&to_date={2}", 
 												MixPanelEndpointConfiguration.RawExportUrl, 
-												TestFromDateUriParamName, defaultStartDate.ToString(), 
-												TestToDateUriParamName, defaultEndDate.ToString());
+												defaultStartDate.ToString(),
+												defaultEndDate.ToString());
+
+			return new Uri(stringifiedUrl);
+		} 
+
+		private Uri GetExpectedUrl(Date defaultStartDate, Date defaultEndDate, string @event)
+		{
+			var stringifiedUrl = string.Format("{0}?from_date={1}&to_date={2}&event=[\"{3}\"]",
+												MixPanelEndpointConfiguration.RawExportUrl,
+												defaultStartDate.ToString(),
+												defaultEndDate.ToString(),
+												HttpUtility.UrlEncode(@event));
 
 			return new Uri(stringifiedUrl);
 		}
