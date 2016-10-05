@@ -33,7 +33,7 @@ namespace CsExport.Application.Logic.Tests.ParserTests.ConfigurationTests
 			var @from = new Date(2016, 1, 1);
 			var to = new Date(2016, 1, 3);
 			var events = "first; second; third";
-			var commandText = string.Format("raw-export -from={0} -to={1} -event={2}", from, to, events);
+			var commandText = string.Format("raw-export -from={0} -to={1} -events={2}", from, to, events);
 			
 			var result = _configuration.TryParse(commandText);
 			
