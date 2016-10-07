@@ -62,6 +62,7 @@
     <Compile Include="ResultHandler.cs" />
     <Compile Include="Results\CommandNotFoundResult.cs" />
     <Compile Include="CommandResult.cs" />
+    <Compile Include="Results\CommandParseFailedResult.cs" />
     <Compile Include="Results\CommandTerminatedResult.cs" />
     <Compile Include="ExportConsoleApplication.cs" />
     <Compile Include="ICommand.cs" />

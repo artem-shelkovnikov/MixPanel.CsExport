@@ -1,5 +1,6 @@
 ﻿using System;
 using CsExport.Application.Logic.Parser;
+using CsExport.Application.Logic.Parser.Utility;
 using CsExport.Application.Logic.Results;
 using CsExport.Core;
 using CsExport.Core.Client;
@@ -68,7 +69,7 @@ namespace CsExport.Application.Logic.Tests
 		}
 
 		[Fact]
-		public void ReceiveCommand_When_exception_is_thrown_by_component_Then_writes_error_message_to_output()
+		public void ReceiveCommand_When_exception_is_thrown_by_component_Then_writes_output_for_commandTerminatedResult()
 		{
 			_inputProviderMock.Setup(x => x.GetLine()).Throws(new NotImplementedException());
 
@@ -78,7 +79,7 @@ namespace CsExport.Application.Logic.Tests
 		}
 
 		[Fact]
-		public void ReceiveCommand_When_unauthorized_exception_is_thrown_by_component_Then_writes_error_message_to_output()
+		public void ReceiveCommand_When_unauthorized_exception_is_thrown_by_component_Then_writes_output_for_unauthorizedResult()
 		{
 			_inputProviderMock.Setup(x => x.GetLine()).Returns(ValidCommandText);
 			_commandMock.Setup(x => x.Execute(It.IsAny<ExecutionSettings>())).Throws<MixPanelUnauthorizedException>();
@@ -86,6 +87,17 @@ namespace CsExport.Application.Logic.Tests
 			_application.ReceiveCommand();
 
 			_resultHandlerMock.Verify(x=>x.HandleResult(It.IsAny<UnauthorizedResult>()), Times.Once);
+		} 
+
+		[Fact]
+		public void ReceiveCommand_When_argument_parse_exception_is_thrown_by_component_Then_writes_output_for_commandParseFailedResult()
+		{
+			_inputProviderMock.Setup(x => x.GetLine()).Returns(ValidCommandText);
+			_commandMock.Setup(x => x.Execute(It.IsAny<ExecutionSettings>())).Throws<ArgumentParseException>();
+
+			_application.ReceiveCommand();
+
+			_resultHandlerMock.Verify(x=>x.HandleResult(It.IsAny<CommandParseFailedResult>()), Times.Once);
 		} 
 	}
 }
