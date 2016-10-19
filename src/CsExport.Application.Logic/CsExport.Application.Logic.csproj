@@ -40,6 +40,9 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="CommandArguments\SetCredentialsCommandArguments.cs" />
+    <Compile Include="CommandArguments\HelpCommandArguments.cs" />
+    <Compile Include="CommandArguments\RawExportCommandArguments.cs" />
     <Compile Include="Commands\HelpCommand.cs" />
     <Compile Include="Commands\SetCredentialsCommand.cs" />
     <Compile Include="ConsoleInput.cs" />
@@ -80,7 +83,9 @@
       <Name>CsExport.Core</Name>
     </ProjectReference>
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <Folder Include="obj\" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

@@ -1,4 +1,5 @@
 ﻿using System.Linq;
+using CsExport.Application.Logic.CommandArguments;
 using CsExport.Application.Logic.Commands;
 using CsExport.Application.Logic.Parser;
 using CsExport.Application.Logic.Parser.Configuration;
@@ -37,7 +38,12 @@ namespace CsExport.Application.Logic.Tests.ParserTests.ConfigurationTests
 			
 			var result = _configuration.TryParse(commandText);
 			
-			var command = new RawExportCommand(from, to, events.Split(';').Select(x=>x.Trim()).ToArray());
+			var command = new RawExportCommand(new RawExportCommandArguments
+			{
+				Events = events.Split(';').Select(x => x.Trim()).ToArray(),
+				From = from,
+				To = to
+			});
 			Assert.Equal(command, result);
 			
 		}  

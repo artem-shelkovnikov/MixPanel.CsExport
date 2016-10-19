@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using CsExport.Application.Logic.CommandArguments;
 using CsExport.Application.Logic.Commands;
 using CsExport.Application.Logic.Parser.Utility;
 using CsExport.Core;
@@ -45,7 +46,12 @@ namespace CsExport.Application.Logic.Parser.Configuration
 			}
 
 
-			return new RawExportCommand(new Date(from), new Date(to), events);
+			return new RawExportCommand(new RawExportCommandArguments
+			{
+				Events = events,
+				From = new Date(from),
+				To = new Date(to)
+			});
 		}
 	}
 }

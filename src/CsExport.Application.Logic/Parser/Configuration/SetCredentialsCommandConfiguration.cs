@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using CsExport.Application.Logic.CommandArguments;
 using CsExport.Application.Logic.Commands;
 using CsExport.Application.Logic.Parser.Utility;
 
@@ -19,7 +20,7 @@ namespace CsExport.Application.Logic.Parser.Configuration
 				return null;
 			var secret = secretArgument.Value;
 
-			return new SetCredentialsCommand(secret);
+			return new SetCredentialsCommand(new SetCredentialsCommandArguments {Secret = secret });
 		}
 	}
 }

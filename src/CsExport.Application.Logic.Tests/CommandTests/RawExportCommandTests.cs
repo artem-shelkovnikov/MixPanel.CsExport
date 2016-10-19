@@ -1,4 +1,5 @@
 ﻿using System;
+using CsExport.Application.Logic.CommandArguments;
 using CsExport.Application.Logic.Commands;
 using CsExport.Application.Logic.Results;
 using CsExport.Core;
@@ -97,7 +98,12 @@ namespace CsExport.Application.Logic.Tests.CommandTests
 
 		private RawExportCommand GetCommand(Date from, Date to, string[] events)
 		{
-			return new RawExportCommand(from, to, events);
+			return new RawExportCommand(new RawExportCommandArguments
+			{
+				Events = events,
+				From = from,
+				To = to
+			});
 		}							
 
 		private RawExportCommand GetCommand(Date from, Date to)

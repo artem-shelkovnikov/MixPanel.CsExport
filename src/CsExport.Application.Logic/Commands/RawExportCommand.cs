@@ -1,24 +1,22 @@
 ﻿using System;
-using System.Linq;
+using CsExport.Application.Logic.CommandArguments;
 using CsExport.Application.Logic.Results;
-using CsExport.Core;
 
 namespace CsExport.Application.Logic.Commands
 {
 	public class RawExportCommand : ICommand
 	{
-		private readonly Date _from;
-		private readonly Date _to;
-		private readonly string[] _events;
+		private readonly RawExportCommandArguments _arguments;	   
 
-		public RawExportCommand(Date @from, Date @to, string[] events = null)
+		public RawExportCommand(RawExportCommandArguments arguments)
 		{
-			if (@from.GetDateTime() > to.GetDateTime())
-				throw new ArgumentException("@from should represent a date less than @to", nameof(@from));
+			if (arguments == null)
+				throw new ArgumentNullException(nameof(arguments));
 
-			_from = @from;
-			_to = to;
-			_events = events;
+			if (arguments.From.GetDateTime() > arguments.To.GetDateTime())
+				throw new ArgumentException("@from should represent a date less than @to", nameof(arguments.From));
+
+			_arguments = arguments;	 
 		}
 			 
 		public CommandResult Execute(ExecutionSettings settings)
@@ -31,7 +29,7 @@ namespace CsExport.Application.Logic.Commands
 			if (clientConfiguration == null || string.IsNullOrWhiteSpace(clientConfiguration.Secret))
 				return new UnauthorizedResult();
 
-			var content = mixPanelClient.ExportRaw(clientConfiguration, _from, _to, _events);
+			var content = mixPanelClient.ExportRaw(clientConfiguration, _arguments.From, _arguments.To, _arguments.Events);
 
 			fileWriter.WriteContent(applicationConfiguration.ExportPath, string.Format("{0}-raw-export.txt", DateTime.Now.ToFileTimeUtc()), content);
 			 
@@ -46,15 +44,12 @@ namespace CsExport.Application.Logic.Commands
 			if (target == null)
 				return false;
 
-			return source._from.Equals(target._from)
-			       && source._to.Equals(target._to)
-				   && source._events.Length.Equals(target._events.Length)
-				   && source._events.All(x=>target._events.Contains(x));
+			return source._arguments.Equals(target._arguments);
 		}
 
 		public override int GetHashCode()
 		{
-			return _from.GetHashCode()*17 + _to.GetHashCode()*37 + _events.Count() * 97;
+			return _arguments.GetHashCode();
 		}
 	}
 }

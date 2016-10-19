@@ -1,9 +1,17 @@
-﻿using CsExport.Application.Logic.Results;
+﻿using System;
+using CsExport.Application.Logic.CommandArguments;
+using CsExport.Application.Logic.Results;
 
 namespace CsExport.Application.Logic.Commands
 {
 	public class HelpCommand : ICommand
 	{
+		public HelpCommand(HelpCommandArguments arguments)
+		{
+			if (arguments == null)
+				throw new ArgumentNullException(nameof(arguments));
+		}
+
 		public CommandResult Execute(ExecutionSettings settings)
 		{
 			var output = settings.Output;

@@ -1,19 +1,23 @@
 ﻿using System;
+using CsExport.Application.Logic.CommandArguments;
 using CsExport.Application.Logic.Results;
 using CsExport.Core.Settings;
 
 namespace CsExport.Application.Logic.Commands
 {
 	public class SetCredentialsCommand: ICommand
-	{										
-		private readonly string _secret;
+	{
+		private readonly SetCredentialsCommandArguments _arguments;		
 
-		public SetCredentialsCommand(string secret)
-		{																			   
-			if (string.IsNullOrWhiteSpace(secret))
-				throw new ArgumentException("Secret cannot be empty", nameof(secret));
-									
-			_secret = secret;
+		public SetCredentialsCommand(SetCredentialsCommandArguments arguments)
+		{
+			if (arguments == null)
+				throw new ArgumentNullException(nameof(arguments));
+
+			if (string.IsNullOrWhiteSpace(arguments.Secret))
+				throw new ArgumentException("Secret cannot be empty", nameof(arguments.Secret));
+
+			_arguments = arguments;
 		}
 		
 		public CommandResult Execute(ExecutionSettings settings)
@@ -22,11 +26,11 @@ namespace CsExport.Application.Logic.Commands
 			var mixPanelClient = settings.MixPanelClient;
 
 			var updatedConfiguration = new ClientConfiguration();
-			updatedConfiguration.UpdateCredentials(_secret);
+			updatedConfiguration.UpdateCredentials(_arguments.Secret);
 
 			if (mixPanelClient.VerifyCredentials(updatedConfiguration))
 			{
-				clientConfiguration.UpdateCredentials(_secret);
+				clientConfiguration.UpdateCredentials(_arguments.Secret);
 				return new SuccessResult();
 			}
 
@@ -41,12 +45,12 @@ namespace CsExport.Application.Logic.Commands
 			if (target == null)
 				return false;
 
-			return source._secret.Equals(target._secret);
+			return source._arguments.Equals(target._arguments);
 		}
 
 		public override int GetHashCode()
 		{
-			return  _secret.GetHashCode();
+			return  _arguments.GetHashCode();
 		}
 	}
 }
