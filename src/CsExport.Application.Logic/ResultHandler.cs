@@ -1,4 +1,6 @@
-﻿namespace CsExport.Application.Logic
+﻿using CsExport.Application.Logic.IO;
+
+namespace CsExport.Application.Logic
 {
 	public class ResultHandler : IResultHandler
 	{

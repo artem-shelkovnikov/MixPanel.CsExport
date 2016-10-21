@@ -1,6 +1,6 @@
 ﻿using System.IO;
 
-namespace CsExport.Application.Logic
+namespace CsExport.Application.Logic.IO
 {
 	public class FileWriter : IFileWriter
 	{

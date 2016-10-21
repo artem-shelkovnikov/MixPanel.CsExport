@@ -1,4 +1,4 @@
-﻿namespace CsExport.Application.Logic
+﻿namespace CsExport.Application.Logic.IO
 {
 	public interface IInput
 	{
