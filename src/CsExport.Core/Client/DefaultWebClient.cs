@@ -12,7 +12,7 @@ namespace CsExport.Core.Client
 				System.Convert.ToBase64String(
 					System.Text.Encoding.GetEncoding("ISO-8859-1").GetBytes(authentication.UserName + ":" + authentication.Password));
 
-			_webClient.Headers[HttpRequestHeader.Authorization] = string.Format("Basic {0}", basicAuthToken);
+			_webClient.Headers[HttpRequestHeader.Authorization] = $"Basic {basicAuthToken}";
 			return _webClient.DownloadString(baseUri);
 		}
 	}

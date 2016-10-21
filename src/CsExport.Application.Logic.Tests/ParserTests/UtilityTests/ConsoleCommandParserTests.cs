@@ -7,7 +7,7 @@ namespace CsExport.Application.Logic.Tests.ParserTests.UtilityTests
 {
 	public class ConsoleCommandParserTests
 	{
-		private ConsoleCommandParser _commandParser	 = new ConsoleCommandParser();
+		private readonly ConsoleCommandParser _commandParser	 = new ConsoleCommandParser();
 
 		[Fact]
 		public void Parse_When_only_command_name_is_passed_Then_returns_definition_only_with_command_name()
@@ -92,8 +92,8 @@ namespace CsExport.Application.Logic.Tests.ParserTests.UtilityTests
 
 			var formattedParameters = parameters.Select(
 				x => x.Value == null
-					? string.Format("-{0}", x.Key)
-					: string.Format("-{0}={1}", x.Key, x.Value));
+					? $"-{x.Key}"
+					: $"-{x.Key}={x.Value}");
 
 			var input = "some-command  " + string.Join(" ", formattedParameters);
 

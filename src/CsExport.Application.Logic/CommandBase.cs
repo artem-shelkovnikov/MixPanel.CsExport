@@ -8,7 +8,7 @@ namespace CsExport.Application.Logic
 	{
 		private readonly TArguments _arguments;
 
-		public CommandBase(TArguments arguments)
+		protected CommandBase(TArguments arguments)
 		{
 			_arguments = arguments;
 		}	  

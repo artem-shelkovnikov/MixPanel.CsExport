@@ -3,8 +3,6 @@ using CsExport.Application.Logic.IO;
 using CsExport.Application.Logic.Parser;
 using CsExport.Application.Logic.Parser.Utility;
 using CsExport.Application.Logic.Results;
-using CsExport.Core;
-using CsExport.Core.Client;
 using CsExport.Core.Exceptions;
 using CsExport.Core.Settings;
 using Moq;

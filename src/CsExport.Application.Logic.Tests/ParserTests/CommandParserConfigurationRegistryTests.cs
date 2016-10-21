@@ -1,5 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
 using CsExport.Application.Logic.Parser;
 using CsExport.Application.Logic.Parser.Utility;
@@ -9,7 +8,7 @@ namespace CsExport.Application.Logic.Tests.ParserTests
 {
 	public class CommandParserConfigurationRegistryTests
 	{
-		private ICommandParserConfigurationRegistry _configurationRegistry = new CommandParserConfigurationRegistry();
+		private readonly ICommandParserConfigurationRegistry _configurationRegistry = new CommandParserConfigurationRegistry();
 
 		[Fact]
 		public void Init_When_called_Then_collects_profiles_from_calling_assembly()
@@ -25,7 +24,8 @@ namespace CsExport.Application.Logic.Tests.ParserTests
 
 		public class StubParserConfiguration : ICommandParserConfiguration
 		{	 
-			public string CommandName { get { return "stub-command"; } }
+			public string CommandName => "stub-command";
+
 			public IArguments TryParse(IEnumerable<CommandArgument> arguments)
 			{
 				return null;

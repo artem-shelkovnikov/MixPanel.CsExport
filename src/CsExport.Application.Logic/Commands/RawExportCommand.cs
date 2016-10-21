@@ -31,7 +31,7 @@ namespace CsExport.Application.Logic.Commands
 
 			var content = _mixPanelClient.ExportRaw(clientConfiguration, arguments.From, arguments.To, arguments.Events);
 
-			_fileWriter.WriteContent(applicationConfiguration.ExportPath, string.Format("{0}-raw-export.txt", DateTime.Now.ToFileTimeUtc()), content);
+			_fileWriter.WriteContent(applicationConfiguration.ExportPath, $"{DateTime.Now.ToFileTimeUtc()}-raw-export.txt", content);
 			 
 			return new SuccessResult();
 		}

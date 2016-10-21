@@ -35,7 +35,7 @@ namespace CsExport.Application.Logic.Tests.ParserTests
 
 			var command = _commandParser.ParseCommand(input);
 
-			configurationMock.Verify(x => x.TryParse(It.Is<IEnumerable<CommandArgument>>(y => y.Count() == 0)), Times.Once); 
+			configurationMock.Verify(x => x.TryParse(It.Is<IEnumerable<CommandArgument>>(y => y.Any() == false)), Times.Once); 
 		} 
 
 		[Fact]

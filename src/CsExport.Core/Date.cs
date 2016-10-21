@@ -4,21 +4,19 @@ namespace CsExport.Core
 {
 	public class Date
 	{
-		private readonly int _year;
-		private readonly int _month;
-		private readonly int _day;
+		public int Year { get; }
 
-		public int Year { get { return _year; } }
-		public int Month { get { return _month; } }
-		public int Day { get { return _day; } }
+		public int Month { get; }
+
+		public int Day { get; }
 
 		public Date(DateTime dateTime)
 		{
 			var date = dateTime.Date;
 
-			_day = date.Day;
-			_month = date.Month;
-			_year = date.Year;
+			Day = date.Day;
+			Month = date.Month;
+			Year = date.Year;
 		}
 
 		public Date(int year, int month, int day) : this(new DateTime(year, month, day))

@@ -36,26 +36,26 @@ namespace CsExport.Application.Logic.Tests.CommandTests
 		[Fact]
 		public void Execute_When_called_with_from_and_to_Then_passes_these_parameters_into_mixPanelClient_leaving_rest_parameters_null()
 		{
-			var @from = new Date(2010, 10, 31);
+			var from = new Date(2010, 10, 31);
 			var to = new Date(2011, 1, 1);
 
 			var command = GetCommand();
-			var arguments = GetArguments(@from, to);
+			var arguments = GetArguments(from, to);
 
 			var result = command.Execute(ApplicationConfiguration, ClientConfiguration, arguments);
 
-			MixPanelClientMock.Verify(x => x.ExportRaw(ClientConfiguration, @from, to, null), Times.Once);
+			MixPanelClientMock.Verify(x => x.ExportRaw(ClientConfiguration, from, to, null), Times.Once);
 		}
 
 		[Fact]
 		public void Execute_When_called_with_event_parameter_Then_passes_event_into_mixPanelClient()
 		{
-			var @from = new Date(2010, 10, 31);
+			var from = new Date(2010, 10, 31);
 			var to = new Date(2011, 1, 1);
 			var @event = "some_event";
 
 			var command = GetCommand();
-			var arguments = GetArguments(@from, to, new[] {@event});
+			var arguments = GetArguments(from, to, new[] {@event});
 
 			var result = command.Execute(ApplicationConfiguration, ClientConfiguration, arguments);
 
@@ -69,11 +69,11 @@ namespace CsExport.Application.Logic.Tests.CommandTests
 			MixPanelClientMock.Setup(x => x.ExportRaw(It.IsAny<ClientConfiguration>(), It.IsAny<Date>(), It.IsAny<Date>(), It.IsAny<string[]>()))
 				.Returns(exportContent);
 
-			var @from = new Date(2010, 10, 31);
+			var from = new Date(2010, 10, 31);
 			var to = new Date(2011, 1, 1);
 
 			var command = GetCommand();
-			var arguments = GetArguments(@from, to);
+			var arguments = GetArguments(from, to);
 
 			var result = command.Execute(ApplicationConfiguration, ClientConfiguration, arguments);
 
@@ -83,9 +83,9 @@ namespace CsExport.Application.Logic.Tests.CommandTests
 		[Fact]
 		public void Ctor_When_called_with_wrong_date_range_Then_throws_argumentException()
 		{
-			var @from = new Date(2011, 1, 1);
+			var from = new Date(2011, 1, 1);
 			var to = new Date(2010, 10, 31);
-			var arguments = GetArguments(@from, to);
+			var arguments = GetArguments(from, to);
 
 			var command = GetCommand();
 

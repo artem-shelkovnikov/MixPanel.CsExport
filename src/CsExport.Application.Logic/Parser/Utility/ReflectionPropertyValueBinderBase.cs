@@ -8,8 +8,8 @@ namespace CsExport.Application.Logic.Parser.Utility
 		private readonly object _o;
 		private readonly PropertyInfo _propertyInfo;
 
-		protected object Source { get { return _o; } }
-		protected PropertyInfo PropertyInfo { get { return _propertyInfo; } }
+		protected object Source => _o;
+		protected PropertyInfo PropertyInfo => _propertyInfo;
 
 		protected ReflectionPropertyValueBinderBase(object o, PropertyInfo propertyInfo)
 		{
@@ -21,11 +21,9 @@ namespace CsExport.Application.Logic.Parser.Utility
 		{
 			try
 			{
-				TPropertyValue propertyValue;
-				if (string.IsNullOrEmpty(value))
-					propertyValue = default(TPropertyValue);
-				else
-					propertyValue = ParseValue(value);
+				var propertyValue = string.IsNullOrEmpty(value)
+					? default(TPropertyValue)
+					: ParseValue(value);
 
 				_propertyInfo.SetValue(_o, propertyValue);
 			}

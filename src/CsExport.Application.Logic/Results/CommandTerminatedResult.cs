@@ -14,7 +14,7 @@ namespace CsExport.Application.Logic.Results
 
 		public override void Handle(IOutput output)
 		{
-			output.Notify(String.Format("Execution stopped with an exception <{0}>, Message: {1}", _ex.GetType().FullName, _ex.Message));
+			output.Notify($"Execution stopped with an exception <{_ex.GetType().FullName}>, Message: {_ex.Message}");
 		}
 	}
 }

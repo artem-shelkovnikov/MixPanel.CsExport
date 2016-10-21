@@ -7,21 +7,15 @@ namespace CsExport.Application.Logic.Tests.CommandTests
 {
 	public abstract class CommandTestsBase
 	{
-		private Mock<IMixPanelClient> _mixPanelClientMock = new Mock<IMixPanelClient>();
-		private Mock<IInput> _inputProviderMock = new Mock<IInput>();			
-		private Mock<IFileWriter> _fileWriterMock = new Mock<IFileWriter>();			
-		private ClientConfiguration _clientConfiguration = new ClientConfiguration();		  
-		private ApplicationConfiguration _applicationConfiguration = new ApplicationConfiguration();		  
-
-		protected Mock<IMixPanelClient> MixPanelClientMock { get { return _mixPanelClientMock;} }
-		protected Mock<IInput> InputProviderMock { get { return _inputProviderMock; } }
-		protected Mock<IFileWriter> FileWriterMock { get { return _fileWriterMock; } }
-		protected ClientConfiguration ClientConfiguration { get { return _clientConfiguration; } }
-		protected ApplicationConfiguration ApplicationConfiguration { get { return _applicationConfiguration; } }
+		protected Mock<IMixPanelClient> MixPanelClientMock { get; } = new Mock<IMixPanelClient>();
+		protected Mock<IInput> InputProviderMock { get; } = new Mock<IInput>();
+		protected Mock<IFileWriter> FileWriterMock { get; } = new Mock<IFileWriter>();
+		protected ClientConfiguration ClientConfiguration { get; } = new ClientConfiguration();
+		protected ApplicationConfiguration ApplicationConfiguration { get; } = new ApplicationConfiguration();
 
 		protected CommandTestsBase()
 		{
-			_clientConfiguration.UpdateCredentials("valid-secret");
+			ClientConfiguration.UpdateCredentials("valid-secret");
 		}	
 	}
 }

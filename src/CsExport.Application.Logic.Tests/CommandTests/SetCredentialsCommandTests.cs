@@ -29,22 +29,20 @@ namespace CsExport.Application.Logic.Tests.CommandTests
 
 		[Fact]
 		public void Execute_When_called_with_settings_Then_swaps_current_clientConfiguration_with_new()
-		{										  
-			var testSecret = ValidSecret;
+		{								
 			var command = GetCommand();
-			var arguments = GetArguments(testSecret);
+			var arguments = GetArguments(ValidSecret);
 
 			command.Execute(ApplicationConfiguration, ClientConfiguration, arguments);
 																	
-			Assert.Equal(testSecret, ClientConfiguration.Secret);
+			Assert.Equal(ValidSecret, ClientConfiguration.Secret);
 		}
 
 		[Fact]
 		public void Execute_When_called_with_settings_Then_returns_successResult()
-		{										  
-			var testSecret = ValidSecret;
+		{										
 			var command = GetCommand();
-			var arguments = GetArguments(testSecret);
+			var arguments = GetArguments(ValidSecret);
 
 			var result = command.Execute(ApplicationConfiguration, ClientConfiguration, arguments);
 
@@ -53,8 +51,7 @@ namespace CsExport.Application.Logic.Tests.CommandTests
 
 		[Fact]
 		public void Execute_When_called_with_invalid_secret_Then_returns_unauthorizedResponse()
-		{
-			var invalidSecret = InvalidSecret;
+		{										 
 			var command = GetCommand();
 			var arguments = GetArguments(InvalidSecret);
 
@@ -63,10 +60,12 @@ namespace CsExport.Application.Logic.Tests.CommandTests
 			Assert.IsType<UnauthorizedResult>(result);
 
 		}	
+
 		private SetCredentialsCommand GetCommand()
 		{
 			return new SetCredentialsCommand(MixPanelClientMock.Object);
 		}
+
 		private SetCredentialsCommandArguments GetArguments(string secret)
 		{
 			return new SetCredentialsCommandArguments {Secret = secret};

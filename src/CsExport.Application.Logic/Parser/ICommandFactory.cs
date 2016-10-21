@@ -1,5 +1,4 @@
 ﻿using System;
-using CsExport.Application.Logic.Parser.Configuration;
 using CsExport.Application.Logic.Parser.Utility;
 
 namespace CsExport.Application.Logic.Parser

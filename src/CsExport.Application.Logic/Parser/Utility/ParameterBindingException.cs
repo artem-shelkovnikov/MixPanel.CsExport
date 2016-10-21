@@ -4,9 +4,7 @@ namespace CsExport.Application.Logic.Parser.Utility
 {
 	public class ParameterBindingException : Exception
 	{
-		private readonly string _parameterName;
-
-		public string ParameterName { get { return _parameterName; } }
+		public string ParameterName { get; }
 
 		public ParameterBindingException()
 		{
@@ -18,9 +16,9 @@ namespace CsExport.Application.Logic.Parser.Utility
 			
 		}
 
-		public ParameterBindingException(string parameterName) : base(string.Format("Failed to bind parameter: {0}", parameterName))
+		public ParameterBindingException(string parameterName) : base($"Failed to bind parameter: {parameterName}")
 		{
-			_parameterName = parameterName;
+			ParameterName = parameterName;
 		}
 	}
 }

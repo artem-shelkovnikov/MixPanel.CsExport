@@ -1,6 +1,5 @@
 ﻿using System.Linq;
 using CsExport.Application.Logic.CommandArguments;
-using CsExport.Application.Logic.Commands;
 using CsExport.Application.Logic.Parser;
 using CsExport.Application.Logic.Parser.Configuration;
 using CsExport.Application.Logic.Parser.Utility;
@@ -11,7 +10,7 @@ namespace CsExport.Application.Logic.Tests.ParserTests.ConfigurationTests
 {
 	public class RawExportCommandConfigurationTests
 	{
-		ICommandParserConfiguration _configuration = new RawExportCommandConfiguration();
+		readonly ICommandParserConfiguration _configuration = new RawExportCommandConfiguration();
 
 		[Fact]
 		public void TryParse_When_called_without_argumentsThen_returns_null_for_all_fields()

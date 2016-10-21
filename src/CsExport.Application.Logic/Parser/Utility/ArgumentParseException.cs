@@ -9,7 +9,7 @@ namespace CsExport.Application.Logic.Parser.Utility
 			
 		}
 
-		public ArgumentParseException(string input) : base(string.Format("Failed to parse input: {0}", input))
+		public ArgumentParseException(string input) : base($"Failed to parse input: {input}")
 		{
 			
 		}

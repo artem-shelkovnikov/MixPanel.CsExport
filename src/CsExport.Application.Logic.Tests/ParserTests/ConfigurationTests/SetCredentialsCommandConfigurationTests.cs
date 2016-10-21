@@ -1,6 +1,5 @@
 ﻿using System.Linq;
 using CsExport.Application.Logic.CommandArguments;
-using CsExport.Application.Logic.Commands;
 using CsExport.Application.Logic.Parser;
 using CsExport.Application.Logic.Parser.Configuration;
 using CsExport.Application.Logic.Parser.Utility;
@@ -10,7 +9,7 @@ namespace CsExport.Application.Logic.Tests.ParserTests.ConfigurationTests
 {
 	public class SetCredentialsCommandConfigurationTests
 	{
-		 ICommandParserConfiguration _configuration = new SetCredentialsCommandConfiguration();
+		readonly ICommandParserConfiguration _configuration = new SetCredentialsCommandConfiguration();
 
 		[Fact]
 		public void TryParse_When_called_with_invalid_arguments_Then_returns_arguments_object_without_secret_set()

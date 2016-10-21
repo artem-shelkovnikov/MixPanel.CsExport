@@ -112,21 +112,16 @@ namespace CsExport.Core.Tests
 
 		private Uri GetExpectedUrl(Date defaultStartDate, Date defaultEndDate)
 		{
-			var stringifiedUrl = string.Format("{0}?from_date={1}&to_date={2}", 
-												MixPanelEndpointConfiguration.RawExportUrl, 
-												defaultStartDate.ToString(),
-												defaultEndDate.ToString());
+			var stringifiedUrl =
+				$"{MixPanelEndpointConfiguration.RawExportUrl}?from_date={defaultStartDate.ToString()}&to_date={defaultEndDate.ToString()}";
 
 			return new Uri(stringifiedUrl);
 		} 
 
 		private Uri GetExpectedUrl(Date defaultStartDate, Date defaultEndDate, string @event)
 		{
-			var stringifiedUrl = string.Format("{0}?from_date={1}&to_date={2}&event=[\"{3}\"]",
-												MixPanelEndpointConfiguration.RawExportUrl,
-												defaultStartDate.ToString(),
-												defaultEndDate.ToString(),
-												HttpUtility.UrlEncode(@event));
+			var stringifiedUrl =
+				$"{MixPanelEndpointConfiguration.RawExportUrl}?from_date={defaultStartDate.ToString()}&to_date={defaultEndDate.ToString()}&event=[\"{HttpUtility.UrlEncode(@event)}\"]";
 
 			return new Uri(stringifiedUrl);
 		}

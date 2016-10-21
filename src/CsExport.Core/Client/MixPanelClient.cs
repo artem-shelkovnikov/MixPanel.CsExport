@@ -44,7 +44,7 @@ namespace CsExport.Core.Client
 
 				parameterDictionary.Add(FromDateParamName, from.ToString());
 				parameterDictionary.Add(ToDateParamName, to.ToString());
-				if (@events != null && events.Any())
+				if (events != null && events.Any())
 					parameterDictionary.Add(EventParamName, StringifyEvents(events));
 
 				var callingUri =
@@ -68,7 +68,7 @@ namespace CsExport.Core.Client
 
 		private string StringifyEvents(string[] events)
 		{
-			return string.Format("[{0}]", string.Join(",", events.Select(y => HttpUtility.UrlEncode($"\"{y}\""))));
+			return $"[{string.Join(",", events.Select(y => HttpUtility.UrlEncode($"\"{y}\"")))}]";
 		}
 
 		private static void TryHandleWebException(WebException ex)

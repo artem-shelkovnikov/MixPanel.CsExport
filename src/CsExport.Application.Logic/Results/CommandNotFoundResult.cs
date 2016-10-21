@@ -13,7 +13,7 @@ namespace CsExport.Application.Logic.Results
 
 		public override void Handle(IOutput output)
 		{
-			var message = string.Format("Command not recognized: {0} \nType \"help\" to get a list of available commands", _commandText);
+			var message = $"Command not recognized: {_commandText} \nType \"help\" to get a list of available commands";
 
 			output.Notify(message);
 		}
