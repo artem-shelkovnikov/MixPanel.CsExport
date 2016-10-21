@@ -4,9 +4,9 @@ namespace CsExport.Core
 {
 	public class Date
 	{
-		private int _year;
-		private int _month;
-		private int _day;
+		private readonly int _year;
+		private readonly int _month;
+		private readonly int _day;
 
 		public int Year { get { return _year; } }
 		public int Month { get { return _month; } }

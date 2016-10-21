@@ -1,6 +1,6 @@
 ﻿namespace CsExport.Application.Logic.CommandArguments
 {
-	public class HelpCommandArguments
+	public class HelpCommandArguments : IArguments
 	{
 		
 	}

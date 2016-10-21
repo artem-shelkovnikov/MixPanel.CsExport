@@ -5,7 +5,7 @@ namespace CsExport.Core.Client
 {
 	public class DefaultWebClient : IWebClient
 	{
-		private WebClient _webClient = new WebClient();
+		private readonly WebClient _webClient = new WebClient();
 		public string QueryUri(Uri baseUri, BasicAuthentication authentication)
 		{
 			var basicAuthToken =

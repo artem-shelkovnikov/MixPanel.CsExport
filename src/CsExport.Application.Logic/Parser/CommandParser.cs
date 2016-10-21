@@ -1,25 +1,33 @@
-﻿namespace CsExport.Application.Logic.Parser
+﻿using CsExport.Application.Logic.Parser.Utility;
+
+namespace CsExport.Application.Logic.Parser
 {
 	public class CommandParser : ICommandParser
 	{
 		private readonly ICommandParserConfigurationRegistry _commandParserConfigurationRegistry;
-
-		public CommandParser(ICommandParserConfigurationRegistry commandParserConfigurationRegistry)
+		private readonly ICommandFactory _commandFactory;
+		private readonly ConsoleCommandParser _consoleCommandParser = new ConsoleCommandParser();
+		
+		public CommandParser(ICommandParserConfigurationRegistry commandParserConfigurationRegistry, ICommandFactory commandFactory)
 		{
 			_commandParserConfigurationRegistry = commandParserConfigurationRegistry;
+			_commandFactory = commandFactory;								 
 		}
 
 		public ICommand ParseCommand(string commandText)
 		{
-			var parserConfigurations = _commandParserConfigurationRegistry.GetAll();
-			foreach (var commandParserConfiguration in parserConfigurations)
-			{
-				var result = commandParserConfiguration.TryParse(commandText);
-				if (result != null)
-					return result;
-			}
+			var commandDefinition = _consoleCommandParser.Parse(commandText);
 
-			return null;
+			var commandParserConfiguration = _commandParserConfigurationRegistry.GetByName(commandDefinition.Name);
+
+			if (commandParserConfiguration == null)
+				return null;
+
+			var arguments = commandParserConfiguration.TryParse(commandDefinition.Arguments);
+
+			var command = _commandFactory.Create(arguments);
+
+			return command;
 		}
 	}
 }

@@ -1,7 +1,9 @@
-﻿namespace CsExport.Application.Logic
-{
+﻿using CsExport.Core.Settings;
+
+namespace CsExport.Application.Logic
+{  
 	public interface ICommand
 	{
-		CommandResult Execute(ExecutionSettings settings);
+		CommandResult Execute(ApplicationConfiguration applicationConfiguration, ClientConfiguration clientConfiguration);
 	}
 }

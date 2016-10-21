@@ -21,18 +21,6 @@ namespace CsExport.Application.Logic.Tests.CommandTests
 		protected CommandTestsBase()
 		{
 			_clientConfiguration.UpdateCredentials("valid-secret");
-		}
-		
-		protected ExecutionSettings GetExecutionSettings()
-		{
-			return new ExecutionSettings
-			{
-				MixPanelClient = _mixPanelClientMock.Object,
-				Input = _inputProviderMock.Object,
-				FileWriter = _fileWriterMock.Object,
-				ClientConfiguration = _clientConfiguration,
-				ApplicationConfiguration = _applicationConfiguration
-			};
-		}
+		}	
 	}
 }

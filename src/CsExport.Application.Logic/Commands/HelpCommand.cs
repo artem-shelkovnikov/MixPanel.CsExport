@@ -1,20 +1,23 @@
 ﻿using System;
 using CsExport.Application.Logic.CommandArguments;
 using CsExport.Application.Logic.Results;
+using CsExport.Core.Settings;
 
 namespace CsExport.Application.Logic.Commands
 {
-	public class HelpCommand : ICommand
+	public class HelpCommand : ICommandWithArguments<HelpCommandArguments>
 	{
-		public HelpCommand(HelpCommandArguments arguments)
+		private readonly IOutput _output;
+
+		public HelpCommand(IOutput output)
+		{
+			_output = output;
+		} 
+
+		public CommandResult Execute(ApplicationConfiguration applicationConfiguration, ClientConfiguration clientConfiguration, HelpCommandArguments arguments)
 		{
 			if (arguments == null)
 				throw new ArgumentNullException(nameof(arguments));
-		}
-
-		public CommandResult Execute(ExecutionSettings settings)
-		{
-			var output = settings.Output;
 
 			string message = @"
 Available commands:
@@ -25,7 +28,7 @@ Available commands:
   raw-export from=<starting date> to=<ending date> - Exports Raw data for specified date range
 ";
 
-			output.Notify(message);												
+			_output.Notify(message);
 
 			return new SuccessResult();
 		}

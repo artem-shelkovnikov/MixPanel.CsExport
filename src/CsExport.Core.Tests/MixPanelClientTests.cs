@@ -15,7 +15,7 @@ namespace CsExport.Core.Tests
 
 		private const string TestSecret = "secret_123654987456";
 
-		private ClientConfiguration _clientConfiguration = new ClientConfiguration();
+		private readonly ClientConfiguration _clientConfiguration = new ClientConfiguration();
  																	
 
 		public MixPanelClientTests()

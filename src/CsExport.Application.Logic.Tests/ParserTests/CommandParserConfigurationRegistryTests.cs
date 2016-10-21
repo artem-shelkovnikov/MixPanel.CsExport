@@ -1,6 +1,8 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using CsExport.Application.Logic.Parser;
+using CsExport.Application.Logic.Parser.Utility;
 using Xunit;
 
 namespace CsExport.Application.Logic.Tests.ParserTests
@@ -22,10 +24,11 @@ namespace CsExport.Application.Logic.Tests.ParserTests
 		}
 
 		public class StubParserConfiguration : ICommandParserConfiguration
-		{
-			public ICommand TryParse(string input)
+		{	 
+			public string CommandName { get { return "stub-command"; } }
+			public IArguments TryParse(IEnumerable<CommandArgument> arguments)
 			{
-				throw new NotImplementedException();
+				return null;
 			}
 		}
 	}

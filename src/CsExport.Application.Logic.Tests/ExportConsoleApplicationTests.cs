@@ -15,27 +15,18 @@ namespace CsExport.Application.Logic.Tests
 	{
 		private readonly ExportConsoleApplication _application;
 		private readonly Mock<ICommandParser> _commandParserMock = new Mock<ICommandParser>();
-		private readonly Mock<IResultHandler> _resultHandlerMock = new Mock<IResultHandler>();
-		private readonly Mock<IMixPanelClient> _mixPanelClientMock = new Mock<IMixPanelClient>();
-		private readonly Mock<IFileWriter> _fileWriterMock = new Mock<IFileWriter>();
-		private readonly Mock<IInput> _inputProviderMock = new Mock<IInput>();								  
-		private readonly Mock<IOutput> _outputMock = new Mock<IOutput>();			
+		private readonly Mock<IResultHandler> _resultHandlerMock = new Mock<IResultHandler>(); 
+		private readonly Mock<IInput> _inputProviderMock = new Mock<IInput>();		
 		private	readonly Mock<ICommand> _commandMock = new Mock<ICommand>();
 
 		private const string ValidCommandText = "dummy";
 		private const string InvalidCommandText = "invalid";
 
 		public ExportConsoleApplicationTests()
-		{
-			_commandMock.Setup(x => x.Execute(It.IsAny<ExecutionSettings>())).Returns(new SuccessResult());
+		{																										 
 			_commandParserMock.Setup(x => x.ParseCommand(ValidCommandText)).Returns(_commandMock.Object);
 
-			_application = new ExportConsoleApplication(_commandParserMock.Object, 
-			_mixPanelClientMock.Object, 
-			_resultHandlerMock.Object, 
-			_fileWriterMock.Object,
-			_inputProviderMock.Object,
-			_outputMock.Object);
+			_application = new ExportConsoleApplication(_commandParserMock.Object, _resultHandlerMock.Object, _inputProviderMock.Object);
 		}
 
 		[Fact]
@@ -82,7 +73,7 @@ namespace CsExport.Application.Logic.Tests
 		public void ReceiveCommand_When_unauthorized_exception_is_thrown_by_component_Then_writes_output_for_unauthorizedResult()
 		{
 			_inputProviderMock.Setup(x => x.GetLine()).Returns(ValidCommandText);
-			_commandMock.Setup(x => x.Execute(It.IsAny<ExecutionSettings>())).Throws<MixPanelUnauthorizedException>();
+			_commandMock.Setup(x => x.Execute(It.IsAny<ApplicationConfiguration>(), It.IsAny<ClientConfiguration>())).Throws<MixPanelUnauthorizedException>();
 
 			_application.ReceiveCommand();
 
@@ -93,7 +84,7 @@ namespace CsExport.Application.Logic.Tests
 		public void ReceiveCommand_When_argument_parse_exception_is_thrown_by_component_Then_writes_output_for_commandParseFailedResult()
 		{
 			_inputProviderMock.Setup(x => x.GetLine()).Returns(ValidCommandText);
-			_commandMock.Setup(x => x.Execute(It.IsAny<ExecutionSettings>())).Throws<ArgumentParseException>();
+			_commandMock.Setup(x => x.Execute(It.IsAny<ApplicationConfiguration>(), It.IsAny<ClientConfiguration>())).Throws<ArgumentParseException>();
 
 			_application.ReceiveCommand();
 

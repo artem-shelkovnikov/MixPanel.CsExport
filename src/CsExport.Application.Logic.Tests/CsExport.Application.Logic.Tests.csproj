@@ -73,6 +73,9 @@
     <Compile Include="ParserTests\ConfigurationTests\SetCredentialsCommandConfigurationTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="CommandTests\RawExportCommandTests.cs" />
+    <Compile Include="UtilityTests\BinderTests\DateValueBinderTests.cs" />
+    <Compile Include="UtilityTests\BinderTests\StringArrayValueBinderTests.cs" />
+    <Compile Include="UtilityTests\BinderTests\StringValueBinderTests.cs" />
     <Compile Include="UtilityTests\ConsoleCommandParserTests.cs" />
   </ItemGroup>
   <ItemGroup>

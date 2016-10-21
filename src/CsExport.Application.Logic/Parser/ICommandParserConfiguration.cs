@@ -1,7 +1,11 @@
-﻿namespace CsExport.Application.Logic.Parser
+﻿using System.Collections.Generic;
+using CsExport.Application.Logic.Parser.Utility;
+
+namespace CsExport.Application.Logic.Parser
 {
 	public interface ICommandParserConfiguration
-	{
-		ICommand TryParse(string input);
+	{																	   
+		string CommandName { get; }
+		IArguments TryParse(IEnumerable<CommandArgument> arguments);
 	}
 }

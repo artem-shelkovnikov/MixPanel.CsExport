@@ -20,18 +20,21 @@ namespace CsExport.Application.Logic.Tests.CommandTests
 		}
 
 		[Fact]
-		public void Ctor_When_called_with_null_Then_throws()
-		{																					  
-			Assert.Throws<ArgumentNullException>(() => new SetCredentialsCommand(null));
+		public void Ctor_When_called_with_null_arguments_Then_throws()
+		{										
+			var command = new SetCredentialsCommand(MixPanelClientMock.Object);
+													  
+			Assert.Throws<ArgumentNullException>(() => command.Execute(ApplicationConfiguration, ClientConfiguration, null));
 		}
 
 		[Fact]
 		public void Execute_When_called_with_settings_Then_swaps_current_clientConfiguration_with_new()
 		{										  
 			var testSecret = ValidSecret;
-			var command = new SetCredentialsCommand(GetCommandArguments(testSecret));
+			var command = GetCommand();
+			var arguments = GetArguments(testSecret);
 
-			command.Execute(GetExecutionSettings());
+			command.Execute(ApplicationConfiguration, ClientConfiguration, arguments);
 																	
 			Assert.Equal(testSecret, ClientConfiguration.Secret);
 		}
@@ -40,9 +43,10 @@ namespace CsExport.Application.Logic.Tests.CommandTests
 		public void Execute_When_called_with_settings_Then_returns_successResult()
 		{										  
 			var testSecret = ValidSecret;
-			var command = new SetCredentialsCommand(GetCommandArguments(testSecret));
+			var command = GetCommand();
+			var arguments = GetArguments(testSecret);
 
-			var result = command.Execute(GetExecutionSettings());
+			var result = command.Execute(ApplicationConfiguration, ClientConfiguration, arguments);
 
 			Assert.IsType<SuccessResult>(result);
 		}
@@ -51,15 +55,19 @@ namespace CsExport.Application.Logic.Tests.CommandTests
 		public void Execute_When_called_with_invalid_secret_Then_returns_unauthorizedResponse()
 		{
 			var invalidSecret = InvalidSecret;
-			var command = new SetCredentialsCommand(GetCommandArguments(invalidSecret));	  
+			var command = GetCommand();
+			var arguments = GetArguments(InvalidSecret);
 
-			var result = command.Execute(GetExecutionSettings());
+			var result = command.Execute(ApplicationConfiguration, ClientConfiguration, arguments);
 
 			Assert.IsType<UnauthorizedResult>(result);
 
+		}	
+		private SetCredentialsCommand GetCommand()
+		{
+			return new SetCredentialsCommand(MixPanelClientMock.Object);
 		}
-
-		private SetCredentialsCommandArguments GetCommandArguments(string secret)
+		private SetCredentialsCommandArguments GetArguments(string secret)
 		{
 			return new SetCredentialsCommandArguments {Secret = secret};
 		}

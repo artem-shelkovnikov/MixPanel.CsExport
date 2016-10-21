@@ -1,6 +1,4 @@
-﻿using System;
-
-namespace CsExport.Core.Settings
+﻿namespace CsExport.Core.Settings
 {
 	public class MixPanelEndpointConfiguration
 	{

@@ -21,5 +21,10 @@ namespace CsExport.Application.Logic.Parser
 		{
 			return _configurations;
 		}
+
+		public ICommandParserConfiguration GetByName(string commandName)
+		{
+			return _configurations.FirstOrDefault(x => x.CommandName == commandName);
+		}
 	}
 }

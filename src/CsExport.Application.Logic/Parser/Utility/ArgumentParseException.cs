@@ -1,16 +1,15 @@
-﻿using System;
+using System;
 
 namespace CsExport.Application.Logic.Parser.Utility
 {
 	public class ArgumentParseException : Exception
 	{
-		public ArgumentParseException() : base("Unable to parse some of command arguments")
+		public ArgumentParseException() : base("Failed to parse input")
 		{
 			
 		}
 
-		public ArgumentParseException(string argumentDefinition) : base(
-			$"Unable to parse command argument : {argumentDefinition}")
+		public ArgumentParseException(string input) : base(string.Format("Failed to parse input: {0}", input))
 		{
 			
 		}

@@ -30,6 +30,10 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="Autofac, Version=4.1.1.0, Culture=neutral, PublicKeyToken=17863af14b0044da, processorArchitecture=MSIL">
+      <HintPath>..\packages\Autofac.4.1.1\lib\net45\Autofac.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
     <Reference Include="System.Xml.Linq" />
@@ -40,28 +44,44 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="ApplicationConfiguration.cs" />
+    <Compile Include="CommandBase.cs" />
+    <Compile Include="DependancyInjectionService.cs" />
     <Compile Include="CommandArguments\SetCredentialsCommandArguments.cs" />
     <Compile Include="CommandArguments\HelpCommandArguments.cs" />
     <Compile Include="CommandArguments\RawExportCommandArguments.cs" />
     <Compile Include="Commands\HelpCommand.cs" />
     <Compile Include="Commands\SetCredentialsCommand.cs" />
-    <Compile Include="ConsoleInput.cs" />
-    <Compile Include="ConsoleOutput.cs" />
-    <Compile Include="ExecutionSettings.cs" />
-    <Compile Include="FileWriter.cs" />
-    <Compile Include="IFileWriter.cs" />
-    <Compile Include="IOutput.cs" />
+    <Compile Include="IO\ConsoleInput.cs" />
+    <Compile Include="IO\ConsoleOutput.cs" />
+    <Compile Include="IO\FileWriter.cs" />
+    <Compile Include="IArguments.cs" />
+    <Compile Include="ICommandWithArguments.cs" />
+    <Compile Include="IDependancyInjectionService.cs" />
+    <Compile Include="IO\IFileWriter.cs" />
+    <Compile Include="IO\IOutput.cs" />
     <Compile Include="Parser\CommandParser.cs" />
     <Compile Include="Parser\CommandParserConfigurationRegistry.cs" />
-    <Compile Include="Parser\Configuration\CommandParserConfigurationBase.cs" />
+    <Compile Include="Parser\CommandParserConfigurationBase.cs" />
+    <Compile Include="Parser\Utility\ArgumentParseException.cs" />
+    <Compile Include="Parser\Utility\CompiledCommand.cs" />
+    <Compile Include="Parser\Utility\ParameterBindingException.cs" />
+    <Compile Include="Parser\Utility\ReflectionPropertyValueBinderBase.cs" />
+    <Compile Include="Parser\Utility\ValueBinders\DateValueBinder.cs" />
     <Compile Include="Parser\Configuration\HelpCommandConfiguration.cs" />
+    <Compile Include="Parser\Utility\IReflectionPropertyBinderFactory.cs" />
+    <Compile Include="Parser\Utility\IReflectionPropertyValueBinder.cs" />
     <Compile Include="Parser\Configuration\RawExportCommandConfiguration.cs" />
+    <Compile Include="Parser\Utility\ReflectionPropertyBinderFactory.cs" />
     <Compile Include="Parser\Configuration\SetCredentialsCommandConfiguration.cs" />
+    <Compile Include="Parser\Utility\ValueBinders\StringArrayValueBinder.cs" />
+    <Compile Include="Parser\Utility\ValueBinders\StringValueBinder.cs" />
+    <Compile Include="Parser\ICommandFactory.cs" />
     <Compile Include="Parser\ICommandParserConfiguration.cs" />
     <Compile Include="Parser\ICommandParserConfigurationRegistry.cs" />
     <Compile Include="Parser\Utility\CommandArgument.cs" />
+    <Compile Include="Parser\Utility\ConsoleCommandDefinition.cs" />
     <Compile Include="Parser\Utility\ConsoleCommandParser.cs" />
-    <Compile Include="Parser\Utility\ArgumentParseException.cs" />
     <Compile Include="ResultHandler.cs" />
     <Compile Include="Results\CommandNotFoundResult.cs" />
     <Compile Include="CommandResult.cs" />
@@ -70,7 +90,7 @@
     <Compile Include="ExportConsoleApplication.cs" />
     <Compile Include="ICommand.cs" />
     <Compile Include="Parser\ICommandParser.cs" />
-    <Compile Include="IInput.cs" />
+    <Compile Include="IO\IInput.cs" />
     <Compile Include="IResultHandler.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Commands\RawExportCommand.cs" />
@@ -83,8 +103,9 @@
       <Name>CsExport.Core</Name>
     </ProjectReference>
   </ItemGroup>
+  <ItemGroup />
   <ItemGroup>
-    <Folder Include="obj\" />
+    <None Include="packages.config" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
