@@ -1,10 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
-using CsExport.Application.Logic.Parser.Utility;  
+using CsExport.Application.Logic.Parser.Utility;
 using Xunit;
 
-namespace CsExport.Application.Logic.Tests.UtilityTests
+namespace CsExport.Application.Logic.Tests.ParserTests.UtilityTests
 {
 	public class ConsoleCommandParserTests
 	{

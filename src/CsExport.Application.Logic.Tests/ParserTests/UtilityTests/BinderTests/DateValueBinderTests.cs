@@ -1,10 +1,9 @@
-﻿using System;
-using CsExport.Application.Logic.Parser.Utility;
+﻿using CsExport.Application.Logic.Parser.Utility;
 using CsExport.Application.Logic.Parser.Utility.ValueBinders;
 using CsExport.Core;
 using Xunit;
 
-namespace CsExport.Application.Logic.Tests.UtilityTests.BinderTests
+namespace CsExport.Application.Logic.Tests.ParserTests.UtilityTests.BinderTests
 {
 	public class DateValueBinderTests
 	{

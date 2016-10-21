@@ -1,7 +1,7 @@
 ﻿using CsExport.Application.Logic.Parser.Utility.ValueBinders;
 using Xunit;
 
-namespace CsExport.Application.Logic.Tests.UtilityTests.BinderTests
+namespace CsExport.Application.Logic.Tests.ParserTests.UtilityTests.BinderTests
 {
 	public class StringArrayValueBinderTests
 	{
