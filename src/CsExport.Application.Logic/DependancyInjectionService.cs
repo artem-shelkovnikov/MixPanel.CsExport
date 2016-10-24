@@ -11,7 +11,7 @@ namespace CsExport.Application.Logic
 		{
 			_container = container;
 		}
-			  
+
 		public T Resolve<T>()
 		{
 			return _container.BeginLifetimeScope().Resolve<T>();

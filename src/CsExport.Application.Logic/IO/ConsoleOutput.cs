@@ -6,7 +6,7 @@ namespace CsExport.Application.Logic.IO
 	{
 		public void Notify(string message)
 		{
-			Console.WriteLine(message);	 
+			Console.WriteLine(message);
 		}
 	}
 }

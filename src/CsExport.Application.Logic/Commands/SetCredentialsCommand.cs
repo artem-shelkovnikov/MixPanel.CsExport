@@ -7,15 +7,17 @@ using CsExport.Core.Settings;
 namespace CsExport.Application.Logic.Commands
 {
 	public class SetCredentialsCommand : ICommandWithArguments<SetCredentialsCommandArguments>
-	{															  
+	{
 		private readonly IMixPanelClient _mixPanelClient;
-		
-		public SetCredentialsCommand(IMixPanelClient mixPanelClient)
-		{												   
-			_mixPanelClient = mixPanelClient;
-		}	  
 
-		public CommandResult Execute(ApplicationConfiguration applicationConfiguration, ClientConfiguration clientConfiguration, SetCredentialsCommandArguments arguments)
+		public SetCredentialsCommand(IMixPanelClient mixPanelClient)
+		{
+			_mixPanelClient = mixPanelClient;
+		}
+
+		public CommandResult Execute(ApplicationConfiguration applicationConfiguration,
+		                             ClientConfiguration clientConfiguration,
+		                             SetCredentialsCommandArguments arguments)
 		{
 			if (arguments == null)
 				throw new ArgumentNullException(nameof(arguments));
@@ -34,6 +36,6 @@ namespace CsExport.Application.Logic.Commands
 			}
 
 			return new UnauthorizedResult();
-		} 
+		}
 	}
 }

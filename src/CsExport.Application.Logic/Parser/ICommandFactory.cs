@@ -27,7 +27,7 @@ namespace CsExport.Application.Logic.Parser
 			var compiledCommandType = typeof(CompiledCommand<,>);
 			var genericCompiledCommandType = compiledCommandType.MakeGenericType(genericType, arguments.GetType());
 
-			var result = (ICommand)Activator.CreateInstance(genericCompiledCommandType, command, arguments);
+			var result = (ICommand) Activator.CreateInstance(genericCompiledCommandType, command, arguments);
 
 			return result;
 		}

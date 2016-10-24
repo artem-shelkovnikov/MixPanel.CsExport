@@ -31,7 +31,6 @@ namespace CsExport.Application.Logic.Parser.Utility
 			{
 				throw new ParameterBindingException(ex);
 			}
-			
 		}
 
 		protected abstract TPropertyValue ParseValue(string value);

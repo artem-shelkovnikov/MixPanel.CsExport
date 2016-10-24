@@ -18,7 +18,7 @@ namespace CsExport.Core.Client
 
 		public MixPanelClient(IWebClient webClient)
 		{
-			_webClient = webClient;											  
+			_webClient = webClient;
 		}
 
 		public bool VerifyCredentials(ClientConfiguration clientConfiguration)
@@ -31,6 +31,7 @@ namespace CsExport.Core.Client
 			{
 				return false;
 			}
+
 			return true;
 		}
 
@@ -44,14 +45,15 @@ namespace CsExport.Core.Client
 
 				parameterDictionary.Add(FromDateParamName, from.ToString());
 				parameterDictionary.Add(ToDateParamName, to.ToString());
-				if (events != null && events.Any())
+				if (events != null
+				    && events.Any())
 					parameterDictionary.Add(EventParamName, StringifyEvents(events));
 
 				var callingUri =
 					new Uri(uri.ToString() + "?" + string.Join("&", parameterDictionary.Select(x => x.Key + "=" + x.Value)));
 
 				var webClientResponse = _webClient.QueryUri(callingUri,
-					new BasicAuthentication {UserName = clientConfiguration.Secret});
+				                                            new BasicAuthentication { UserName = clientConfiguration.Secret });
 
 				return webClientResponse;
 			}
@@ -73,7 +75,8 @@ namespace CsExport.Core.Client
 
 		private static void TryHandleWebException(WebException ex)
 		{
-			if (ex.Status == WebExceptionStatus.ProtocolError && ex.Response != null)
+			if (ex.Status == WebExceptionStatus.ProtocolError
+			    && ex.Response != null)
 			{
 				var webResponse = (HttpWebResponse) ex.Response;
 				if (webResponse == null)
@@ -94,9 +97,10 @@ namespace CsExport.Core.Client
 						var response = responseReader.ReadToEnd();
 						if (response.Contains("Unable to authenticate")) //some magic
 							throw new MixPanelUnauthorizedException();
+
 						break;
 				}
-			}		   
+			}
 		}
 	}
 }

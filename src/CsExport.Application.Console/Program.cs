@@ -15,8 +15,9 @@ namespace CsExport.Application.Console
 		{
 			var dependancyInjectionService = GetDependancyInjectionService();
 
-			var commandParserConfigurationRegistry = new CommandParserConfigurationRegistry();				
-			var commandParser = new CommandParser(commandParserConfigurationRegistry, new CommandFactory(dependancyInjectionService));
+			var commandParserConfigurationRegistry = new CommandParserConfigurationRegistry();
+			var commandParser = new CommandParser(commandParserConfigurationRegistry,
+			                                      new CommandFactory(dependancyInjectionService));
 
 
 			var input = new ConsoleInput();

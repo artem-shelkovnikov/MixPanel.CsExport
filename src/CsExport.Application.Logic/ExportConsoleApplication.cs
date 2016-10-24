@@ -10,20 +10,20 @@ namespace CsExport.Application.Logic
 {
 	public class ExportConsoleApplication
 	{
-		private readonly ICommandParser _commandParser;	  
+		private readonly ICommandParser _commandParser;
 		private readonly IResultHandler _resultHandler;
 
 		private readonly ApplicationConfiguration _applicationConfiguration = new ApplicationConfiguration();
 		private readonly ClientConfiguration _clientConfiguration = new ClientConfiguration();
-		
-		private readonly IInput _input;		
+
+		private readonly IInput _input;
 
 		public ExportConsoleApplication(ICommandParser commandParser, IResultHandler resultHandler, IInput input)
 		{
-			_commandParser = commandParser;	   
+			_commandParser = commandParser;
 			_resultHandler = resultHandler;
-			_input = input;	 
-		}	
+			_input = input;
+		}
 
 		public void ReceiveCommand()
 		{
@@ -37,7 +37,7 @@ namespace CsExport.Application.Logic
 				{
 					_resultHandler.HandleResult(new CommandNotFoundResult(commandText));
 					return;
-				}	
+				}
 
 				var commandResult = command.Execute(_applicationConfiguration, _clientConfiguration);
 

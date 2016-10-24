@@ -10,7 +10,7 @@ using Xunit;
 namespace CsExport.Application.Logic.Tests.CommandTests
 {
 	public class RawExportCommandTests : CommandTestsBase
-	{  
+	{
 		[Fact]
 		public void Execute_When_called_with_valid_parameters_Then_returns_correct_result_type()
 		{
@@ -30,11 +30,12 @@ namespace CsExport.Application.Logic.Tests.CommandTests
 
 			var result = command.Execute(ApplicationConfiguration, ClientConfiguration, arguments);
 
-			MixPanelClientMock.Verify(x=>x.ExportRaw(ClientConfiguration, It.IsAny<Date>(), It.IsAny<Date>(), null), Times.Once);
+			MixPanelClientMock.Verify(x => x.ExportRaw(ClientConfiguration, It.IsAny<Date>(), It.IsAny<Date>(), null), Times.Once);
 		}
 
 		[Fact]
-		public void Execute_When_called_with_from_and_to_Then_passes_these_parameters_into_mixPanelClient_leaving_rest_parameters_null()
+		public void
+			Execute_When_called_with_from_and_to_Then_passes_these_parameters_into_mixPanelClient_leaving_rest_parameters_null()
 		{
 			var from = new Date(2010, 10, 31);
 			var to = new Date(2011, 1, 1);
@@ -55,19 +56,26 @@ namespace CsExport.Application.Logic.Tests.CommandTests
 			var @event = "some_event";
 
 			var command = GetCommand();
-			var arguments = GetArguments(from, to, new[] {@event});
+			var arguments = GetArguments(from, to, new[] { @event });
 
 			var result = command.Execute(ApplicationConfiguration, ClientConfiguration, arguments);
 
-			MixPanelClientMock.Verify(x => x.ExportRaw(ClientConfiguration, It.IsAny<Date>(), It.IsAny<Date>(), It.Is<string[]>(y=>y[0] == @event)), Times.Once);
+			MixPanelClientMock.Verify(
+				x => x.ExportRaw(ClientConfiguration, It.IsAny<Date>(), It.IsAny<Date>(), It.Is<string[]>(y => y[0] == @event)),
+				Times.Once);
 		}
 
 		[Fact]
 		public void Execute_When_called_with_valid_parameters_Then_passes_string_received_from_mixPanelClient_to_fileWriter()
 		{
 			var exportContent = "some export content";
-			MixPanelClientMock.Setup(x => x.ExportRaw(It.IsAny<ClientConfiguration>(), It.IsAny<Date>(), It.IsAny<Date>(), It.IsAny<string[]>()))
-				.Returns(exportContent);
+			MixPanelClientMock.Setup(
+				                  x =>
+					                  x.ExportRaw(It.IsAny<ClientConfiguration>(),
+					                              It.IsAny<Date>(),
+					                              It.IsAny<Date>(),
+					                              It.IsAny<string[]>()))
+			                  .Returns(exportContent);
 
 			var from = new Date(2010, 10, 31);
 			var to = new Date(2011, 1, 1);
@@ -77,7 +85,7 @@ namespace CsExport.Application.Logic.Tests.CommandTests
 
 			var result = command.Execute(ApplicationConfiguration, ClientConfiguration, arguments);
 
-			FileWriterMock.Verify(x=>x.WriteContent(ApplicationConfiguration.ExportPath, It.IsAny<string>(), exportContent));
+			FileWriterMock.Verify(x => x.WriteContent(ApplicationConfiguration.ExportPath, It.IsAny<string>(), exportContent));
 		}
 
 		[Fact]
@@ -96,18 +104,18 @@ namespace CsExport.Application.Logic.Tests.CommandTests
 		public void Execute_when_called_with_client_context_without_secret_specified_Then_returns_unauthorizedResult()
 		{
 			var command = GetCommand();
-			var arguments = GetArguments();					 
+			var arguments = GetArguments();
 			ClientConfiguration.UpdateCredentials(string.Empty);
 
 			var result = command.Execute(ApplicationConfiguration, ClientConfiguration, arguments);
 
 			Assert.IsType<UnauthorizedResult>(result);
-		}						
+		}
 
 		private RawExportCommand GetCommand()
 		{
 			return new RawExportCommand(MixPanelClientMock.Object, FileWriterMock.Object);
-		}			 
+		}
 
 		private RawExportCommandArguments GetArguments(Date from = null, Date to = null, string[] events = null)
 		{
@@ -115,8 +123,8 @@ namespace CsExport.Application.Logic.Tests.CommandTests
 			{
 				Events = events,
 				From = from ?? new Date(2011, 1, 1),
-				To = to	?? new Date(2011, 12, 31)
+				To = to ?? new Date(2011, 12, 31)
 			};
-		}	
+		}
 	}
 }

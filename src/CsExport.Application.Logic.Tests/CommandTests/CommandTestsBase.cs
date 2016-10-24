@@ -16,6 +16,6 @@ namespace CsExport.Application.Logic.Tests.CommandTests
 		protected CommandTestsBase()
 		{
 			ClientConfiguration.UpdateCredentials("valid-secret");
-		}	
+		}
 	}
 }

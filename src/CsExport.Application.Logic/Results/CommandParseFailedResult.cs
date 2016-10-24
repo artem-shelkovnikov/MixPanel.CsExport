@@ -11,6 +11,7 @@ namespace CsExport.Application.Logic.Results
 		{
 			_ex = ex;
 		}
+
 		public override void Handle(IOutput output)
 		{
 			output.Notify(_ex.Message);

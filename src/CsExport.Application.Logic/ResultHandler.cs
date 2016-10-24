@@ -9,7 +9,7 @@ namespace CsExport.Application.Logic
 		public ResultHandler(IOutput output)
 		{
 			_output = output;
-		}	
+		}
 
 		public void HandleResult(CommandResult commandResult)
 		{

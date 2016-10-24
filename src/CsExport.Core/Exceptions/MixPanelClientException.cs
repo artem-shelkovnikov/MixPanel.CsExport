@@ -8,12 +8,10 @@ namespace CsExport.Core.Exceptions
 
 		public MixPanelClientException() : base(ErrorMessage)
 		{
-			
 		}
 
 		public MixPanelClientException(Exception innerException) : base(ErrorMessage, innerException)
 		{
-			
 		}
 	}
 }

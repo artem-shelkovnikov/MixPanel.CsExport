@@ -44,7 +44,7 @@ namespace CsExport.Application.Logic.Parser.Utility
 			{
 				var currentSymbol = argumentsPart.ElementAt(i);
 				var nextSymbol = i == argumentsPart.Length - 1
-					? (char?)null
+					? (char?) null
 					: argumentsPart.ElementAt(i + 1);
 
 				buffer += currentSymbol;
@@ -79,10 +79,10 @@ namespace CsExport.Application.Logic.Parser.Utility
 			if (argumentValueDelimiterIndex != -1)
 			{
 				argumentName = argumentDefinition
-				.Substring(0, argumentValueDelimiterIndex)
+					.Substring(0, argumentValueDelimiterIndex)
 					.Substring(1);
 				argumentValue = argumentDefinition
-				.Substring(argumentValueDelimiterIndex)
+					.Substring(argumentValueDelimiterIndex)
 					.Substring(1);
 			}
 			else

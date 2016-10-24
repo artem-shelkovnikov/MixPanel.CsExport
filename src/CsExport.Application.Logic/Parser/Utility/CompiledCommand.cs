@@ -13,8 +13,10 @@ namespace CsExport.Application.Logic.Parser.Utility
 		{
 			_command = command;
 			_commandArguments = commandArguments;
-		}	  
-		public CommandResult Execute(ApplicationConfiguration applicationConfiguration, ClientConfiguration clientConfiguration)
+		}
+
+		public CommandResult Execute(ApplicationConfiguration applicationConfiguration,
+		                             ClientConfiguration clientConfiguration)
 		{
 			return _command.Execute(applicationConfiguration, clientConfiguration, _commandArguments);
 		}

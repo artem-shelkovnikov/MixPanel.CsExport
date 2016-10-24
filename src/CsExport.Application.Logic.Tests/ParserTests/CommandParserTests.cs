@@ -10,7 +10,10 @@ namespace CsExport.Application.Logic.Tests.ParserTests
 	public class CommandParserTests
 	{
 		private readonly ICommandParser _commandParser;
-		private readonly Mock<ICommandParserConfigurationRegistry> _commandParserConfigurationRegistryMock = new Mock<ICommandParserConfigurationRegistry>();
+
+		private readonly Mock<ICommandParserConfigurationRegistry> _commandParserConfigurationRegistryMock =
+			new Mock<ICommandParserConfigurationRegistry>();
+
 		private readonly Mock<ICommandFactory> _commandFactoryMock = new Mock<ICommandFactory>();
 
 		public CommandParserTests()
@@ -26,7 +29,8 @@ namespace CsExport.Application.Logic.Tests.ParserTests
 		}
 
 		[Fact]
-		public void Parse_When_called_with_existing_parser_configuration_Then_uses_parserConfiguration_tryParse_for_found_configuration()
+		public void
+			Parse_When_called_with_existing_parser_configuration_Then_uses_parserConfiguration_tryParse_for_found_configuration()
 		{
 			var configurationMock = new Mock<ICommandParserConfiguration>();
 
@@ -35,21 +39,23 @@ namespace CsExport.Application.Logic.Tests.ParserTests
 
 			var command = _commandParser.ParseCommand(input);
 
-			configurationMock.Verify(x => x.TryParse(It.Is<IEnumerable<CommandArgument>>(y => y.Any() == false)), Times.Once); 
-		} 
+			configurationMock.Verify(x => x.TryParse(It.Is<IEnumerable<CommandArgument>>(y => y.Any() == false)), Times.Once);
+		}
 
 		[Fact]
-		public void Parse_When_called_with_existing_parser_configurations_and_multiple_configurations_can_parse_command_Then_creates_command_using_arguments_received_from_parser()
+		public void
+			Parse_When_called_with_existing_parser_configurations_and_multiple_configurations_can_parse_command_Then_creates_command_using_arguments_received_from_parser
+			()
 		{
 			var configurationMock = new Mock<ICommandParserConfiguration>();
 
-			var argumentsMock = new Mock<IArguments>();	  
+			var argumentsMock = new Mock<IArguments>();
 
 			var input = "test-existing";
 
 			configurationMock.Setup(x => x.TryParse(It.IsAny<IEnumerable<CommandArgument>>())).Returns(argumentsMock.Object);
 			_commandParserConfigurationRegistryMock.Setup(x => x.GetByName(input)).Returns(configurationMock.Object);
-																									
+
 			var command = _commandParser.ParseCommand(input);
 
 			_commandFactoryMock.Verify(x => x.Create(argumentsMock.Object));

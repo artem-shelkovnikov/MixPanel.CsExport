@@ -7,7 +7,7 @@ namespace CsExport.Application.Logic.Tests.ParserTests.UtilityTests
 {
 	public class ConsoleCommandParserTests
 	{
-		private readonly ConsoleCommandParser _commandParser	 = new ConsoleCommandParser();
+		private readonly ConsoleCommandParser _commandParser = new ConsoleCommandParser();
 
 		[Fact]
 		public void Parse_When_only_command_name_is_passed_Then_returns_definition_only_with_command_name()
@@ -35,7 +35,8 @@ namespace CsExport.Application.Logic.Tests.ParserTests.UtilityTests
 
 		[Fact]
 		public void
-			Parse_when_command_with_parameter_without_value_is_passed_Then_returns_definition_with_correct_parameter_without_value()
+			Parse_when_command_with_parameter_without_value_is_passed_Then_returns_definition_with_correct_parameter_without_value
+			()
 		{
 			var input = "some-command -hello";
 
@@ -55,11 +56,12 @@ namespace CsExport.Application.Logic.Tests.ParserTests.UtilityTests
 			var parameter = result.Arguments.Single();
 
 			Assert.Equal("value", parameter.ArgumentName);
-			Assert.Equal("with-dashes-inside", parameter.Value);	  
+			Assert.Equal("with-dashes-inside", parameter.Value);
 		}
 
 		[Fact]
-		public void Parse_When_command_with_parameter_with_spaces_and_dashes_is_passed_Then_returns_correct_command_definition()
+		public void Parse_When_command_with_parameter_with_spaces_and_dashes_is_passed_Then_returns_correct_command_definition
+			()
 		{
 			var input = "some-command -value=with spaces-and dashes inside";
 
@@ -67,7 +69,7 @@ namespace CsExport.Application.Logic.Tests.ParserTests.UtilityTests
 			var parameter = result.Arguments.Single();
 
 			Assert.Equal("value", parameter.ArgumentName);
-			Assert.Equal("with spaces-and dashes inside", parameter.Value);	  
+			Assert.Equal("with spaces-and dashes inside", parameter.Value);
 		}
 
 		[Fact]
@@ -77,17 +79,19 @@ namespace CsExport.Application.Logic.Tests.ParserTests.UtilityTests
 
 			var result = _commandParser.Parse(input);
 
-			Assert.Equal(3, result.Arguments.Count());	   
+			Assert.Equal(3, result.Arguments.Count());
 		}
 
 		[Fact]
-		public void Parse_When_command_multiple_different_parameters_is_passed_Then_returns_definition_with_correct_parameter_keys_and_values()
+		public void
+			Parse_When_command_multiple_different_parameters_is_passed_Then_returns_definition_with_correct_parameter_keys_and_values
+			()
 		{
 			var parameters = new Dictionary<string, string>
 			{
-				{"value", "with-dashes-inside" },
-				{"hello", "what,a,wonderful world" },
-				{"valueless", null }
+				{ "value", "with-dashes-inside" },
+				{ "hello", "what,a,wonderful world" },
+				{ "valueless", null }
 			};
 
 			var formattedParameters = parameters.Select(
@@ -101,7 +105,7 @@ namespace CsExport.Application.Logic.Tests.ParserTests.UtilityTests
 
 			foreach (var parameter in parameters)
 			{
-				Assert.Equal(1, result.Arguments.Count(y=>y.ArgumentName == parameter.Key && y.Value == parameter.Value));
+				Assert.Equal(1, result.Arguments.Count(y => y.ArgumentName == parameter.Key && y.Value == parameter.Value));
 			}
 		}
 
@@ -120,7 +124,7 @@ namespace CsExport.Application.Logic.Tests.ParserTests.UtilityTests
 		{
 			var input = "command with invalid input";
 
-			Assert.Throws<ArgumentParseException>(()=>_commandParser.Parse(input));
+			Assert.Throws<ArgumentParseException>(() => _commandParser.Parse(input));
 		}
 	}
 }

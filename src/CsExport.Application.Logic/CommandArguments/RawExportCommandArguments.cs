@@ -7,6 +7,6 @@ namespace CsExport.Application.Logic.CommandArguments
 		public Date From { get; set; }
 		public Date To { get; set; }
 
-		public string[] Events { get; set; }   
+		public string[] Events { get; set; }
 	}
 }

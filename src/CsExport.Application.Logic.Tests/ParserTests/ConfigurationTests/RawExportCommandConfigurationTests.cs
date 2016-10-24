@@ -14,7 +14,7 @@ namespace CsExport.Application.Logic.Tests.ParserTests.ConfigurationTests
 
 		[Fact]
 		public void TryParse_When_called_without_argumentsThen_returns_null_for_all_fields()
-		{  
+		{
 			var result = _configuration.TryParse(Enumerable.Empty<CommandArgument>()) as RawExportCommandArguments;
 
 			Assert.NotNull(result);
@@ -28,8 +28,8 @@ namespace CsExport.Application.Logic.Tests.ParserTests.ConfigurationTests
 		{
 			var arguments = new[]
 			{
-				new CommandArgument {ArgumentName = "from", Value = "2016-01-01"},
-				new CommandArgument {ArgumentName = "to", Value = "2016-01-03"}
+				new CommandArgument { ArgumentName = "from", Value = "2016-01-01" },
+				new CommandArgument { ArgumentName = "to", Value = "2016-01-03" }
 			};
 
 			var result = _configuration.TryParse(arguments) as RawExportCommandArguments;

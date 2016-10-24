@@ -7,11 +7,12 @@ namespace CsExport.Application.Logic.Parser
 		private readonly ICommandParserConfigurationRegistry _commandParserConfigurationRegistry;
 		private readonly ICommandFactory _commandFactory;
 		private readonly ConsoleCommandParser _consoleCommandParser = new ConsoleCommandParser();
-		
-		public CommandParser(ICommandParserConfigurationRegistry commandParserConfigurationRegistry, ICommandFactory commandFactory)
+
+		public CommandParser(ICommandParserConfigurationRegistry commandParserConfigurationRegistry,
+		                     ICommandFactory commandFactory)
 		{
 			_commandParserConfigurationRegistry = commandParserConfigurationRegistry;
-			_commandFactory = commandFactory;								 
+			_commandFactory = commandFactory;
 		}
 
 		public ICommand ParseCommand(string commandText)

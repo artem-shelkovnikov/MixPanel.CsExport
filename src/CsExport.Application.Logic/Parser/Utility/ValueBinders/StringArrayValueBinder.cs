@@ -4,10 +4,10 @@ using System.Reflection;
 namespace CsExport.Application.Logic.Parser.Utility.ValueBinders
 {
 	public class StringArrayValueBinder : ReflectionPropertyValueBinderBase<string[]>
-	{													  
+	{
 		public StringArrayValueBinder(object @object, PropertyInfo propertyInfo) : base(@object, propertyInfo)
-		{								 
-		}		 
+		{
+		}
 
 		protected override string[] ParseValue(string value)
 		{

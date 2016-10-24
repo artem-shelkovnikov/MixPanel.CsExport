@@ -20,8 +20,8 @@ namespace CsExport.Core
 		}
 
 		public Date(int year, int month, int day) : this(new DateTime(year, month, day))
-		{	
-		}  
+		{
+		}
 
 		public override string ToString()
 		{

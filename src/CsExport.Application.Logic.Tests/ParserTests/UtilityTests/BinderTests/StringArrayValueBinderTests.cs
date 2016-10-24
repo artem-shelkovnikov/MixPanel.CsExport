@@ -30,7 +30,7 @@ namespace CsExport.Application.Logic.Tests.ParserTests.UtilityTests.BinderTests
 			var stubClassType = typeof(StubClass);
 			var arrayPropertyInfo = stubClassType.GetProperty("Property");
 			var binder = new StringArrayValueBinder(stubClass, arrayPropertyInfo);
-							   
+
 			binder.BindValue(null);
 
 			Assert.Null(stubClass.Property);
@@ -39,7 +39,7 @@ namespace CsExport.Application.Logic.Tests.ParserTests.UtilityTests.BinderTests
 		[Fact]
 		public void BindValue_When_value_is_passed_and_original_value_is_not_empty_Then_updates_property_value()
 		{
-			var stubClass = new StubClass {Property = new [] {"test", "second"}};
+			var stubClass = new StubClass { Property = new[] { "test", "second" } };
 			var stubClassType = typeof(StubClass);
 			var arrayPropertyInfo = stubClassType.GetProperty("Property");
 			var binder = new StringArrayValueBinder(stubClass, arrayPropertyInfo);

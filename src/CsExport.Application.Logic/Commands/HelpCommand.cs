@@ -13,9 +13,11 @@ namespace CsExport.Application.Logic.Commands
 		public HelpCommand(IOutput output)
 		{
 			_output = output;
-		} 
+		}
 
-		public CommandResult Execute(ApplicationConfiguration applicationConfiguration, ClientConfiguration clientConfiguration, HelpCommandArguments arguments)
+		public CommandResult Execute(ApplicationConfiguration applicationConfiguration,
+		                             ClientConfiguration clientConfiguration,
+		                             HelpCommandArguments arguments)
 		{
 			if (arguments == null)
 				throw new ArgumentNullException(nameof(arguments));

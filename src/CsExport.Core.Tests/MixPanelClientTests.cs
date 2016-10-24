@@ -16,14 +16,14 @@ namespace CsExport.Core.Tests
 		private const string TestSecret = "secret_123654987456";
 
 		private readonly ClientConfiguration _clientConfiguration = new ClientConfiguration();
- 																	
+
 
 		public MixPanelClientTests()
 		{
-			_webClientMock = new Mock<IWebClient>();  	   
-			_mixPanelClient = new MixPanelClient(_webClientMock.Object); 
+			_webClientMock = new Mock<IWebClient>();
+			_mixPanelClient = new MixPanelClient(_webClientMock.Object);
 
-			_clientConfiguration.UpdateCredentials(TestSecret);													   
+			_clientConfiguration.UpdateCredentials(TestSecret);
 		}
 
 		[Fact]
@@ -49,15 +49,18 @@ namespace CsExport.Core.Tests
 		[Fact]
 		public void ExportRaw_When_webClient_throws_exception_Then_throws_mixPanelClientException()
 		{
-			_webClientMock.Setup(x => x.QueryUri(It.IsAny<Uri>(), It.IsAny<BasicAuthentication>())).Throws<DummyWebClientException>();
+			_webClientMock.Setup(x => x.QueryUri(It.IsAny<Uri>(), It.IsAny<BasicAuthentication>()))
+			              .Throws<DummyWebClientException>();
 
-			Assert.Throws<MixPanelClientException>(() => _mixPanelClient.ExportRaw(_clientConfiguration, GetDefaultStartDate(), GetDefaultEndDate()));
+			Assert.Throws<MixPanelClientException>(
+				() => _mixPanelClient.ExportRaw(_clientConfiguration, GetDefaultStartDate(), GetDefaultEndDate()));
 		}
 
 		[Fact]
 		public void ExportRaw_When_webClient_throws_exception_Then_throws_mixPanelClientException_with_correct_innerException()
 		{
-			_webClientMock.Setup(x => x.QueryUri(It.IsAny<Uri>(), It.IsAny<BasicAuthentication>())).Throws<DummyWebClientException>();
+			_webClientMock.Setup(x => x.QueryUri(It.IsAny<Uri>(), It.IsAny<BasicAuthentication>()))
+			              .Throws<DummyWebClientException>();
 
 			try
 			{
@@ -67,7 +70,7 @@ namespace CsExport.Core.Tests
 			{
 				Assert.IsType<DummyWebClientException>(ex.InnerException);
 			}
-		}	  
+		}
 
 		[Fact]
 		public void ExportRaw_When_called_Then_passes_fromDate_and_toDate_to_webClient()
@@ -80,7 +83,7 @@ namespace CsExport.Core.Tests
 			var result = _mixPanelClient.ExportRaw(_clientConfiguration, fromDate, toDate);
 
 			_webClientMock.Verify(x => x.QueryUri(expectedUrl, It.IsAny<BasicAuthentication>()), Times.Once);
-		}	
+		}
 
 		[Fact]
 		public void ExportRaw_When_called_with_event_Then_passes_event_as_query_parameter_to_webClient()
@@ -91,10 +94,10 @@ namespace CsExport.Core.Tests
 
 			var expectedUrl = GetExpectedUrl(fromDate, toDate, @event);
 
-			var result = _mixPanelClient.ExportRaw(_clientConfiguration, fromDate, toDate, new [] { @event });
+			var result = _mixPanelClient.ExportRaw(_clientConfiguration, fromDate, toDate, new[] { @event });
 
 			_webClientMock.Verify(x => x.QueryUri(expectedUrl, It.IsAny<BasicAuthentication>()), Times.Once);
-		}	
+		}
 
 		[Fact]
 		public void ExportRaw_When_called_Then_passes_secret_to_basic_authentication_userName_and_leaves_password_empty()
@@ -107,8 +110,8 @@ namespace CsExport.Core.Tests
 			_webClientMock.Verify(
 				x =>
 					x.QueryUri(It.IsAny<Uri>(),
-						It.Is<BasicAuthentication>(y => y.UserName == _clientConfiguration.Secret && y.Password == null)));
-		} 
+					           It.Is<BasicAuthentication>(y => y.UserName == _clientConfiguration.Secret && y.Password == null)));
+		}
 
 		private Uri GetExpectedUrl(Date defaultStartDate, Date defaultEndDate)
 		{
@@ -116,7 +119,7 @@ namespace CsExport.Core.Tests
 				$"{MixPanelEndpointConfiguration.RawExportUrl}?from_date={defaultStartDate.ToString()}&to_date={defaultEndDate.ToString()}";
 
 			return new Uri(stringifiedUrl);
-		} 
+		}
 
 		private Uri GetExpectedUrl(Date defaultStartDate, Date defaultEndDate, string @event)
 		{
@@ -138,7 +141,6 @@ namespace CsExport.Core.Tests
 
 		private class DummyWebClientException : Exception
 		{
-
 		}
 	}
 }

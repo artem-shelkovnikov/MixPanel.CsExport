@@ -28,7 +28,7 @@ namespace CsExport.Application.Logic.Tests.ParserTests.UtilityTests.BinderTests
 			var stubClassType = typeof(StubClass);
 			var stringPropertyInfo = stubClassType.GetProperty("Property");
 			var binder = new DateValueBinder(stubClass, stringPropertyInfo);
-							   
+
 			binder.BindValue(null);
 
 			Assert.Null(stubClass.Property);
@@ -37,7 +37,7 @@ namespace CsExport.Application.Logic.Tests.ParserTests.UtilityTests.BinderTests
 		[Fact]
 		public void BindValue_When_value_is_passed_and_original_value_is_not_empty_Then_updates_property_value()
 		{
-			var stubClass = new StubClass {Property = new Date(2015, 1, 3)};
+			var stubClass = new StubClass { Property = new Date(2015, 1, 3) };
 			var stubClassType = typeof(StubClass);
 			var datePropertyInfo = stubClassType.GetProperty("Property");
 			var binder = new DateValueBinder(stubClass, datePropertyInfo);
@@ -51,14 +51,14 @@ namespace CsExport.Application.Logic.Tests.ParserTests.UtilityTests.BinderTests
 		[Fact]
 		public void BindValue_When_invalid_string_is_passed_Then_throws_exception()
 		{
-			var stubClass = new StubClass {Property = new Date(2015, 1, 3)};
+			var stubClass = new StubClass { Property = new Date(2015, 1, 3) };
 			var stubClassType = typeof(StubClass);
 			var datePropertyInfo = stubClassType.GetProperty("Property");
 			var binder = new DateValueBinder(stubClass, datePropertyInfo);
 
 			var updatedValue = "asdsdf";
-			
-			Assert.Throws<ParameterBindingException>(()=> binder.BindValue(updatedValue));
+
+			Assert.Throws<ParameterBindingException>(() => binder.BindValue(updatedValue));
 		}
 
 		private class StubClass

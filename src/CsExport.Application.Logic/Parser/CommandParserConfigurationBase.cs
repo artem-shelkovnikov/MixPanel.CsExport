@@ -12,15 +12,16 @@ namespace CsExport.Application.Logic.Parser
 		public abstract string CommandName { get; }
 
 		public IArguments TryParse(IEnumerable<CommandArgument> arguments)
-		{														 
-
+		{
 			var commandArgumentsInstance = new TCommandArguments();
 
 			var typeDefinition = typeof(TCommandArguments);
 
 			foreach (var commandArgument in arguments)
 			{
-				var propertyDefinition = typeDefinition.GetProperty(commandArgument.ArgumentName, BindingFlags.IgnoreCase | BindingFlags.Public | BindingFlags.Instance);
+				var propertyDefinition = typeDefinition.GetProperty(commandArgument.ArgumentName,
+				                                                    BindingFlags.IgnoreCase | BindingFlags.Public
+				                                                    | BindingFlags.Instance);
 				var propertyValueBinder = _binderFactory.CreateForProperty(commandArgumentsInstance, propertyDefinition);
 
 				if (propertyValueBinder != null)

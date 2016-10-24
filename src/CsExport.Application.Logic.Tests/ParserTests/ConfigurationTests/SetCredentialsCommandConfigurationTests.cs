@@ -13,7 +13,7 @@ namespace CsExport.Application.Logic.Tests.ParserTests.ConfigurationTests
 
 		[Fact]
 		public void TryParse_When_called_with_invalid_arguments_Then_returns_arguments_object_without_secret_set()
-		{																					 
+		{
 			var result = (SetCredentialsCommandArguments) _configuration.TryParse(Enumerable.Empty<CommandArgument>());
 
 			Assert.Null(result.Secret);
@@ -24,7 +24,7 @@ namespace CsExport.Application.Logic.Tests.ParserTests.ConfigurationTests
 		{
 			var arguments = new[]
 			{
-				new CommandArgument {ArgumentName = "secret", Value = "test"}
+				new CommandArgument { ArgumentName = "secret", Value = "test" }
 			};
 
 			var result = _configuration.TryParse(arguments) as SetCredentialsCommandArguments;
@@ -37,9 +37,9 @@ namespace CsExport.Application.Logic.Tests.ParserTests.ConfigurationTests
 		{
 			var arguments = new[]
 			{
-				new CommandArgument {ArgumentName = "SecREt", Value = "test"}
+				new CommandArgument { ArgumentName = "SecREt", Value = "test" }
 			};
-															 
+
 			var result = _configuration.TryParse(arguments) as SetCredentialsCommandArguments;
 
 			Assert.NotNull(result);

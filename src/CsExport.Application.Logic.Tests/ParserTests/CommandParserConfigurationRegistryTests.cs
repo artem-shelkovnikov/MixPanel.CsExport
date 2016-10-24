@@ -19,11 +19,11 @@ namespace CsExport.Application.Logic.Tests.ParserTests
 			var configurationTypes = existingConfigurations.Select(x => x.GetType()).ToArray();
 
 			Assert.NotEqual(0, existingConfigurations.Count());
-			Assert.Contains(typeof(StubParserConfiguration), configurationTypes); 
+			Assert.Contains(typeof(StubParserConfiguration), configurationTypes);
 		}
 
 		public class StubParserConfiguration : ICommandParserConfiguration
-		{	 
+		{
 			public string CommandName => "stub-command";
 
 			public IArguments TryParse(IEnumerable<CommandArgument> arguments)

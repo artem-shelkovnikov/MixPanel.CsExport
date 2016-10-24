@@ -6,12 +6,10 @@ namespace CsExport.Application.Logic.Parser.Utility
 	{
 		public ArgumentParseException() : base("Failed to parse input")
 		{
-			
 		}
 
 		public ArgumentParseException(string input) : base($"Failed to parse input: {input}")
 		{
-			
 		}
 	}
 }
