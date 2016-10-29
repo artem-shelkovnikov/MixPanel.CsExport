@@ -13,6 +13,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CsExport.Application.Logic.
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CsExport.Application.Console", "CsExport.Application.Console\CsExport.Application.Console.csproj", "{6480E5DE-1603-4E2A-BD27-03792A7919C7}"
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Tests", "Tests", "{F063CD8B-7F41-4ABC-9F4C-64BDB1AB67F0}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -42,5 +44,9 @@ Global
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{C77569BB-019E-459E-9AEA-C487236F62C7} = {F063CD8B-7F41-4ABC-9F4C-64BDB1AB67F0}
+		{6052012D-DCFA-491E-B4F8-00F99A1F9A3B} = {F063CD8B-7F41-4ABC-9F4C-64BDB1AB67F0}
 	EndGlobalSection
 EndGlobal
