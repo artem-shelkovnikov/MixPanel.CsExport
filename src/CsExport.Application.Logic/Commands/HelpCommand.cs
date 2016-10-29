@@ -1,6 +1,8 @@
 ﻿using System;
+using System.Text;
 using CsExport.Application.Logic.CommandArguments;
 using CsExport.Application.Logic.IO;
+using CsExport.Application.Logic.Parser;
 using CsExport.Application.Logic.Results;
 using CsExport.Core.Settings;
 
@@ -9,10 +11,12 @@ namespace CsExport.Application.Logic.Commands
 	public class HelpCommand : ICommandWithArguments<HelpCommandArguments>
 	{
 		private readonly IOutput _output;
+		private readonly ICommandConfigurationRegistry _commandConfigurationRegistry;
 
-		public HelpCommand(IOutput output)
+		public HelpCommand(IOutput output, ICommandConfigurationRegistry commandConfigurationRegistry)
 		{
 			_output = output;
+			_commandConfigurationRegistry = commandConfigurationRegistry;
 		}
 
 		public CommandResult Execute(ApplicationConfiguration applicationConfiguration,
@@ -22,16 +26,24 @@ namespace CsExport.Application.Logic.Commands
 			if (arguments == null)
 				throw new ArgumentNullException(nameof(arguments));
 
-			string message = @"
-Available commands:
-  -- Set Credentials --
-  set-credentials secret=<your_project_secret> - Sets credentials for all further requests made to MixPanel. Setting credentials is required to be done before any other export command execution.
+			var commands = _commandConfigurationRegistry.GetAll();
 
-  -- Raw Export --
-  raw-export from=<starting date> to=<ending date> - Exports Raw data for specified date range
-";
+			var builder = new StringBuilder();
 
-			_output.Notify(message);
+			foreach (var commandParserConfiguration in commands)
+			{
+				builder.AppendLine(commandParserConfiguration.Signature);
+				builder.AppendLine(commandParserConfiguration.Description);
+
+				foreach (var propertyConfiguration in commandParserConfiguration.Parameters)
+				{
+					builder.AppendLine("-" + propertyConfiguration.Signature + " -- " + propertyConfiguration.Description);
+				}
+
+				builder.AppendLine();
+			}
+
+			_output.Notify(builder.ToString());
 
 			return new SuccessResult();
 		}

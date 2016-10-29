@@ -1,30 +1,36 @@
-﻿using CsExport.Application.Logic.Parser.Utility;
+﻿using System.Linq;
 
 namespace CsExport.Application.Logic.Parser
 {
 	public class CommandParser : ICommandParser
 	{
-		private readonly ICommandParserConfigurationRegistry _commandParserConfigurationRegistry;
+		private readonly ICommandConfigurationRegistry _commandConfigurationRegistry;
 		private readonly ICommandFactory _commandFactory;
-		private readonly ConsoleCommandParser _consoleCommandParser = new ConsoleCommandParser();
+		private readonly ICommandArgumentParser _commandArgumentParser;
 
-		public CommandParser(ICommandParserConfigurationRegistry commandParserConfigurationRegistry,
-		                     ICommandFactory commandFactory)
+		public CommandParser(ICommandConfigurationRegistry commandConfigurationRegistry,
+		                     ICommandFactory commandFactory,
+		                     ICommandArgumentParser commandArgumentParser)
 		{
-			_commandParserConfigurationRegistry = commandParserConfigurationRegistry;
+			_commandConfigurationRegistry = commandConfigurationRegistry;
 			_commandFactory = commandFactory;
+			_commandArgumentParser = commandArgumentParser;
 		}
 
 		public ICommand ParseCommand(string commandText)
 		{
-			var commandDefinition = _consoleCommandParser.Parse(commandText);
+			var commandDefinitions = _commandConfigurationRegistry.GetAll();
 
-			var commandParserConfiguration = _commandParserConfigurationRegistry.GetByName(commandDefinition.Name);
-
-			if (commandParserConfiguration == null)
+			if (commandDefinitions == null
+			    || commandDefinitions.Any() == false)
 				return null;
 
-			var arguments = commandParserConfiguration.TryParse(commandDefinition.Arguments);
+			var commandDefinition = commandDefinitions.FirstOrDefault(x => _commandArgumentParser.CanParse(commandText, x));
+
+			if (commandDefinition == null)
+				return null;
+
+			var arguments = _commandArgumentParser.Parse(commandText, commandDefinition);
 
 			var command = _commandFactory.Create(arguments);
 

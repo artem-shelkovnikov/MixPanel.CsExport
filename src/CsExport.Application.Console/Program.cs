@@ -15,9 +15,10 @@ namespace CsExport.Application.Console
 		{
 			var dependancyInjectionService = GetDependancyInjectionService();
 
-			var commandParserConfigurationRegistry = new CommandParserConfigurationRegistry();
+			var commandParserConfigurationRegistry = new CommandConfigurationRegistry();
 			var commandParser = new CommandParser(commandParserConfigurationRegistry,
-			                                      new CommandFactory(dependancyInjectionService));
+			                                      new CommandFactory(dependancyInjectionService),
+			                                      new CommandArgumentParser());
 
 
 			var input = new ConsoleInput();
@@ -40,11 +41,13 @@ namespace CsExport.Application.Console
 			containerBuilder.RegisterType<MixPanelClient>().As<IMixPanelClient>();
 			containerBuilder.RegisterType<FileWriter>().As<IFileWriter>();
 			containerBuilder.RegisterType<DefaultWebClient>().As<IWebClient>();
+			containerBuilder.RegisterType<CommandConfigurationRegistry>().As<ICommandConfigurationRegistry>();
 			containerBuilder.RegisterType<ConsoleInput>().As<IInput>();
 			containerBuilder.RegisterType<ConsoleOutput>().As<IOutput>();
 			containerBuilder.RegisterType<HelpCommand>().As<ICommandWithArguments<HelpCommandArguments>>();
 			containerBuilder.RegisterType<RawExportCommand>().As<ICommandWithArguments<RawExportCommandArguments>>();
 			containerBuilder.RegisterType<SetCredentialsCommand>().As<ICommandWithArguments<SetCredentialsCommandArguments>>();
+
 
 			var dependancyInjectionService = new DependancyInjectionService(containerBuilder.Build());
 

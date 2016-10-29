@@ -1,7 +1,6 @@
 ﻿using System;
 using CsExport.Application.Logic.IO;
 using CsExport.Application.Logic.Parser;
-using CsExport.Application.Logic.Parser.Utility;
 using CsExport.Application.Logic.Results;
 using CsExport.Core.Exceptions;
 using CsExport.Core.Settings;
@@ -46,10 +45,6 @@ namespace CsExport.Application.Logic
 			catch (MixPanelUnauthorizedException)
 			{
 				_resultHandler.HandleResult(new UnauthorizedResult());
-			}
-			catch (ArgumentParseException ex)
-			{
-				_resultHandler.HandleResult(new CommandParseFailedResult(ex));
 			}
 			catch (Exception ex)
 			{

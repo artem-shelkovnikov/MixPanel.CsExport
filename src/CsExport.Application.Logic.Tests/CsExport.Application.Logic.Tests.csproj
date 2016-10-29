@@ -67,16 +67,16 @@
     <Compile Include="CommandTests\CommandTestsBase.cs" />
     <Compile Include="CommandTests\SetCredentialsCommandTests.cs" />
     <Compile Include="ExportConsoleApplicationTests.cs" />
-    <Compile Include="ParserTests\CommandParserConfigurationRegistryTests.cs" />
+    <Compile Include="ParserTests\CommandArgumentParserTests.cs" />
+    <Compile Include="ParserTests\CommandConfigurationRegistryTests.cs" />
+    <Compile Include="ParserTests\CommandFactoryTests.cs" />
     <Compile Include="ParserTests\CommandParserTests.cs" />
-    <Compile Include="ParserTests\ConfigurationTests\RawExportCommandConfigurationTests.cs" />
-    <Compile Include="ParserTests\ConfigurationTests\SetCredentialsCommandConfigurationTests.cs" />
+    <Compile Include="ParserTests\DefaultParameterExtractorTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="CommandTests\RawExportCommandTests.cs" />
     <Compile Include="ParserTests\UtilityTests\BinderTests\DateValueBinderTests.cs" />
     <Compile Include="ParserTests\UtilityTests\BinderTests\StringArrayValueBinderTests.cs" />
     <Compile Include="ParserTests\UtilityTests\BinderTests\StringValueBinderTests.cs" />
-    <Compile Include="ParserTests\UtilityTests\ConsoleCommandParserTests.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />

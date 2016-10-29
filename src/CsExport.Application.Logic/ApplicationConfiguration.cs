@@ -6,7 +6,7 @@
 
 		public ApplicationConfiguration()
 		{
-			ExportPath = "export";
+			ExportPath = ".";
 		}
 	}
 }

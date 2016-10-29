@@ -2,8 +2,13 @@ using CsExport.Application.Logic.CommandArguments;
 
 namespace CsExport.Application.Logic.Parser.Configuration
 {
-	public class HelpCommandConfiguration : CommandParserConfigurationBase<HelpCommandArguments>
+	public class HelpCommandConfiguration : CommandConfiguration<HelpCommandArguments>
 	{
-		public override string CommandName => "help";
+		public HelpCommandConfiguration()
+		{
+			HasSignature("help");
+
+			HasDescription("Retrieves list of commands for application");
+		}
 	}
 }

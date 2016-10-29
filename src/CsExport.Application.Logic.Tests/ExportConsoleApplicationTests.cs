@@ -1,7 +1,6 @@
 ﻿using System;
 using CsExport.Application.Logic.IO;
 using CsExport.Application.Logic.Parser;
-using CsExport.Application.Logic.Parser.Utility;
 using CsExport.Application.Logic.Results;
 using CsExport.Core.Exceptions;
 using CsExport.Core.Settings;
@@ -81,19 +80,6 @@ namespace CsExport.Application.Logic.Tests
 			_application.ReceiveCommand();
 
 			_resultHandlerMock.Verify(x => x.HandleResult(It.IsAny<UnauthorizedResult>()), Times.Once);
-		}
-
-		[Fact]
-		public void
-			ReceiveCommand_When_argument_parse_exception_is_thrown_by_component_Then_writes_output_for_commandParseFailedResult()
-		{
-			_inputProviderMock.Setup(x => x.GetLine()).Returns(ValidCommandText);
-			_commandMock.Setup(x => x.Execute(It.IsAny<ApplicationConfiguration>(), It.IsAny<ClientConfiguration>()))
-			            .Throws<ArgumentParseException>();
-
-			_application.ReceiveCommand();
-
-			_resultHandlerMock.Verify(x => x.HandleResult(It.IsAny<CommandParseFailedResult>()), Times.Once);
 		}
 	}
 }
