@@ -9,7 +9,9 @@ namespace CsExport.Application.Logic.Tests.ParserTests
 	public class CommandFactoryTests
 	{
 		private readonly ICommandFactory _commandFactory;
-		private readonly Mock<IDependancyInjectionService> _dependancyInjectionServiceMock = new Mock<IDependancyInjectionService>();
+
+		private readonly Mock<IDependancyInjectionService> _dependancyInjectionServiceMock =
+			new Mock<IDependancyInjectionService>();
 
 		public CommandFactoryTests()
 		{
@@ -42,7 +44,7 @@ namespace CsExport.Application.Logic.Tests.ParserTests
 			var result = _commandFactory.Create(new StubArguments());
 
 			Assert.NotNull(result);
-		}						 
+		}
 
 		[Fact]
 		public void Create_When_dependancyInjectionService_returns_command_Then_returns_command_with_correct_type()
@@ -50,7 +52,7 @@ namespace CsExport.Application.Logic.Tests.ParserTests
 			var commandMock = new Mock<ICommandWithArguments<StubArguments>>();
 			_dependancyInjectionServiceMock.Setup(x => x.Resolve(typeof(ICommandWithArguments<StubArguments>)))
 			                               .Returns(commandMock.Object);
-			var arguments = new StubArguments(); 
+			var arguments = new StubArguments();
 
 			var result = _commandFactory.Create(arguments);
 
@@ -58,14 +60,16 @@ namespace CsExport.Application.Logic.Tests.ParserTests
 		}
 
 		[Fact]
-		public void Create_When_dependancyInjectionService_returns_command_Then_command_execute_calls_internal_command_execute_with_correct_arguments()
+		public void
+			Create_When_dependancyInjectionService_returns_command_Then_command_execute_calls_internal_command_execute_with_correct_arguments
+			()
 		{
 			var commandMock = new Mock<ICommandWithArguments<StubArguments>>();
 			_dependancyInjectionServiceMock.Setup(x => x.Resolve(typeof(ICommandWithArguments<StubArguments>)))
-										   .Returns(commandMock.Object);
-			var arguments = new StubArguments();						
+			                               .Returns(commandMock.Object);
+			var arguments = new StubArguments();
 
-			var result = _commandFactory.Create(arguments);	 
+			var result = _commandFactory.Create(arguments);
 			result.Execute();
 
 			commandMock.Verify(x => x.Execute(arguments));

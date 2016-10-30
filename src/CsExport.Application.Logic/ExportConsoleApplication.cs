@@ -10,7 +10,7 @@ namespace CsExport.Application.Logic
 	public class ExportConsoleApplication
 	{
 		private readonly ICommandParser _commandParser;
-		private readonly IResultHandler _resultHandler;		
+		private readonly IResultHandler _resultHandler;
 
 		private readonly IInput _input;
 

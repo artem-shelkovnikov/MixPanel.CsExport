@@ -14,7 +14,10 @@ namespace CsExport.Application.Logic.Commands
 		private readonly IMixPanelClient _mixPanelClient;
 		private readonly IFileWriter _fileWriter;
 
-		public RawExportCommand(ApplicationConfiguration applicationConfiguration, ClientConfiguration clientConfiguration, IMixPanelClient mixPanelClient, IFileWriter fileWriter)
+		public RawExportCommand(ApplicationConfiguration applicationConfiguration,
+		                        ClientConfiguration clientConfiguration,
+		                        IMixPanelClient mixPanelClient,
+		                        IFileWriter fileWriter)
 		{
 			_applicationConfiguration = applicationConfiguration;
 			_clientConfiguration = clientConfiguration;

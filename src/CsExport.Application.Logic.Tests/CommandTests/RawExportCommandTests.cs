@@ -114,7 +114,10 @@ namespace CsExport.Application.Logic.Tests.CommandTests
 
 		private RawExportCommand GetCommand()
 		{
-			return new RawExportCommand(ApplicationConfiguration, ClientConfiguration, MixPanelClientMock.Object, FileWriterMock.Object);
+			return new RawExportCommand(ApplicationConfiguration,
+			                            ClientConfiguration,
+			                            MixPanelClientMock.Object,
+			                            FileWriterMock.Object);
 		}
 
 		private RawExportCommandArguments GetArguments(Date from = null, Date to = null, string[] events = null)
