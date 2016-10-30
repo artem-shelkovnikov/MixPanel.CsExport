@@ -63,15 +63,12 @@ namespace CsExport.Application.Logic.Tests.ParserTests
 			var commandMock = new Mock<ICommandWithArguments<StubArguments>>();
 			_dependancyInjectionServiceMock.Setup(x => x.Resolve(typeof(ICommandWithArguments<StubArguments>)))
 										   .Returns(commandMock.Object);
-			var arguments = new StubArguments();
-			var applicationConfiguration = new ApplicationConfiguration();
-			var clientConfiguration = new ClientConfiguration();
+			var arguments = new StubArguments();						
 
-			var result = _commandFactory.Create(arguments);
+			var result = _commandFactory.Create(arguments);	 
+			result.Execute();
 
-			result.Execute(applicationConfiguration, clientConfiguration);
-
-			commandMock.Verify(x => x.Execute(applicationConfiguration, clientConfiguration, arguments));
+			commandMock.Verify(x => x.Execute(arguments));
 		}
 
 

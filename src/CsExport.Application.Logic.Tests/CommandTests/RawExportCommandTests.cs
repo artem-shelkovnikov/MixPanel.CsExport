@@ -17,7 +17,7 @@ namespace CsExport.Application.Logic.Tests.CommandTests
 			var command = GetCommand();
 			var arguments = GetArguments();
 
-			var result = command.Execute(ApplicationConfiguration, ClientConfiguration, arguments);
+			var result = command.Execute(arguments);
 
 			Assert.IsType<SuccessResult>(result);
 		}
@@ -28,7 +28,7 @@ namespace CsExport.Application.Logic.Tests.CommandTests
 			var command = GetCommand();
 			var arguments = GetArguments();
 
-			var result = command.Execute(ApplicationConfiguration, ClientConfiguration, arguments);
+			var result = command.Execute(arguments);
 
 			MixPanelClientMock.Verify(x => x.ExportRaw(ClientConfiguration, It.IsAny<Date>(), It.IsAny<Date>(), null), Times.Once);
 		}
@@ -43,7 +43,7 @@ namespace CsExport.Application.Logic.Tests.CommandTests
 			var command = GetCommand();
 			var arguments = GetArguments(from, to);
 
-			var result = command.Execute(ApplicationConfiguration, ClientConfiguration, arguments);
+			var result = command.Execute(arguments);
 
 			MixPanelClientMock.Verify(x => x.ExportRaw(ClientConfiguration, from, to, null), Times.Once);
 		}
@@ -58,7 +58,7 @@ namespace CsExport.Application.Logic.Tests.CommandTests
 			var command = GetCommand();
 			var arguments = GetArguments(from, to, new[] { @event });
 
-			var result = command.Execute(ApplicationConfiguration, ClientConfiguration, arguments);
+			var result = command.Execute(arguments);
 
 			MixPanelClientMock.Verify(
 				x => x.ExportRaw(ClientConfiguration, It.IsAny<Date>(), It.IsAny<Date>(), It.Is<string[]>(y => y[0] == @event)),
@@ -83,7 +83,7 @@ namespace CsExport.Application.Logic.Tests.CommandTests
 			var command = GetCommand();
 			var arguments = GetArguments(from, to);
 
-			var result = command.Execute(ApplicationConfiguration, ClientConfiguration, arguments);
+			var result = command.Execute(arguments);
 
 			FileWriterMock.Verify(x => x.WriteContent(ApplicationConfiguration.ExportPath, It.IsAny<string>(), exportContent));
 		}
@@ -97,7 +97,7 @@ namespace CsExport.Application.Logic.Tests.CommandTests
 
 			var command = GetCommand();
 
-			Assert.Throws<ArgumentException>(() => command.Execute(ApplicationConfiguration, ClientConfiguration, arguments));
+			Assert.Throws<ArgumentException>(() => command.Execute(arguments));
 		}
 
 		[Fact]
@@ -107,14 +107,14 @@ namespace CsExport.Application.Logic.Tests.CommandTests
 			var arguments = GetArguments();
 			ClientConfiguration.UpdateCredentials(string.Empty);
 
-			var result = command.Execute(ApplicationConfiguration, ClientConfiguration, arguments);
+			var result = command.Execute(arguments);
 
 			Assert.IsType<UnauthorizedResult>(result);
 		}
 
 		private RawExportCommand GetCommand()
 		{
-			return new RawExportCommand(MixPanelClientMock.Object, FileWriterMock.Object);
+			return new RawExportCommand(ApplicationConfiguration, ClientConfiguration, MixPanelClientMock.Object, FileWriterMock.Object);
 		}
 
 		private RawExportCommandArguments GetArguments(Date from = null, Date to = null, string[] events = null)

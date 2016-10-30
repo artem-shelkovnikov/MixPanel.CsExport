@@ -9,18 +9,20 @@ namespace CsExport.Application.Logic.Commands
 {
 	public class RawExportCommand : ICommandWithArguments<RawExportCommandArguments>
 	{
+		private readonly ApplicationConfiguration _applicationConfiguration;
+		private readonly ClientConfiguration _clientConfiguration;
 		private readonly IMixPanelClient _mixPanelClient;
 		private readonly IFileWriter _fileWriter;
 
-		public RawExportCommand(IMixPanelClient mixPanelClient, IFileWriter fileWriter)
+		public RawExportCommand(ApplicationConfiguration applicationConfiguration, ClientConfiguration clientConfiguration, IMixPanelClient mixPanelClient, IFileWriter fileWriter)
 		{
+			_applicationConfiguration = applicationConfiguration;
+			_clientConfiguration = clientConfiguration;
 			_mixPanelClient = mixPanelClient;
 			_fileWriter = fileWriter;
 		}
 
-		public CommandResult Execute(ApplicationConfiguration applicationConfiguration,
-		                             ClientConfiguration clientConfiguration,
-		                             RawExportCommandArguments arguments)
+		public CommandResult Execute(RawExportCommandArguments arguments)
 		{
 			if (arguments == null)
 				throw new ArgumentNullException(nameof(arguments));
@@ -28,13 +30,13 @@ namespace CsExport.Application.Logic.Commands
 			if (arguments.From.GetDateTime() > arguments.To.GetDateTime())
 				throw new ArgumentException("@from should represent a date less than @to", nameof(arguments.From));
 
-			if (clientConfiguration == null
-			    || string.IsNullOrWhiteSpace(clientConfiguration.Secret))
+			if (_clientConfiguration == null
+			    || string.IsNullOrWhiteSpace(_clientConfiguration.Secret))
 				return new UnauthorizedResult();
 
-			var content = _mixPanelClient.ExportRaw(clientConfiguration, arguments.From, arguments.To, arguments.Events);
+			var content = _mixPanelClient.ExportRaw(_clientConfiguration, arguments.From, arguments.To, arguments.Events);
 
-			_fileWriter.WriteContent(applicationConfiguration.ExportPath,
+			_fileWriter.WriteContent(_applicationConfiguration.ExportPath,
 			                         $"{DateTime.Now.ToFileTimeUtc()}-raw-export.txt",
 			                         content);
 

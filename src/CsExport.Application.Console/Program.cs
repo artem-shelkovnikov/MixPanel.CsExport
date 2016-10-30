@@ -6,6 +6,7 @@ using CsExport.Application.Logic.IO;
 using CsExport.Application.Logic.Parser;
 using CsExport.Application.Logic.Parser.Configuration;
 using CsExport.Core.Client;
+using CsExport.Core.Settings;
 
 namespace CsExport.Application.Console
 {
@@ -47,6 +48,9 @@ namespace CsExport.Application.Console
 			containerBuilder.RegisterType<HelpCommand>().As<ICommandWithArguments<HelpCommandArguments>>();
 			containerBuilder.RegisterType<RawExportCommand>().As<ICommandWithArguments<RawExportCommandArguments>>();
 			containerBuilder.RegisterType<SetCredentialsCommand>().As<ICommandWithArguments<SetCredentialsCommandArguments>>();
+
+			containerBuilder.RegisterInstance(new ApplicationConfiguration());
+			containerBuilder.RegisterInstance(new ClientConfiguration());
 
 
 			var dependancyInjectionService = new DependancyInjectionService(containerBuilder.Build());

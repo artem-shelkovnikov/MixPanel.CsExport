@@ -13,14 +13,11 @@ namespace CsExport.Application.Logic
 			_arguments = arguments;
 		}
 
-		protected abstract CommandResult ExecuteInner(ApplicationConfiguration applicationConfiguration,
-		                                              ClientConfiguration clientConfiguration,
-		                                              TArguments arguments);
+		protected abstract CommandResult ExecuteInner(TArguments arguments);
 
-		public CommandResult Execute(ApplicationConfiguration applicationConfiguration,
-		                             ClientConfiguration clientConfiguration)
+		public CommandResult Execute()
 		{
-			return ExecuteInner(applicationConfiguration, clientConfiguration, _arguments);
+			return ExecuteInner(_arguments);
 		}
 	}
 }

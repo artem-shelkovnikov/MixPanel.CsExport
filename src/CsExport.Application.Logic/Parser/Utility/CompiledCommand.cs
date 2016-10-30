@@ -15,10 +15,9 @@ namespace CsExport.Application.Logic.Parser.Utility
 			_commandArguments = commandArguments;
 		}
 
-		public CommandResult Execute(ApplicationConfiguration applicationConfiguration,
-		                             ClientConfiguration clientConfiguration)
+		public CommandResult Execute()
 		{
-			return _command.Execute(applicationConfiguration, clientConfiguration, _commandArguments);
+			return _command.Execute(_commandArguments);
 		}
 	}
 }

@@ -24,9 +24,9 @@ namespace CsExport.Application.Logic.Tests.CommandTests
 		[Fact]
 		public void Ctor_When_called_with_null_arguments_Then_throws()
 		{
-			var command = new SetCredentialsCommand(MixPanelClientMock.Object);
+			var command = GetCommand();
 
-			Assert.Throws<ArgumentNullException>(() => command.Execute(ApplicationConfiguration, ClientConfiguration, null));
+			Assert.Throws<ArgumentNullException>(() => command.Execute(null));
 		}
 
 		[Fact]
@@ -35,7 +35,7 @@ namespace CsExport.Application.Logic.Tests.CommandTests
 			var command = GetCommand();
 			var arguments = GetArguments(ValidSecret);
 
-			command.Execute(ApplicationConfiguration, ClientConfiguration, arguments);
+			command.Execute(arguments);
 
 			Assert.Equal(ValidSecret, ClientConfiguration.Secret);
 		}
@@ -46,7 +46,7 @@ namespace CsExport.Application.Logic.Tests.CommandTests
 			var command = GetCommand();
 			var arguments = GetArguments(ValidSecret);
 
-			var result = command.Execute(ApplicationConfiguration, ClientConfiguration, arguments);
+			var result = command.Execute(arguments);
 
 			Assert.IsType<SuccessResult>(result);
 		}
@@ -57,14 +57,14 @@ namespace CsExport.Application.Logic.Tests.CommandTests
 			var command = GetCommand();
 			var arguments = GetArguments(InvalidSecret);
 
-			var result = command.Execute(ApplicationConfiguration, ClientConfiguration, arguments);
+			var result = command.Execute(arguments);
 
 			Assert.IsType<UnauthorizedResult>(result);
 		}
 
 		private SetCredentialsCommand GetCommand()
 		{
-			return new SetCredentialsCommand(MixPanelClientMock.Object);
+			return new SetCredentialsCommand(ClientConfiguration, MixPanelClientMock.Object);
 		}
 
 		private SetCredentialsCommandArguments GetArguments(string secret)

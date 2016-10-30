@@ -19,9 +19,7 @@ namespace CsExport.Application.Logic.Commands
 			_commandConfigurationRegistry = commandConfigurationRegistry;
 		}
 
-		public CommandResult Execute(ApplicationConfiguration applicationConfiguration,
-		                             ClientConfiguration clientConfiguration,
-		                             HelpCommandArguments arguments)
+		public CommandResult Execute(HelpCommandArguments arguments)
 		{
 			if (arguments == null)
 				throw new ArgumentNullException(nameof(arguments));

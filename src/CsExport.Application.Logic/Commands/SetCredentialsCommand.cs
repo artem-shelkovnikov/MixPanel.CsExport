@@ -8,16 +8,16 @@ namespace CsExport.Application.Logic.Commands
 {
 	public class SetCredentialsCommand : ICommandWithArguments<SetCredentialsCommandArguments>
 	{
+		private readonly ClientConfiguration _clientConfiguration;
 		private readonly IMixPanelClient _mixPanelClient;
 
-		public SetCredentialsCommand(IMixPanelClient mixPanelClient)
+		public SetCredentialsCommand(ClientConfiguration clientConfiguration, IMixPanelClient mixPanelClient)
 		{
+			_clientConfiguration = clientConfiguration;
 			_mixPanelClient = mixPanelClient;
 		}
 
-		public CommandResult Execute(ApplicationConfiguration applicationConfiguration,
-		                             ClientConfiguration clientConfiguration,
-		                             SetCredentialsCommandArguments arguments)
+		public CommandResult Execute(SetCredentialsCommandArguments arguments)
 		{
 			if (arguments == null)
 				throw new ArgumentNullException(nameof(arguments));
@@ -31,7 +31,7 @@ namespace CsExport.Application.Logic.Commands
 
 			if (_mixPanelClient.VerifyCredentials(updatedConfiguration))
 			{
-				clientConfiguration.UpdateCredentials(arguments.Secret);
+				_clientConfiguration.UpdateCredentials(arguments.Secret);
 				return new SuccessResult();
 			}
 

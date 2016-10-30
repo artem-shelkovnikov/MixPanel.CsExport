@@ -74,7 +74,7 @@ namespace CsExport.Application.Logic.Tests
 			ReceiveCommand_When_unauthorized_exception_is_thrown_by_component_Then_writes_output_for_unauthorizedResult()
 		{
 			_inputProviderMock.Setup(x => x.GetLine()).Returns(ValidCommandText);
-			_commandMock.Setup(x => x.Execute(It.IsAny<ApplicationConfiguration>(), It.IsAny<ClientConfiguration>()))
+			_commandMock.Setup(x => x.Execute())
 			            .Throws<MixPanelUnauthorizedException>();
 
 			_application.ReceiveCommand();
