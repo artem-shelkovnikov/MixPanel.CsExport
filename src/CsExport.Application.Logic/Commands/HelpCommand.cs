@@ -4,7 +4,6 @@ using CsExport.Application.Logic.CommandArguments;
 using CsExport.Application.Logic.IO;
 using CsExport.Application.Logic.Parser;
 using CsExport.Application.Logic.Results;
-using CsExport.Core.Settings;
 
 namespace CsExport.Application.Logic.Commands
 {

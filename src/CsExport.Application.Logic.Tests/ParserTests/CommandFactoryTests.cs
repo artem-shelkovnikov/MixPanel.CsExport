@@ -1,6 +1,5 @@
 ﻿using CsExport.Application.Logic.Parser;
 using CsExport.Application.Logic.Parser.Utility;
-using CsExport.Core.Settings;
 using Moq;
 using Xunit;
 

@@ -1,6 +1,4 @@
-﻿using CsExport.Core.Settings;
-
-namespace CsExport.Application.Logic
+﻿namespace CsExport.Application.Logic
 {
 	public interface ICommand
 	{

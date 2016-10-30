@@ -3,16 +3,14 @@ using CsExport.Application.Logic.IO;
 using CsExport.Application.Logic.Parser;
 using CsExport.Application.Logic.Results;
 using CsExport.Core.Exceptions;
-using CsExport.Core.Settings;
 
 namespace CsExport.Application.Logic
 {
 	public class ExportConsoleApplication
 	{
 		private readonly ICommandParser _commandParser;
-		private readonly IResultHandler _resultHandler;
-
-		private readonly IInput _input;
+		private readonly IResultHandler _resultHandler;				   
+		private readonly IInput _input;	   
 
 		public ExportConsoleApplication(ICommandParser commandParser, IResultHandler resultHandler, IInput input)
 		{

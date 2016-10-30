@@ -3,7 +3,6 @@ using CsExport.Application.Logic.IO;
 using CsExport.Application.Logic.Parser;
 using CsExport.Application.Logic.Results;
 using CsExport.Core.Exceptions;
-using CsExport.Core.Settings;
 using Moq;
 using Xunit;
 

@@ -1,5 +1,3 @@
-using CsExport.Core.Settings;
-
 namespace CsExport.Application.Logic.Parser.Utility
 {
 	public class CompiledCommand<TCommand, TCommandArguments> : ICommand
