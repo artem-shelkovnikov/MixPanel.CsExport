@@ -6,20 +6,25 @@ using CsExport.Core.Exceptions;
 
 namespace CsExport.Application.Logic
 {
-	public class ExportConsoleApplication
+	public class ConsoleApplication : IConsoleApplication
 	{
 		private readonly ICommandParser _commandParser;
-		private readonly IResultHandler _resultHandler;				   
-		private readonly IInput _input;	   
+		private readonly IResultHandler _resultHandler;
+		private readonly IInput _input;
 
-		public ExportConsoleApplication(ICommandParser commandParser, IResultHandler resultHandler, IInput input)
+		public ConsoleApplication(ICommandParser commandParser, IResultHandler resultHandler, IInput input)
 		{
 			_commandParser = commandParser;
 			_resultHandler = resultHandler;
 			_input = input;
 		}
 
-		public void ReceiveCommand()
+		public bool IsTerminated()
+		{
+			return false;
+		}
+
+		public void ReadCommand()
 		{
 			try
 			{

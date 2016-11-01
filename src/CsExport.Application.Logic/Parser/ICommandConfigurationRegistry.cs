@@ -4,7 +4,7 @@ namespace CsExport.Application.Logic.Parser
 {
 	public interface ICommandConfigurationRegistry
 	{
-		void InitializeFromAssebmlyOf<T>() where T : ICommandConfiguration;
+		void AddMultiple(ICommandConfiguration[] configurations);
 
 		IReadOnlyCollection<CommandDefinition> GetAll();
 	}

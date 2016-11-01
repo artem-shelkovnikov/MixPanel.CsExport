@@ -10,7 +10,7 @@ namespace CsExport.Application.Logic.Tests
 {
 	public class ExportConsoleApplicationTests
 	{
-		private readonly ExportConsoleApplication _application;
+		private readonly ConsoleApplication _application;
 		private readonly Mock<ICommandParser> _commandParserMock = new Mock<ICommandParser>();
 		private readonly Mock<IResultHandler> _resultHandlerMock = new Mock<IResultHandler>();
 		private readonly Mock<IInput> _inputProviderMock = new Mock<IInput>();
@@ -23,9 +23,9 @@ namespace CsExport.Application.Logic.Tests
 		{
 			_commandParserMock.Setup(x => x.ParseCommand(ValidCommandText)).Returns(_commandMock.Object);
 
-			_application = new ExportConsoleApplication(_commandParserMock.Object,
-			                                            _resultHandlerMock.Object,
-			                                            _inputProviderMock.Object);
+			_application = new ConsoleApplication(_commandParserMock.Object,
+			                                      _resultHandlerMock.Object,
+			                                      _inputProviderMock.Object);
 		}
 
 		[Fact]
@@ -33,7 +33,7 @@ namespace CsExport.Application.Logic.Tests
 		{
 			_inputProviderMock.Setup(x => x.GetLine()).Returns(ValidCommandText);
 
-			_application.ReceiveCommand();
+			_application.ReadCommand();
 
 			_commandParserMock.Verify(x => x.ParseCommand(ValidCommandText), Times.Once);
 		}
@@ -43,7 +43,7 @@ namespace CsExport.Application.Logic.Tests
 		{
 			_inputProviderMock.Setup(x => x.GetLine()).Returns(ValidCommandText);
 
-			_application.ReceiveCommand();
+			_application.ReadCommand();
 
 			_resultHandlerMock.Verify(x => x.HandleResult(It.IsAny<CommandResult>()), Times.Once);
 		}
@@ -53,7 +53,7 @@ namespace CsExport.Application.Logic.Tests
 		{
 			_inputProviderMock.Setup(x => x.GetLine()).Returns(InvalidCommandText);
 
-			_application.ReceiveCommand();
+			_application.ReadCommand();
 
 			_resultHandlerMock.Verify(x => x.HandleResult(It.IsAny<CommandNotFoundResult>()), Times.Once);
 		}
@@ -63,7 +63,7 @@ namespace CsExport.Application.Logic.Tests
 		{
 			_inputProviderMock.Setup(x => x.GetLine()).Throws(new NotImplementedException());
 
-			_application.ReceiveCommand();
+			_application.ReadCommand();
 
 			_resultHandlerMock.Verify(x => x.HandleResult(It.IsAny<CommandTerminatedResult>()), Times.Once);
 		}
@@ -76,7 +76,7 @@ namespace CsExport.Application.Logic.Tests
 			_commandMock.Setup(x => x.Execute())
 			            .Throws<MixPanelUnauthorizedException>();
 
-			_application.ReceiveCommand();
+			_application.ReadCommand();
 
 			_resultHandlerMock.Verify(x => x.HandleResult(It.IsAny<UnauthorizedResult>()), Times.Once);
 		}

@@ -8,6 +8,12 @@ namespace CsExport.Application.Logic.Parser
 
 		internal ParameterConfiguration(ParameterDefinition parameterDefinition)
 		{
+			if (parameterDefinition == null)
+				throw new ArgumentNullException(nameof(parameterDefinition));
+
+			if (parameterDefinition.PropertyInfo == null)
+				throw new ArgumentNullException(nameof(parameterDefinition.PropertyInfo));
+
 			_parameterDefinition = parameterDefinition;
 		}
 

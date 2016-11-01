@@ -1,4 +1,5 @@
-﻿using CsExport.Application.Logic.Parser;
+﻿using CsExport.Application.Logic.DependancyControl;
+using CsExport.Application.Logic.Parser;
 using CsExport.Application.Logic.Parser.Utility;
 using Moq;
 using Xunit;
@@ -9,12 +10,12 @@ namespace CsExport.Application.Logic.Tests.ParserTests
 	{
 		private readonly ICommandFactory _commandFactory;
 
-		private readonly Mock<IDependancyInjectionService> _dependancyInjectionServiceMock =
-			new Mock<IDependancyInjectionService>();
+		private readonly Mock<IDependancyContainer> _dependancyContainerMock =
+			new Mock<IDependancyContainer>();
 
 		public CommandFactoryTests()
 		{
-			_commandFactory = new CommandFactory(_dependancyInjectionServiceMock.Object);
+			_commandFactory = new CommandFactory(_dependancyContainerMock.Object);
 		}
 
 		[Fact]
@@ -22,7 +23,7 @@ namespace CsExport.Application.Logic.Tests.ParserTests
 		{
 			var result = _commandFactory.Create(new StubArguments());
 
-			_dependancyInjectionServiceMock.Verify(x => x.Resolve(typeof(ICommandWithArguments<StubArguments>)), Times.Once);
+			_dependancyContainerMock.Verify(x => x.Resolve(typeof(ICommandWithArguments<StubArguments>)), Times.Once);
 		}
 
 		[Fact]
@@ -37,8 +38,8 @@ namespace CsExport.Application.Logic.Tests.ParserTests
 		public void Create_When_dependancyInjectionService_returns_command_Then_returns_not_null()
 		{
 			var commandMock = new Mock<ICommandWithArguments<StubArguments>>();
-			_dependancyInjectionServiceMock.Setup(x => x.Resolve(typeof(ICommandWithArguments<StubArguments>)))
-			                               .Returns(commandMock.Object);
+			_dependancyContainerMock.Setup(x => x.Resolve(typeof(ICommandWithArguments<StubArguments>)))
+			                        .Returns(commandMock.Object);
 
 			var result = _commandFactory.Create(new StubArguments());
 
@@ -49,8 +50,8 @@ namespace CsExport.Application.Logic.Tests.ParserTests
 		public void Create_When_dependancyInjectionService_returns_command_Then_returns_command_with_correct_type()
 		{
 			var commandMock = new Mock<ICommandWithArguments<StubArguments>>();
-			_dependancyInjectionServiceMock.Setup(x => x.Resolve(typeof(ICommandWithArguments<StubArguments>)))
-			                               .Returns(commandMock.Object);
+			_dependancyContainerMock.Setup(x => x.Resolve(typeof(ICommandWithArguments<StubArguments>)))
+			                        .Returns(commandMock.Object);
 			var arguments = new StubArguments();
 
 			var result = _commandFactory.Create(arguments);
@@ -64,8 +65,8 @@ namespace CsExport.Application.Logic.Tests.ParserTests
 			()
 		{
 			var commandMock = new Mock<ICommandWithArguments<StubArguments>>();
-			_dependancyInjectionServiceMock.Setup(x => x.Resolve(typeof(ICommandWithArguments<StubArguments>)))
-			                               .Returns(commandMock.Object);
+			_dependancyContainerMock.Setup(x => x.Resolve(typeof(ICommandWithArguments<StubArguments>)))
+			                        .Returns(commandMock.Object);
 			var arguments = new StubArguments();
 
 			var result = _commandFactory.Create(arguments);

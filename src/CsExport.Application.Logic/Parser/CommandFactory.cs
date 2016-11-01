@@ -1,15 +1,16 @@
 ﻿using System;
+using CsExport.Application.Logic.DependancyControl;
 using CsExport.Application.Logic.Parser.Utility;
 
 namespace CsExport.Application.Logic.Parser
 {
 	public class CommandFactory : ICommandFactory
 	{
-		private readonly IDependancyInjectionService _dependancyInjectionService;
+		private readonly IDependancyContainer _dependancyContainer;
 
-		public CommandFactory(IDependancyInjectionService dependancyInjectionService)
+		public CommandFactory(IDependancyContainer dependancyContainer)
 		{
-			_dependancyInjectionService = dependancyInjectionService;
+			_dependancyContainer = dependancyContainer;
 		}
 
 		public ICommand Create(IArguments arguments)
@@ -17,7 +18,7 @@ namespace CsExport.Application.Logic.Parser
 			var commandType = typeof(ICommandWithArguments<>);
 			var genericType = commandType.MakeGenericType(arguments.GetType());
 
-			var command = _dependancyInjectionService.Resolve(genericType);
+			var command = _dependancyContainer.Resolve(genericType);
 
 			if (command == null)
 				return null;

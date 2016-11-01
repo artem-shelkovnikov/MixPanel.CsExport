@@ -45,19 +45,30 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="ApplicationConfiguration.cs" />
+    <Compile Include="Commands\RawExportCommand.cs" />
+    <Compile Include="Commands\SetCredentialsCommand.cs" />
+    <Compile Include="ConsoleApplicationFactory.cs" />
+    <Compile Include="DependancyControl\DefaultDependancyConfiguration.cs" />
+    <Compile Include="DependancyControl\CommandRegistration.cs" />
+    <Compile Include="DependancyControl\DefaultCommandRegistration.cs" />
+    <Compile Include="DependancyControl\DependancyConfiguration.cs" />
     <Compile Include="CommandBase.cs" />
-    <Compile Include="DependancyInjectionService.cs" />
+    <Compile Include="ConsoleApplicationBootstrapper.cs" />
+    <Compile Include="DependancyControl\DependancyContainer.cs" />
     <Compile Include="CommandArguments\SetCredentialsCommandArguments.cs" />
     <Compile Include="CommandArguments\HelpCommandArguments.cs" />
     <Compile Include="CommandArguments\RawExportCommandArguments.cs" />
     <Compile Include="Commands\HelpCommand.cs" />
-    <Compile Include="Commands\SetCredentialsCommand.cs" />
+    <Compile Include="DependancyControl\DependancyContainerFactory.cs" />
+    <Compile Include="DependancyControl\IDependancyContainerFactory.cs" />
+    <Compile Include="IConsoleApplication.cs" />
+    <Compile Include="IConsoleApplicationFactory.cs" />
     <Compile Include="IO\ConsoleInput.cs" />
     <Compile Include="IO\ConsoleOutput.cs" />
     <Compile Include="IO\FileWriter.cs" />
     <Compile Include="IArguments.cs" />
     <Compile Include="ICommandWithArguments.cs" />
-    <Compile Include="IDependancyInjectionService.cs" />
+    <Compile Include="DependancyControl\IDependancyContainer.cs" />
     <Compile Include="IO\IFileWriter.cs" />
     <Compile Include="IO\IOutput.cs" />
     <Compile Include="Parser\CommandArgumentParser.cs" />
@@ -93,13 +104,12 @@
     <Compile Include="Results\CommandNotFoundResult.cs" />
     <Compile Include="CommandResult.cs" />
     <Compile Include="Results\CommandTerminatedResult.cs" />
-    <Compile Include="ExportConsoleApplication.cs" />
+    <Compile Include="ConsoleApplication.cs" />
     <Compile Include="ICommand.cs" />
     <Compile Include="Parser\ICommandParser.cs" />
     <Compile Include="IO\IInput.cs" />
     <Compile Include="IResultHandler.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Commands\RawExportCommand.cs" />
     <Compile Include="Results\SuccessResult.cs" />
     <Compile Include="Results\UnauthorizedResult.cs" />
   </ItemGroup>

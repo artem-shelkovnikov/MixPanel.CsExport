@@ -7,28 +7,39 @@ namespace CsExport.Application.Logic.Parser
 {
 	public class CommandConfigurationRegistry : ICommandConfigurationRegistry
 	{
-		private static List<CommandDefinition> _configurations = new List<CommandDefinition>();
+		private readonly List<CommandDefinition> _configurations = new List<CommandDefinition>();
 
-		public void InitializeFromAssebmlyOf<T>() where T : ICommandConfiguration
+		public void AddMultiple(ICommandConfiguration[] configurations)
 		{
-			var configurationImplementations = typeof(T).Assembly
-			                                            .GetTypes()
-			                                            .Where(
-				                                            x =>
-					                                            typeof(ICommandConfiguration).IsAssignableFrom(x)
-					                                            && x.IsAbstract == false).ToArray();
+			AddDefinitions(configurations);
+		}
 
-			_configurations =
-				configurationImplementations.Select(x =>
-				                                    {
-					                                    var property = x.GetProperty("Configuration",
-					                                                                 BindingFlags.IgnoreCase | BindingFlags.NonPublic
-					                                                                 | BindingFlags.Instance);
-					                                    var value =
-						                                    (CommandDefinition) property.GetValue(Activator.CreateInstance(x), null);
-					                                    return value;
-				                                    })
-				                            .ToList();
+		private void AddDefinitions(ICommandConfiguration[] configurationImplementations)
+		{
+			var commandDefinitions = configurationImplementations.Select(x =>
+			                                                             {
+				                                                             var property = x.GetType()
+				                                                                             .GetProperty("Configuration",
+				                                                                                          BindingFlags.IgnoreCase
+				                                                                                          | BindingFlags.NonPublic
+				                                                                                          | BindingFlags.Instance);
+				                                                             var value =
+					                                                             (CommandDefinition) property.GetValue(x, null);
+				                                                             return value;
+			                                                             });
+
+			if (
+				commandDefinitions.Any(
+					x =>
+						commandDefinitions.Count(y => y.Signature == x.Signature) > 1
+						|| _configurations.Any(y => y.Signature == x.Signature)))
+				throw new ArgumentException(
+					"Multiple commands with same signature detected. Each command signature must be unique.",
+					nameof(configurationImplementations));
+
+
+			_configurations.AddRange(
+				commandDefinitions);
 		}
 
 		public IReadOnlyCollection<CommandDefinition> GetAll()

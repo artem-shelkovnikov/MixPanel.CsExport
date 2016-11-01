@@ -66,12 +66,14 @@
   <ItemGroup>
     <Compile Include="CommandTests\CommandTestsBase.cs" />
     <Compile Include="CommandTests\SetCredentialsCommandTests.cs" />
+    <Compile Include="ConsoleApplicationBootsrapperTests.cs" />
     <Compile Include="ExportConsoleApplicationTests.cs" />
     <Compile Include="ParserTests\CommandArgumentParserTests.cs" />
     <Compile Include="ParserTests\CommandConfigurationRegistryTests.cs" />
     <Compile Include="ParserTests\CommandFactoryTests.cs" />
     <Compile Include="ParserTests\CommandParserTests.cs" />
     <Compile Include="ParserTests\DefaultParameterExtractorTests.cs" />
+    <Compile Include="ParserTests\ParameterConfigurationTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="CommandTests\RawExportCommandTests.cs" />
     <Compile Include="ParserTests\UtilityTests\BinderTests\DateValueBinderTests.cs" />
