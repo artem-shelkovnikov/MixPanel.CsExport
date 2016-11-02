@@ -82,6 +82,8 @@
     <Compile Include="Parser\IParameterExtractor.cs" />
     <Compile Include="Parser\ParameterDefinition.cs" />
     <Compile Include="Parser\ParameterConfiguration.cs" />
+    <Compile Include="Parser\SignatureHelper.cs" />
+    <Compile Include="Parser\SignatureValidation.cs" />
     <Compile Include="Parser\Utility\PropertyHelper.cs" />
     <Compile Include="Parser\Utility\CompiledCommand.cs" />
     <Compile Include="Parser\Utility\ParameterBindingException.cs" />

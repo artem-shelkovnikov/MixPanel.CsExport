@@ -4,10 +4,28 @@ namespace CsExport.Application.Logic.Parser
 {
 	public class ParameterDefinition
 	{
-		public string Signature { get; internal set; }
+		private string _signature;
+		private string _description;
+		private readonly PropertyInfo _propertyInfo;
 
-		public string Description { get; internal set; }
+		public ParameterDefinition(PropertyInfo propertyInfo)
+		{
+			_propertyInfo = propertyInfo;
+		}
 
-		public PropertyInfo PropertyInfo { get; internal set; }
+		public string Signature => _signature;
+		public string Description => _description;
+		public PropertyInfo PropertyInfo => _propertyInfo;
+
+		internal void SetSignature(string signature)
+		{
+			SignatureValidation.Validate(signature);
+			_signature = signature;
+		}
+
+		internal void SetDescription(string description)
+		{
+			_description = description;
+		}
 	}
 }

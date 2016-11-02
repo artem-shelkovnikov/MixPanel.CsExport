@@ -95,8 +95,8 @@ namespace CsExport.Application.Logic.Tests.ParserTests
 		{
 			var arguments = (StubArguments) _commandArgumentParser.Parse("command", GetStubCommandDefinition());
 
-			Assert.Equal(default(string), arguments.StringArgument);
-			Assert.Equal(default(bool), arguments.BoolArguments);
+			Assert.Equal(default(string), arguments.String);
+			Assert.Equal(default(bool), arguments.Flag);
 		}
 
 		[Fact]
@@ -104,9 +104,9 @@ namespace CsExport.Application.Logic.Tests.ParserTests
 		{
 			var commandDefinition = GetStubCommandDefinition();
 			var boolPropertyInfo =
-				commandDefinition.Parameters.First(y => y.PropertyInfo.Name == nameof(StubArguments.BoolArguments)).PropertyInfo;
+				commandDefinition.Parameters.First(y => y.PropertyInfo.Name == nameof(StubArguments.Flag)).PropertyInfo;
 			var stringPropertyInfo =
-				commandDefinition.Parameters.First(y => y.PropertyInfo.Name == nameof(StubArguments.StringArgument)).PropertyInfo;
+				commandDefinition.Parameters.First(y => y.PropertyInfo.Name == nameof(StubArguments.String)).PropertyInfo;
 
 			var result = _commandArgumentParser.Parse("command flag", commandDefinition);
 
@@ -123,9 +123,9 @@ namespace CsExport.Application.Logic.Tests.ParserTests
 		{
 			var commandDefinition = GetStubCommandDefinition();
 			var boolPropertyParameterDefinition =
-				commandDefinition.Parameters.First(y => y.PropertyInfo.Name == nameof(StubArguments.BoolArguments));
+				commandDefinition.Parameters.First(y => y.PropertyInfo.Name == nameof(StubArguments.Flag));
 			var stringPropertyParameterDefinition =
-				commandDefinition.Parameters.First(y => y.PropertyInfo.Name == nameof(StubArguments.StringArgument));
+				commandDefinition.Parameters.First(y => y.PropertyInfo.Name == nameof(StubArguments.String));
 
 			var result = _commandArgumentParser.Parse("command -flag", commandDefinition);
 
@@ -140,7 +140,7 @@ namespace CsExport.Application.Logic.Tests.ParserTests
 		{
 			var commandDefinition = GetStubCommandDefinition();
 			var boolPropertyParameterDefinition =
-				commandDefinition.Parameters.First(y => y.PropertyInfo.Name == nameof(StubArguments.BoolArguments));
+				commandDefinition.Parameters.First(y => y.PropertyInfo.Name == nameof(StubArguments.Flag));
 			var boolPropertyInfo = boolPropertyParameterDefinition.PropertyInfo;
 			var reflectionPropertyValueBinderMock = new Mock<IReflectionPropertyValueBinder>();
 			_reflectionPropertyBinderFactory.Setup(x => x.CreateForProperty(It.IsAny<StubArguments>(), boolPropertyInfo))
@@ -161,7 +161,7 @@ namespace CsExport.Application.Logic.Tests.ParserTests
 		{
 			var commandDefinition = GetStubCommandDefinition();
 			var boolPropertyParameterDefinition =
-				commandDefinition.Parameters.First(y => y.PropertyInfo.Name == nameof(StubArguments.BoolArguments));
+				commandDefinition.Parameters.First(y => y.PropertyInfo.Name == nameof(StubArguments.Flag));
 			var boolPropertyInfo = boolPropertyParameterDefinition.PropertyInfo;
 			var reflectionPropertyValueBinderMock = new Mock<IReflectionPropertyValueBinder>();
 			_reflectionPropertyBinderFactory.Setup(x => x.CreateForProperty(It.IsAny<StubArguments>(), boolPropertyInfo))
@@ -178,27 +178,20 @@ namespace CsExport.Application.Logic.Tests.ParserTests
 
 		private class StubArguments : IArguments
 		{
-			public string StringArgument { get; set; }
-			public bool BoolArguments { get; set; }
+			public string String { get; set; }
+			public bool Flag { get; set; }
 		}
 
 		private CommandDefinition GetStubCommandDefinition()
 		{
 			var argumentsType = typeof(StubArguments);
-			var stringArgumentsPropertyInfo = argumentsType.GetProperty(nameof(StubArguments.StringArgument));
-			var boolArgumentsPropertyInfo = argumentsType.GetProperty(nameof(StubArguments.BoolArguments));
+			var stringArgumentsPropertyInfo = argumentsType.GetProperty(nameof(StubArguments.String));
+			var boolArgumentsPropertyInfo = argumentsType.GetProperty(nameof(StubArguments.Flag));
 
-			var commandDefinition = new CommandDefinition(typeof(StubArguments)) { Signature = "command" };
-			commandDefinition.AddParameterDefinition(new ParameterDefinition
-			                                         {
-				                                         PropertyInfo = stringArgumentsPropertyInfo,
-				                                         Signature = "string"
-			                                         });
-			commandDefinition.AddParameterDefinition(new ParameterDefinition
-			                                         {
-				                                         PropertyInfo = boolArgumentsPropertyInfo,
-				                                         Signature = "flag"
-			                                         });
+			var commandDefinition = new CommandDefinition(typeof(StubArguments));
+			commandDefinition.SetSignature("command");
+			commandDefinition.AddParameterDefinition(stringArgumentsPropertyInfo);
+			commandDefinition.AddParameterDefinition(boolArgumentsPropertyInfo);
 
 			return commandDefinition;
 		}

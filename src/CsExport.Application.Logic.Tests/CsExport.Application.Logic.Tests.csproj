@@ -70,6 +70,7 @@
     <Compile Include="ExportConsoleApplicationTests.cs" />
     <Compile Include="ParserTests\CommandArgumentParserTests.cs" />
     <Compile Include="ParserTests\CommandConfigurationRegistryTests.cs" />
+    <Compile Include="ParserTests\CommandConfigurationTests.cs" />
     <Compile Include="ParserTests\CommandFactoryTests.cs" />
     <Compile Include="ParserTests\CommandParserTests.cs" />
     <Compile Include="ParserTests\DefaultParameterExtractorTests.cs" />

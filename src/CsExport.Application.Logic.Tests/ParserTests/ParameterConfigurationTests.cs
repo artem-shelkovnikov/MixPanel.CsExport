@@ -15,7 +15,7 @@ namespace CsExport.Application.Logic.Tests.ParserTests
 		[Fact]
 		public void Ctor_When_called_for_parameterDefinition_without_propertyInfo_Then_throws()
 		{
-			Assert.Throws<ArgumentNullException>(() => new ParameterConfiguration(new ParameterDefinition()));
+			Assert.Throws<ArgumentNullException>(() => new ParameterConfiguration(new ParameterDefinition(null)));
 		}
 
 		[Fact]
@@ -33,7 +33,8 @@ namespace CsExport.Application.Logic.Tests.ParserTests
 		}
 
 		[Fact]
-		public void WithSignature_When_called_for_lowercase_alpha_signature_with_dashes_Then_sets_parameterDefinition_signature()
+		public void
+			WithSignature_When_called_for_lowercase_alpha_signature_with_dashes_Then_sets_parameterDefinition_signature()
 		{
 			var signature = "signature-with-dash";
 			var parameterDefinition = GetValidParameterDefinition();
@@ -84,7 +85,7 @@ namespace CsExport.Application.Logic.Tests.ParserTests
 
 		[Fact]
 		public void WithSignature_When_called_for_null_Then_throws_argumentNullException()
-		{											  
+		{
 			var parameterDefinition = GetValidParameterDefinition();
 
 			var parameterConfiguration =
@@ -93,12 +94,18 @@ namespace CsExport.Application.Logic.Tests.ParserTests
 			Assert.Throws<ArgumentNullException>(() => parameterConfiguration.WithSignature(null));
 		}
 
+		[Fact]
+		public void WithDescription_When_called_for_null_Then_throws_argumentNullException()
+		{
+			var parameterDefinition = GetValidParameterDefinition();
+			var parameterConfiguration = new ParameterConfiguration(parameterDefinition);
+
+			Assert.Throws<ArgumentNullException>(() => parameterConfiguration.WithDescription(null));
+		}
+
 		private static ParameterDefinition GetValidParameterDefinition()
 		{
-			return new ParameterDefinition
-			{
-				PropertyInfo = typeof(StubClass).GetProperty(nameof(StubClass.StringProperty))
-			};
+			return new ParameterDefinition(typeof(StubClass).GetProperty(nameof(StubClass.StringProperty)));
 		}
 
 		private class StubClass
