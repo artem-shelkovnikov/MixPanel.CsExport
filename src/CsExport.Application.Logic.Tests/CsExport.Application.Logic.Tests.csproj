@@ -4,7 +4,7 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{6052012D-DCFA-491E-B4F8-00F99A1F9A3B}</ProjectGuid>
+    <ProjectGuid>{4D77EF29-45C7-4CEE-9D64-440728D89788}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <RootNamespace>CsExport.Application.Logic.Tests</RootNamespace>
@@ -34,8 +34,8 @@
       <HintPath>..\..\lib\Castle.Core.3.3.3\lib\net45\Castle.Core.dll</HintPath>
       <Private>True</Private>
     </Reference>
-    <Reference Include="Moq, Version=4.5.22.0, Culture=neutral, PublicKeyToken=69f491c39445e920, processorArchitecture=MSIL">
-      <HintPath>..\..\lib\Moq.4.5.22\lib\net45\Moq.dll</HintPath>
+    <Reference Include="Moq, Version=4.5.23.0, Culture=neutral, PublicKeyToken=69f491c39445e920, processorArchitecture=MSIL">
+      <HintPath>..\..\lib\Moq.4.5.23\lib\net45\Moq.dll</HintPath>
       <Private>True</Private>
     </Reference>
     <Reference Include="System" />
@@ -65,36 +65,27 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="CommandTests\CommandTestsBase.cs" />
-    <Compile Include="CommandTests\SetCredentialsCommandTests.cs" />
-    <Compile Include="ConsoleApplicationBootsrapperTests.cs" />
-    <Compile Include="ExportConsoleApplicationTests.cs" />
-    <Compile Include="ParserTests\CommandArgumentParserTests.cs" />
-    <Compile Include="ParserTests\CommandConfigurationRegistryTests.cs" />
-    <Compile Include="ParserTests\CommandConfigurationTests.cs" />
-    <Compile Include="ParserTests\CommandFactoryTests.cs" />
-    <Compile Include="ParserTests\CommandParserTests.cs" />
-    <Compile Include="ParserTests\DefaultParameterExtractorTests.cs" />
-    <Compile Include="ParserTests\ParameterConfigurationTests.cs" />
-    <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="CommandTests\RawExportCommandTests.cs" />
-    <Compile Include="ParserTests\UtilityTests\BinderTests\DateValueBinderTests.cs" />
-    <Compile Include="ParserTests\UtilityTests\BinderTests\StringArrayValueBinderTests.cs" />
-    <Compile Include="ParserTests\UtilityTests\BinderTests\StringValueBinderTests.cs" />
+    <Compile Include="CommandTests\SetCredentialsCommandTests.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\CsExport.Application.Infrastructure\CsExport.Application.Infrastructure.csproj">
+      <Project>{9dbf517a-c2dd-4793-808c-142e746c5580}</Project>
+      <Name>CsExport.Application.Infrastructure</Name>
+    </ProjectReference>
     <ProjectReference Include="..\CsExport.Application.Logic\CsExport.Application.Logic.csproj">
-      <Project>{5A7483EE-97F5-4AC8-BD4D-F4ED1313D67C}</Project>
+      <Project>{5a7483ee-97f5-4ac8-bd4d-f4ed1313d67c}</Project>
       <Name>CsExport.Application.Logic</Name>
     </ProjectReference>
     <ProjectReference Include="..\CsExport.Core\CsExport.Core.csproj">
-      <Project>{5667461B-4989-44AA-AFB6-78AF0187B901}</Project>
+      <Project>{5667461b-4989-44aa-afb6-78af0187b901}</Project>
       <Name>CsExport.Core</Name>
     </ProjectReference>
   </ItemGroup>
-  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

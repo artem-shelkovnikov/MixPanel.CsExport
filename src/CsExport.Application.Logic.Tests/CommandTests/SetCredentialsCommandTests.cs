@@ -1,7 +1,7 @@
 ﻿using System;
+using CsExport.Application.Infrastructure.Results;
 using CsExport.Application.Logic.CommandArguments;
 using CsExport.Application.Logic.Commands;
-using CsExport.Application.Logic.Results;
 using CsExport.Core.Settings;
 using Moq;
 using Xunit;

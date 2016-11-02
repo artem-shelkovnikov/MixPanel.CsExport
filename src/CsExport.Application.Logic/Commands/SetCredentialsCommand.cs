@@ -1,6 +1,7 @@
 ﻿using System;
+using CsExport.Application.Infrastructure;
+using CsExport.Application.Infrastructure.Results;
 using CsExport.Application.Logic.CommandArguments;
-using CsExport.Application.Logic.Results;
 using CsExport.Core.Client;
 using CsExport.Core.Settings;
 

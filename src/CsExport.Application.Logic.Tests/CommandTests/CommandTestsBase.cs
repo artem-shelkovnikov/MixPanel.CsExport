@@ -1,4 +1,5 @@
-﻿using CsExport.Application.Logic.IO;
+﻿using CsExport.Application.Infrastructure;
+using CsExport.Application.Infrastructure.IO;
 using CsExport.Core.Client;
 using CsExport.Core.Settings;
 using Moq;

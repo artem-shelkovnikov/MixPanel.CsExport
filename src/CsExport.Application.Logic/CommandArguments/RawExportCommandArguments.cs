@@ -1,4 +1,5 @@
-﻿using CsExport.Core;
+﻿using CsExport.Application.Infrastructure;
+using CsExport.Core;
 
 namespace CsExport.Application.Logic.CommandArguments
 {

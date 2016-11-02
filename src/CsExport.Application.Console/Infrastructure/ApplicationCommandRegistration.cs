@@ -1,6 +1,6 @@
-﻿using CsExport.Application.Logic.DependancyControl;
-using CsExport.Application.Logic.Parser;
-using CsExport.Application.Logic.Parser.Configuration;
+﻿using CsExport.Application.Infrastructure.DependancyControl;
+using CsExport.Application.Infrastructure.Parser;
+using CsExport.Application.Logic.Configuration;
 
 namespace CsExport.Application.Console.Infrastructure
 {

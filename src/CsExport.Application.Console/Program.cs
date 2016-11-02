@@ -1,5 +1,5 @@
 ﻿using CsExport.Application.Console.Infrastructure;
-using CsExport.Application.Logic;
+using CsExport.Application.Infrastructure;
 
 namespace CsExport.Application.Console
 {
