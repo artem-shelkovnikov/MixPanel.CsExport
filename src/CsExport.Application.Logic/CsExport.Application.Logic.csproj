@@ -44,12 +44,15 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="ApplicationConfiguration.cs" />
     <Compile Include="Commands\RawExportCommand.cs" />
     <Compile Include="Commands\SetCredentialsCommand.cs" />
     <Compile Include="CommandArguments\SetCredentialsCommandArguments.cs" />
     <Compile Include="CommandArguments\RawExportCommandArguments.cs" />
     <Compile Include="Configuration\RawExportCommandConfiguration.cs" />
     <Compile Include="Configuration\SetCredentialsCommandConfiguration.cs" />
+    <Compile Include="FileWriter.cs" />
+    <Compile Include="IFileWriter.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>

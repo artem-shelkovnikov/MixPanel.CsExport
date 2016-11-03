@@ -1,5 +1,5 @@
-﻿using CsExport.Application.Infrastructure.Parser.Utility;
-using CsExport.Application.Infrastructure.Parser.Utility.ValueBinders;
+﻿using CsExport.Application.Infrastructure.Parser;
+using CsExport.Application.Infrastructure.Parser.ValueBinders;
 using CsExport.Core;
 using Xunit;
 

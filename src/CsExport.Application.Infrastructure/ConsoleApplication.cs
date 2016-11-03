@@ -6,7 +6,7 @@ using CsExport.Core.Exceptions;
 
 namespace CsExport.Application.Infrastructure
 {
-	public class ConsoleApplication : IConsoleApplication
+	internal class ConsoleApplication : IConsoleApplication
 	{
 		private readonly ICommandParser _commandParser;
 		private readonly IResultHandler _resultHandler;

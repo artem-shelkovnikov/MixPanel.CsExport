@@ -2,7 +2,7 @@
 
 namespace CsExport.Application.Infrastructure
 {
-	public class ResultHandler : IResultHandler
+	internal class ResultHandler : IResultHandler
 	{
 		private readonly IOutput _output;
 

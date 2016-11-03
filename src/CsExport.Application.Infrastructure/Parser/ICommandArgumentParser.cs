@@ -1,4 +1,6 @@
-﻿namespace CsExport.Application.Infrastructure.Parser
+﻿using CsExport.Application.Infrastructure.FluentConfiguration;
+
+namespace CsExport.Application.Infrastructure.Parser
 {
 	public interface ICommandArgumentParser
 	{

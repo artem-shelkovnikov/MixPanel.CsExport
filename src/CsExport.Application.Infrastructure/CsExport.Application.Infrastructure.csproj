@@ -44,12 +44,10 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="ApplicationConfiguration.cs" />
-    <Compile Include="CommandArguments\HelpCommandArguments.cs" />
-    <Compile Include="CommandBase.cs" />
+    <Compile Include="Builtin\CommandArguments\HelpCommandArguments.cs" />
     <Compile Include="CommandResult.cs" />
-    <Compile Include="Commands\HelpCommand.cs" />
-    <Compile Include="Configuration\HelpCommandConfiguration.cs" />
+    <Compile Include="Builtin\Commands\HelpCommand.cs" />
+    <Compile Include="Builtin\Configuration\HelpCommandConfiguration.cs" />
     <Compile Include="ConsoleApplication.cs" />
     <Compile Include="ConsoleApplicationBootstrapper.cs" />
     <Compile Include="ConsoleApplicationFactory.cs" />
@@ -68,40 +66,36 @@
     <Compile Include="IConsoleApplicationFactory.cs" />
     <Compile Include="IO\ConsoleInput.cs" />
     <Compile Include="IO\ConsoleOutput.cs" />
-    <Compile Include="IO\FileWriter.cs" />
-    <Compile Include="IO\IFileWriter.cs" />
     <Compile Include="IO\IInput.cs" />
     <Compile Include="IO\IOutput.cs" />
     <Compile Include="IResultHandler.cs" />
     <Compile Include="Parser\CommandArgumentParser.cs" />
-    <Compile Include="Parser\CommandConfiguration.cs" />
-    <Compile Include="Parser\CommandConfigurationRegistry.cs" />
-    <Compile Include="Parser\CommandDefinition.cs" />
-    <Compile Include="Parser\CommandFactory.cs" />
+    <Compile Include="FluentConfiguration\CommandConfiguration.cs" />
+    <Compile Include="FluentConfiguration\CommandConfigurationRegistry.cs" />
+    <Compile Include="FluentConfiguration\CommandDefinition.cs" />
+    <Compile Include="CommandFactory.cs" />
     <Compile Include="Parser\CommandParser.cs" />
     <Compile Include="Parser\DefaultParameterExtractor.cs" />
     <Compile Include="Parser\ICommandArgumentParser.cs" />
-    <Compile Include="Parser\ICommandConfiguration.cs" />
-    <Compile Include="Parser\ICommandConfigurationRegistry.cs" />
-    <Compile Include="Parser\ICommandFactory.cs" />
+    <Compile Include="FluentConfiguration\ICommandConfiguration.cs" />
+    <Compile Include="FluentConfiguration\ICommandConfigurationRegistry.cs" />
+    <Compile Include="ICommandFactory.cs" />
     <Compile Include="Parser\ICommandParser.cs" />
     <Compile Include="Parser\IParameterExtractor.cs" />
-    <Compile Include="Parser\ParameterConfiguration.cs" />
-    <Compile Include="Parser\ParameterDefinition.cs" />
-    <Compile Include="Parser\SignatureHelper.cs" />
-    <Compile Include="Parser\SignatureValidation.cs" />
-    <Compile Include="Parser\Utility\CommandArgument.cs" />
-    <Compile Include="Parser\Utility\CompiledCommand.cs" />
-    <Compile Include="Parser\Utility\ConsoleCommandDefinition.cs" />
-    <Compile Include="Parser\Utility\IReflectionPropertyBinderFactory.cs" />
-    <Compile Include="Parser\Utility\IReflectionPropertyValueBinder.cs" />
-    <Compile Include="Parser\Utility\ParameterBindingException.cs" />
-    <Compile Include="Parser\Utility\PropertyHelper.cs" />
-    <Compile Include="Parser\Utility\ReflectionPropertyBinderFactory.cs" />
-    <Compile Include="Parser\Utility\ReflectionPropertyValueBinderBase.cs" />
-    <Compile Include="Parser\Utility\ValueBinders\DateValueBinder.cs" />
-    <Compile Include="Parser\Utility\ValueBinders\StringArrayValueBinder.cs" />
-    <Compile Include="Parser\Utility\ValueBinders\StringValueBinder.cs" />
+    <Compile Include="FluentConfiguration\ParameterConfiguration.cs" />
+    <Compile Include="FluentConfiguration\ParameterDefinition.cs" />
+    <Compile Include="Utility\SignatureHelper.cs" />
+    <Compile Include="Utility\SignatureValidation.cs" />
+    <Compile Include="CompiledCommand.cs" />
+    <Compile Include="Parser\IReflectionPropertyBinderFactory.cs" />
+    <Compile Include="Parser\IReflectionPropertyValueBinder.cs" />
+    <Compile Include="Parser\ParameterBindingException.cs" />
+    <Compile Include="Utility\PropertyHelper.cs" />
+    <Compile Include="Parser\ReflectionPropertyBinderFactory.cs" />
+    <Compile Include="Parser\ReflectionPropertyValueBinderBase.cs" />
+    <Compile Include="Parser\ValueBinders\DateValueBinder.cs" />
+    <Compile Include="Parser\ValueBinders\StringArrayValueBinder.cs" />
+    <Compile Include="Parser\ValueBinders\StringValueBinder.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="ResultHandler.cs" />
     <Compile Include="Results\CommandNotFoundResult.cs" />
@@ -114,7 +108,7 @@
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\CsExport.Core\CsExport.Core.csproj">
-      <Project>{5667461B-4989-44AA-AFB6-78AF0187B901}</Project>
+      <Project>{5667461b-4989-44aa-afb6-78af0187b901}</Project>
       <Name>CsExport.Core</Name>
     </ProjectReference>
   </ItemGroup>

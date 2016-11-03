@@ -1,5 +1,5 @@
 ﻿using System;
-using CsExport.Application.Infrastructure.Parser.Utility;
+using CsExport.Application.Infrastructure.FluentConfiguration;
 
 namespace CsExport.Application.Infrastructure.Parser
 {

@@ -1,9 +1,10 @@
-﻿using CsExport.Application.Infrastructure.Configuration;
+﻿using CsExport.Application.Infrastructure.Builtin.Configuration;
+using CsExport.Application.Infrastructure.FluentConfiguration;
 using CsExport.Application.Infrastructure.Parser;
 
 namespace CsExport.Application.Infrastructure.DependancyControl
 {
-	public class DefaultCommandRegistration : CommandRegistration
+	internal class DefaultCommandRegistration : CommandRegistration
 	{
 		protected override ICommandConfiguration[] Load()
 		{

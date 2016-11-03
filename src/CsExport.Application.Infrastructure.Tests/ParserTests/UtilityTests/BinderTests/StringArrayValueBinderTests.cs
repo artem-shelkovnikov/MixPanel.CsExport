@@ -1,4 +1,4 @@
-﻿using CsExport.Application.Infrastructure.Parser.Utility.ValueBinders;
+﻿using CsExport.Application.Infrastructure.Parser.ValueBinders;
 using Xunit;
 
 namespace CsExport.Application.Infrastructure.Tests.ParserTests.UtilityTests.BinderTests

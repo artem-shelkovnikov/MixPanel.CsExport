@@ -2,7 +2,7 @@
 
 namespace CsExport.Application.Infrastructure.IO
 {
-	public class ConsoleOutput : IOutput
+	internal class ConsoleOutput : IOutput
 	{
 		public void Notify(string message)
 		{

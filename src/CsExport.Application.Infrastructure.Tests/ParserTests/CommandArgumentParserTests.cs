@@ -1,6 +1,6 @@
 ﻿using System.Linq;
+using CsExport.Application.Infrastructure.FluentConfiguration;
 using CsExport.Application.Infrastructure.Parser;
-using CsExport.Application.Infrastructure.Parser.Utility;
 using Moq;
 using Xunit;
 

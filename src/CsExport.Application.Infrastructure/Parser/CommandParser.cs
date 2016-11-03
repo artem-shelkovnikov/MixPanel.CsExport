@@ -1,8 +1,9 @@
 ﻿using System.Linq;
+using CsExport.Application.Infrastructure.FluentConfiguration;
 
 namespace CsExport.Application.Infrastructure.Parser
 {
-	public class CommandParser : ICommandParser
+	internal class CommandParser : ICommandParser
 	{
 		private readonly ICommandConfigurationRegistry _commandConfigurationRegistry;
 		private readonly ICommandFactory _commandFactory;

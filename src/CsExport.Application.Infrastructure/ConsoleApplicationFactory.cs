@@ -1,10 +1,11 @@
 ﻿using CsExport.Application.Infrastructure.DependancyControl;
+using CsExport.Application.Infrastructure.FluentConfiguration;
 using CsExport.Application.Infrastructure.IO;
 using CsExport.Application.Infrastructure.Parser;
 
 namespace CsExport.Application.Infrastructure
 {
-	class ConsoleApplicationFactory : IConsoleApplicationFactory
+	internal class ConsoleApplicationFactory : IConsoleApplicationFactory
 	{
 		public IConsoleApplication Create(ICommandConfigurationRegistry commandConfigurationRegistry,
 		                                  IDependancyContainer dependancyContainer)

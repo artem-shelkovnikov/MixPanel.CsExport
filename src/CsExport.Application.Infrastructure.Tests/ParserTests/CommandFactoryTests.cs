@@ -1,6 +1,5 @@
 ﻿using CsExport.Application.Infrastructure.DependancyControl;
 using CsExport.Application.Infrastructure.Parser;
-using CsExport.Application.Infrastructure.Parser.Utility;
 using Moq;
 using Xunit;
 

@@ -2,7 +2,7 @@
 
 namespace CsExport.Application.Infrastructure.IO
 {
-	public class ConsoleInput : IInput
+	internal class ConsoleInput : IInput
 	{
 		public string GetLine()
 		{

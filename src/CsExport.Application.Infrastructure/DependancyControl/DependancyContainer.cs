@@ -3,7 +3,7 @@ using Autofac;
 
 namespace CsExport.Application.Infrastructure.DependancyControl
 {
-	public class DependancyContainer : IDependancyContainer
+	internal class DependancyContainer : IDependancyContainer
 	{
 		private readonly IContainer _container;
 

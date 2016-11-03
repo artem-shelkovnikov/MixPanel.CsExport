@@ -2,7 +2,7 @@
 
 namespace CsExport.Application.Infrastructure.DependancyControl
 {
-	public class DefaultDependancyConfiguration : DependancyConfiguration
+	internal class DefaultDependancyConfiguration : DependancyConfiguration
 	{
 		protected override void Register(IDependancyContainer dependancyContainer)
 		{
