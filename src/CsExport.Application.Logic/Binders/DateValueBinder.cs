@@ -1,14 +1,15 @@
 using System;
 using System.Reflection;
+using CsExport.Application.Infrastructure.Parser;
 using CsExport.Core;
 
-namespace CsExport.Application.Infrastructure.Parser.ValueBinders
+namespace CsExport.Application.Logic.Binders
 {
-	internal class DateValueBinder : ReflectionPropertyValueBinderBase<Date>
+	public class DateValueBinder : ReflectionPropertyValueBinderBase<Date>
 	{
 		public DateValueBinder(object @object, PropertyInfo propertyInfo) : base(@object, propertyInfo)
 		{
-		}
+		} 
 
 		protected override Date ParseValue(string value)
 		{

@@ -85,7 +85,7 @@ namespace CsExport.Application.Logic.Tests.CommandTests
 
 			var result = command.Execute(arguments);
 
-			FileWriterMock.Verify(x => x.WriteContent(ApplicationConfiguration.ExportPath, It.IsAny<string>(), exportContent));
+			FileWriterMock.Verify(x => x.WriteContent(ClientConfiguration.ExportPath, It.IsAny<string>(), exportContent));
 		}
 
 		[Fact]
@@ -114,8 +114,7 @@ namespace CsExport.Application.Logic.Tests.CommandTests
 
 		private RawExportCommand GetCommand()
 		{
-			return new RawExportCommand(ApplicationConfiguration,
-			                            ClientConfiguration,
+			return new RawExportCommand(ClientConfiguration,
 			                            MixPanelClientMock.Object,
 			                            FileWriterMock.Object);
 		}

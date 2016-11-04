@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Linq;
 using CsExport.Application.Infrastructure.FluentConfiguration;
-using CsExport.Application.Infrastructure.Parser;
 using Xunit;
 
 namespace CsExport.Application.Infrastructure.Tests.ParserTests

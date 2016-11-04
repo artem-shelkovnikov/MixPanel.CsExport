@@ -1,6 +1,5 @@
 ﻿using CsExport.Application.Infrastructure.DependancyControl;
 using CsExport.Application.Infrastructure.FluentConfiguration;
-using CsExport.Application.Infrastructure.Parser;
 using Moq;
 using Xunit;
 
@@ -27,6 +26,8 @@ namespace CsExport.Application.Infrastructure.Tests
 
 		private readonly Mock<ICommandConfiguration> _commandConfigurationMock = new Mock<ICommandConfiguration>();
 
+		private readonly ApplicationConfiguration _applicationConfiguration = new ApplicationConfiguration();
+
 		public ConsoleApplicationBootsrapperTests()
 		{
 			CommandRegistration stubCommandRegistration = new StubCommandRegistration(_commandConfigurationMock.Object);
@@ -35,12 +36,13 @@ namespace CsExport.Application.Infrastructure.Tests
 			                                                                     _commandConfigurationRegistryMock.Object,
 			                                                                     _consoleApplicationFactoryMock.Object,
 			                                                                     _stubDependancyConfiguration,
-			                                                                     stubCommandRegistration);
+																				 stubCommandRegistration,
+																				 _applicationConfiguration);
 
 			_dependancyContainerFactoryMock.Setup(x => x.Create()).Returns(_dependancyContainerMock.Object);
 			_consoleApplicationFactoryMock.Setup(
 				                              x =>
-						                              x.Create(_commandConfigurationRegistryMock.Object, _dependancyContainerMock.Object))
+						                              x.Create(_commandConfigurationRegistryMock.Object, _dependancyContainerMock.Object, _applicationConfiguration))
 			                              .Returns(_consoleApplicationMock.Object);
 
 			_consoleApplicationMock.Setup(x => x.IsTerminated()).Returns(true);
@@ -87,7 +89,7 @@ namespace CsExport.Application.Infrastructure.Tests
 			_consoleApplicationBootstrapper.Run();
 
 			_consoleApplicationFactoryMock.Verify(
-				x => x.Create(_commandConfigurationRegistryMock.Object, _dependancyContainerMock.Object),
+				x => x.Create(_commandConfigurationRegistryMock.Object, _dependancyContainerMock.Object, _applicationConfiguration),
 				Times.Once);
 		}
 

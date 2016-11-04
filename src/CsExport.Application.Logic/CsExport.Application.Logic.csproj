@@ -44,7 +44,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="ApplicationConfiguration.cs" />
+    <Compile Include="Binders\DateValueBinder.cs" />
     <Compile Include="Commands\RawExportCommand.cs" />
     <Compile Include="Commands\SetCredentialsCommand.cs" />
     <Compile Include="CommandArguments\SetCredentialsCommandArguments.cs" />

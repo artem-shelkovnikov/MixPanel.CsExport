@@ -44,6 +44,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="ApplicationConfiguration.cs" />
     <Compile Include="Builtin\CommandArguments\HelpCommandArguments.cs" />
     <Compile Include="CommandResult.cs" />
     <Compile Include="Builtin\Commands\HelpCommand.cs" />
@@ -84,6 +85,9 @@
     <Compile Include="Parser\IParameterExtractor.cs" />
     <Compile Include="FluentConfiguration\ParameterConfiguration.cs" />
     <Compile Include="FluentConfiguration\ParameterDefinition.cs" />
+    <Compile Include="Parser\IPropertyValueBinderProvider.cs" />
+    <Compile Include="Parser\PropertyValueBinderProvider.cs" />
+    <Compile Include="Parser\ValueBinderProviderCollection.cs" />
     <Compile Include="Utility\SignatureHelper.cs" />
     <Compile Include="Utility\SignatureValidation.cs" />
     <Compile Include="CompiledCommand.cs" />
@@ -93,7 +97,6 @@
     <Compile Include="Utility\PropertyHelper.cs" />
     <Compile Include="Parser\ReflectionPropertyBinderFactory.cs" />
     <Compile Include="Parser\ReflectionPropertyValueBinderBase.cs" />
-    <Compile Include="Parser\ValueBinders\DateValueBinder.cs" />
     <Compile Include="Parser\ValueBinders\StringArrayValueBinder.cs" />
     <Compile Include="Parser\ValueBinders\StringValueBinder.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

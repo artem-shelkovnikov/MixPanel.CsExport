@@ -1,6 +1,5 @@
 ﻿using System;
 using CsExport.Application.Infrastructure;
-using CsExport.Application.Infrastructure.IO;
 using CsExport.Application.Infrastructure.Results;
 using CsExport.Application.Logic.CommandArguments;
 using CsExport.Core.Client;
@@ -9,18 +8,15 @@ using CsExport.Core.Settings;
 namespace CsExport.Application.Logic.Commands
 {
 	public class RawExportCommand : ICommandWithArguments<RawExportCommandArguments>
-	{
-		private readonly ApplicationConfiguration _applicationConfiguration;
+	{																			
 		private readonly ClientConfiguration _clientConfiguration;
 		private readonly IMixPanelClient _mixPanelClient;
 		private readonly IFileWriter _fileWriter;
 
-		public RawExportCommand(ApplicationConfiguration applicationConfiguration,
-		                        ClientConfiguration clientConfiguration,
+		public RawExportCommand(ClientConfiguration clientConfiguration,
 		                        IMixPanelClient mixPanelClient,
 		                        IFileWriter fileWriter)
-		{
-			_applicationConfiguration = applicationConfiguration;
+		{															
 			_clientConfiguration = clientConfiguration;
 			_mixPanelClient = mixPanelClient;
 			_fileWriter = fileWriter;
@@ -40,7 +36,7 @@ namespace CsExport.Application.Logic.Commands
 
 			var content = _mixPanelClient.ExportRaw(_clientConfiguration, arguments.From, arguments.To, arguments.Events);
 
-			_fileWriter.WriteContent(_applicationConfiguration.ExportPath,
+			_fileWriter.WriteContent(_clientConfiguration.ExportPath,
 			                         $"{DateTime.Now.ToFileTimeUtc()}-raw-export.txt",
 			                         content);
 

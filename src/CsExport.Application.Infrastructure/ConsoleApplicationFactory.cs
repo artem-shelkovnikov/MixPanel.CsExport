@@ -7,12 +7,11 @@ namespace CsExport.Application.Infrastructure
 {
 	internal class ConsoleApplicationFactory : IConsoleApplicationFactory
 	{
-		public IConsoleApplication Create(ICommandConfigurationRegistry commandConfigurationRegistry,
-		                                  IDependancyContainer dependancyContainer)
+		public IConsoleApplication Create(ICommandConfigurationRegistry commandConfigurationRegistry, IDependancyContainer dependancyContainer, ApplicationConfiguration applicationConfiguration)
 		{
 			var commandParser = new CommandParser(commandConfigurationRegistry,
 			                                      new CommandFactory(dependancyContainer),
-			                                      new CommandArgumentParser());
+			                                      new CommandArgumentParser(applicationConfiguration.ValueBinderProviderCollection));
 			var resultHandler = new ResultHandler(new ConsoleOutput());
 			var consoleInput = new ConsoleInput();
 

@@ -19,8 +19,8 @@ namespace CsExport.Application.Console.Infrastructure
 			dependancyContainer.Register<ICommandWithArguments<SetCredentialsCommandArguments>, SetCredentialsCommand>();
 
 			dependancyContainer.Register<IMixPanelClient, MixPanelClient>();
-			dependancyContainer.Register<IWebClient, DefaultWebClient>();
-			dependancyContainer.RegisterInstance(new ApplicationConfiguration());
+			dependancyContainer.Register<IFileWriter, FileWriter>();
+			dependancyContainer.Register<IWebClient, DefaultWebClient>();		 
 			dependancyContainer.RegisterInstance(new ClientConfiguration());
 		}
 	}

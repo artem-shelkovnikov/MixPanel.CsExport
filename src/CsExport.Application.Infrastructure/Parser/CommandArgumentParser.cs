@@ -8,7 +8,7 @@ namespace CsExport.Application.Infrastructure.Parser
 		private readonly IReflectionPropertyBinderFactory _binderFactory;
 		private readonly IParameterExtractor _parameterExtractor;
 
-		public CommandArgumentParser() : this(new ReflectionPropertyBinderFactory(), new DefaultParameterExtractor())
+		public CommandArgumentParser(ValueBinderProviderCollection valueBinderProviderCollection) : this(new ReflectionPropertyBinderFactory(valueBinderProviderCollection), new DefaultParameterExtractor())
 		{
 		}
 

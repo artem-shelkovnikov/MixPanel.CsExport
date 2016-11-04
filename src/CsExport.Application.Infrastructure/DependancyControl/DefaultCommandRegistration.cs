@@ -1,6 +1,5 @@
 ﻿using CsExport.Application.Infrastructure.Builtin.Configuration;
 using CsExport.Application.Infrastructure.FluentConfiguration;
-using CsExport.Application.Infrastructure.Parser;
 
 namespace CsExport.Application.Infrastructure.DependancyControl
 {

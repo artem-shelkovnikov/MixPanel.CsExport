@@ -64,6 +64,7 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="BinderTests\DateValueBinderTests.cs" />
     <Compile Include="CommandTests\CommandTestsBase.cs" />
     <Compile Include="CommandTests\RawExportCommandTests.cs" />
     <Compile Include="CommandTests\SetCredentialsCommandTests.cs" />
