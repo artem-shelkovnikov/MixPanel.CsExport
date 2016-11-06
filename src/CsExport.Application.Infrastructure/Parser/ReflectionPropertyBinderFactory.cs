@@ -1,5 +1,4 @@
 using System.Reflection;
-using CsExport.Application.Infrastructure.Parser.ValueBinders;
 
 namespace CsExport.Application.Infrastructure.Parser
 {
@@ -9,21 +8,19 @@ namespace CsExport.Application.Infrastructure.Parser
 
 		public ReflectionPropertyBinderFactory(ValueBinderProviderCollection valueBinderProviderCollection)
 		{
-			_valueBinderProviderCollection = valueBinderProviderCollection;		  
-			_valueBinderProviderCollection.Add<string>((o, info) => new StringValueBinder(o, info));
-			_valueBinderProviderCollection.Add<string[]>((o, info) => new StringArrayValueBinder(o, info));					   
+			_valueBinderProviderCollection = valueBinderProviderCollection;
 		}
 
 		public IReflectionPropertyValueBinder CreateForProperty(object o, PropertyInfo propertyInfo)
 		{
 			var propertyType = propertyInfo.PropertyType;
 
-			if (_valueBinderProviderCollection.ContainsValueBinderProviderForType(propertyType) == false)
+			if (_valueBinderProviderCollection.ContainsValueForType(propertyType) == false)
 				return null;
 
-			var propertyValueBinderProvider = _valueBinderProviderCollection[propertyType];
+			var propertyValueBinderProvider = _valueBinderProviderCollection.GetForType(propertyType);
 
-			return propertyValueBinderProvider.Provide(o, propertyInfo);	
+			return propertyValueBinderProvider.Provide(o, propertyInfo);
 		}
 	}
 }

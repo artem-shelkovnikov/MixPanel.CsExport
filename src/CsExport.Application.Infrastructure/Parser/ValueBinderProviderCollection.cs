@@ -1,55 +1,38 @@
 using System;
-using System.Collections;
 using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.Reflection;
 
 namespace CsExport.Application.Infrastructure.Parser
 {
-	public class ValueBinderProviderCollection : IEnumerable<KeyValuePair<Type, IPropertyValueBinderProvider>>
+	public class ValueBinderProviderCollection : IValueBinderConfiguration
 	{
-		private readonly IDictionary<Type, IPropertyValueBinderProvider> _valueBinderProviders = new ConcurrentDictionary<Type, IPropertyValueBinderProvider>();
+		private readonly IDictionary<Type, IPropertyValueBinderProvider> _valueBinderProviders =
+			new ConcurrentDictionary<Type, IPropertyValueBinderProvider>();
 
-		public void Add<T>(Func<object, PropertyInfo, IReflectionPropertyValueBinder> factory)
-		{
-			if (_valueBinderProviders.ContainsKey(typeof(T)))
-				throw new InvalidOperationException("Value binder for that type already exists. Use Replace method instead.");
-
-			_valueBinderProviders[typeof(T)] = new PropertyValueBinderProvider(factory);
-		}
-
-		public void Replace<T>(Func<object, PropertyInfo, IReflectionPropertyValueBinder> factory)
-			where T : IReflectionPropertyValueBinder
-		{
-			if (_valueBinderProviders.ContainsKey(typeof(T)) == false)
-				throw new InvalidOperationException("Value binder for that type already exists");
-
-			_valueBinderProviders[typeof(T)] = new PropertyValueBinderProvider(factory);
-		}	 
-
-		public bool ContainsValueBinderProviderForType(Type type)
+		public bool ContainsValueForType(Type type)
 		{
 			return _valueBinderProviders.ContainsKey(type);
 		}
 
-		public IEnumerator<KeyValuePair<Type, IPropertyValueBinderProvider>> GetEnumerator()
+		public IPropertyValueBinderProvider GetForType(Type propertyType)
 		{
-			return _valueBinderProviders.GetEnumerator();
+			return _valueBinderProviders.ContainsKey(propertyType)
+				? _valueBinderProviders[propertyType]
+				: null;
 		}
 
-		IEnumerator IEnumerable.GetEnumerator()
+		public void AddOrUpdate<TRecord>(Func<object, PropertyInfo, IReflectionPropertyValueBinder> value)
 		{
-			return GetEnumerator();
+			_valueBinderProviders[typeof(TRecord)] = new PropertyValueBinderProvider(value);
 		}
 
-		public IPropertyValueBinderProvider this[Type propertyType]
+		public void Remove<TRecord>()
 		{
-			get
-			{
-				return _valueBinderProviders.ContainsKey(propertyType)
-					? _valueBinderProviders[propertyType]
-					: null;
-			}
+			if (_valueBinderProviders.ContainsKey(typeof(TRecord)) == false)
+				throw new InvalidOperationException("Specified type does not exist");
+
+			_valueBinderProviders.Remove(typeof(TRecord));
 		}
 	}
 }

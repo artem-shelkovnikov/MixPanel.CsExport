@@ -20,7 +20,7 @@ namespace CsExport.Application.Console.Infrastructure
 
 			dependancyContainer.Register<IMixPanelClient, MixPanelClient>();
 			dependancyContainer.Register<IFileWriter, FileWriter>();
-			dependancyContainer.Register<IWebClient, DefaultWebClient>();		 
+			dependancyContainer.Register<IWebClient, DefaultWebClient>();
 			dependancyContainer.RegisterInstance(new ClientConfiguration());
 		}
 	}

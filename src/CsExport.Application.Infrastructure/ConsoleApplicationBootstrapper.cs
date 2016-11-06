@@ -1,8 +1,10 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using CsExport.Application.Infrastructure.DependancyControl;
 using CsExport.Application.Infrastructure.FluentConfiguration;
-using CsExport.Application.Infrastructure.Parser;
+using CsExport.Application.Infrastructure.Parser.ValueBinders;
+using CsExport.Application.Infrastructure.Results;
 
 namespace CsExport.Application.Infrastructure
 {
@@ -29,6 +31,12 @@ namespace CsExport.Application.Infrastructure
 				new DefaultCommandRegistration(),
 				new ApplicationConfiguration())
 		{
+			_applicationConfiguration.ExceptionHandlerConfigurationsCollection.AddOrUpdate<Exception>(
+				                         exception => new CommandTerminatedResult(exception));
+			_applicationConfiguration.ValueBinderProviderCollection.AddOrUpdate<string>(
+				                         (o, info) => new StringValueBinder(o, info));
+			_applicationConfiguration.ValueBinderProviderCollection.AddOrUpdate<string[]>(
+				                         (o, info) => new StringArrayValueBinder(o, info));
 		}
 
 		internal ConsoleApplicationBootstrapper(IDependancyContainerFactory dependancyContainerFactory,
@@ -46,7 +54,10 @@ namespace CsExport.Application.Infrastructure
 			_applicationConfiguration = applicationConfiguration;
 		}
 
-		public ValueBinderProviderCollection ValueBinders => _applicationConfiguration.ValueBinderProviderCollection;
+		public IValueBinderConfiguration ValueBinders => _applicationConfiguration.ValueBinderProviderCollection;
+
+		public IExceptionHandlerConfiguration ExceptionHandlers
+			=> _applicationConfiguration.ExceptionHandlerConfigurationsCollection;
 
 		public void Run()
 		{
@@ -56,7 +67,9 @@ namespace CsExport.Application.Infrastructure
 			RegisterConfigurationRegistryDependancy(dependancyContainer);
 			RegisterCommandConfigurations(_commandConfigurationRegistry);
 
-			var application = _consoleApplicationFactory.Create(_commandConfigurationRegistry, dependancyContainer, _applicationConfiguration);
+			var application = _consoleApplicationFactory.Create(_commandConfigurationRegistry,
+			                                                    dependancyContainer,
+			                                                    _applicationConfiguration);
 
 			while (application.IsTerminated() == false)
 			{

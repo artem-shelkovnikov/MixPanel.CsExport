@@ -11,7 +11,7 @@ namespace CsExport.Application.Infrastructure.Parser
 		{
 			_factory = factory;
 		}
-		
+
 		public IReflectionPropertyValueBinder Provide(object o, PropertyInfo propertyInfo)
 		{
 			return _factory(o, propertyInfo);

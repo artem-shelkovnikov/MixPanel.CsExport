@@ -2,13 +2,14 @@
 using CsExport.Application.Infrastructure;
 using CsExport.Application.Infrastructure.Results;
 using CsExport.Application.Logic.CommandArguments;
+using CsExport.Application.Logic.Results;
 using CsExport.Core.Client;
 using CsExport.Core.Settings;
 
 namespace CsExport.Application.Logic.Commands
 {
 	public class RawExportCommand : ICommandWithArguments<RawExportCommandArguments>
-	{																			
+	{
 		private readonly ClientConfiguration _clientConfiguration;
 		private readonly IMixPanelClient _mixPanelClient;
 		private readonly IFileWriter _fileWriter;
@@ -16,7 +17,7 @@ namespace CsExport.Application.Logic.Commands
 		public RawExportCommand(ClientConfiguration clientConfiguration,
 		                        IMixPanelClient mixPanelClient,
 		                        IFileWriter fileWriter)
-		{															
+		{
 			_clientConfiguration = clientConfiguration;
 			_mixPanelClient = mixPanelClient;
 			_fileWriter = fileWriter;

@@ -6,7 +6,7 @@ namespace CsExport.Application.Infrastructure.Parser.ValueBinders
 	{
 		public StringValueBinder(object @object, PropertyInfo propertyInfo) : base(@object, propertyInfo)
 		{
-		}	
+		}
 
 		protected override string ParseValue(string value)
 		{

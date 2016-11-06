@@ -1,6 +1,7 @@
-﻿using CsExport.Application.Infrastructure.IO;
+﻿using CsExport.Application.Infrastructure;
+using CsExport.Application.Infrastructure.IO;
 
-namespace CsExport.Application.Infrastructure.Results
+namespace CsExport.Application.Logic.Results
 {
 	public class UnauthorizedResult : CommandResult
 	{

@@ -2,7 +2,6 @@
 using CsExport.Application.Infrastructure.IO;
 using CsExport.Application.Infrastructure.Parser;
 using CsExport.Application.Infrastructure.Results;
-using CsExport.Core.Exceptions;
 
 namespace CsExport.Application.Infrastructure
 {
@@ -10,13 +9,18 @@ namespace CsExport.Application.Infrastructure
 	{
 		private readonly ICommandParser _commandParser;
 		private readonly IResultHandler _resultHandler;
+		private readonly IExceptionHandler _exceptionHandler;
 		private readonly IInput _input;
 
-		public ConsoleApplication(ICommandParser commandParser, IResultHandler resultHandler, IInput input)
+		public ConsoleApplication(ICommandParser commandParser,
+		                          IResultHandler resultHandler,
+		                          IInput input,
+		                          IExceptionHandler exceptionHandler)
 		{
 			_commandParser = commandParser;
 			_resultHandler = resultHandler;
 			_input = input;
+			_exceptionHandler = exceptionHandler;
 		}
 
 		public bool IsTerminated()
@@ -42,13 +46,10 @@ namespace CsExport.Application.Infrastructure
 
 				_resultHandler.HandleResult(commandResult);
 			}
-			catch (MixPanelUnauthorizedException)
-			{
-				_resultHandler.HandleResult(new UnauthorizedResult());
-			}
 			catch (Exception ex)
 			{
-				_resultHandler.HandleResult(new CommandTerminatedResult(ex));
+				var result = _exceptionHandler.HandleException(ex);
+				_resultHandler.HandleResult(result);
 			}
 		}
 	}

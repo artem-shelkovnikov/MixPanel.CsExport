@@ -5,6 +5,8 @@ namespace CsExport.Application.Infrastructure
 {
 	public interface IConsoleApplicationFactory
 	{
-		IConsoleApplication Create(ICommandConfigurationRegistry commandConfigurationRegistry, IDependancyContainer dependancyContainer, ApplicationConfiguration applicationConfiguration);
+		IConsoleApplication Create(ICommandConfigurationRegistry commandConfigurationRegistry,
+		                           IDependancyContainer dependancyContainer,
+		                           ApplicationConfiguration applicationConfiguration);
 	}
 }

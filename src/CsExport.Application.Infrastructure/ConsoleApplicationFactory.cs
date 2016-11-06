@@ -7,15 +7,19 @@ namespace CsExport.Application.Infrastructure
 {
 	internal class ConsoleApplicationFactory : IConsoleApplicationFactory
 	{
-		public IConsoleApplication Create(ICommandConfigurationRegistry commandConfigurationRegistry, IDependancyContainer dependancyContainer, ApplicationConfiguration applicationConfiguration)
+		public IConsoleApplication Create(ICommandConfigurationRegistry commandConfigurationRegistry,
+		                                  IDependancyContainer dependancyContainer,
+		                                  ApplicationConfiguration applicationConfiguration)
 		{
 			var commandParser = new CommandParser(commandConfigurationRegistry,
 			                                      new CommandFactory(dependancyContainer),
-			                                      new CommandArgumentParser(applicationConfiguration.ValueBinderProviderCollection));
+			                                      new CommandArgumentParser(
+				                                      applicationConfiguration.ValueBinderProviderCollection));
 			var resultHandler = new ResultHandler(new ConsoleOutput());
 			var consoleInput = new ConsoleInput();
+			var exceptionHandler = new ExceptionHandler(applicationConfiguration.ExceptionHandlerConfigurationsCollection);
 
-			return new ConsoleApplication(commandParser, resultHandler, consoleInput);
+			return new ConsoleApplication(commandParser, resultHandler, consoleInput, exceptionHandler);
 		}
 	}
 }

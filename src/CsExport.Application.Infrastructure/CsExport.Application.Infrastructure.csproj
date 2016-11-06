@@ -60,16 +60,21 @@
     <Compile Include="DependancyControl\DependancyContainerFactory.cs" />
     <Compile Include="DependancyControl\IDependancyContainer.cs" />
     <Compile Include="DependancyControl\IDependancyContainerFactory.cs" />
+    <Compile Include="ExceptionHandler.cs" />
+    <Compile Include="ExceptionHandlerConfigurationCollection.cs" />
     <Compile Include="IArguments.cs" />
     <Compile Include="ICommand.cs" />
     <Compile Include="ICommandWithArguments.cs" />
     <Compile Include="IConsoleApplication.cs" />
     <Compile Include="IConsoleApplicationFactory.cs" />
+    <Compile Include="IExceptionHandler.cs" />
+    <Compile Include="IExceptionHandlerConfiguration.cs" />
     <Compile Include="IO\ConsoleInput.cs" />
     <Compile Include="IO\ConsoleOutput.cs" />
     <Compile Include="IO\IInput.cs" />
     <Compile Include="IO\IOutput.cs" />
     <Compile Include="IResultHandler.cs" />
+    <Compile Include="IValueBinderConfiguration.cs" />
     <Compile Include="Parser\CommandArgumentParser.cs" />
     <Compile Include="FluentConfiguration\CommandConfiguration.cs" />
     <Compile Include="FluentConfiguration\CommandConfigurationRegistry.cs" />
@@ -104,16 +109,9 @@
     <Compile Include="Results\CommandNotFoundResult.cs" />
     <Compile Include="Results\CommandTerminatedResult.cs" />
     <Compile Include="Results\SuccessResult.cs" />
-    <Compile Include="Results\UnauthorizedResult.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
-  </ItemGroup>
-  <ItemGroup>
-    <ProjectReference Include="..\CsExport.Core\CsExport.Core.csproj">
-      <Project>{5667461b-4989-44aa-afb6-78af0187b901}</Project>
-      <Name>CsExport.Core</Name>
-    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

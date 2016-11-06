@@ -2,7 +2,6 @@
 using CsExport.Application.Infrastructure.IO;
 using CsExport.Application.Infrastructure.Parser;
 using CsExport.Application.Infrastructure.Results;
-using CsExport.Core.Exceptions;
 using Moq;
 using Xunit;
 
@@ -13,8 +12,10 @@ namespace CsExport.Application.Infrastructure.Tests
 		private readonly ConsoleApplication _application;
 		private readonly Mock<ICommandParser> _commandParserMock = new Mock<ICommandParser>();
 		private readonly Mock<IResultHandler> _resultHandlerMock = new Mock<IResultHandler>();
+		private readonly Mock<IExceptionHandler> _exceptionHandlerMock = new Mock<IExceptionHandler>();
 		private readonly Mock<IInput> _inputProviderMock = new Mock<IInput>();
 		private readonly Mock<ICommand> _commandMock = new Mock<ICommand>();
+		private readonly StubResult _exceptionHandlerResult = new StubResult();
 
 		private const string ValidCommandText = "dummy";
 		private const string InvalidCommandText = "invalid";
@@ -25,7 +26,9 @@ namespace CsExport.Application.Infrastructure.Tests
 
 			_application = new ConsoleApplication(_commandParserMock.Object,
 			                                      _resultHandlerMock.Object,
-			                                      _inputProviderMock.Object);
+			                                      _inputProviderMock.Object,
+			                                      _exceptionHandlerMock.Object);
+			_exceptionHandlerMock.Setup(x => x.HandleException(It.IsAny<Exception>())).Returns(_exceptionHandlerResult);
 		}
 
 		[Fact]
@@ -59,26 +62,36 @@ namespace CsExport.Application.Infrastructure.Tests
 		}
 
 		[Fact]
-		public void ReceiveCommand_When_exception_is_thrown_by_component_Then_writes_output_for_commandTerminatedResult()
+		public void
+			ReceiveCommand_When_exception_is_thrown_by_component_Then_exceptionHandler_calls_HandleException_instead_of_throwing()
 		{
-			_inputProviderMock.Setup(x => x.GetLine()).Throws(new NotImplementedException());
+			var expectedException = new NotImplementedException();
+			_inputProviderMock.Setup(x => x.GetLine()).Throws(expectedException);
 
 			_application.ReadCommand();
 
-			_resultHandlerMock.Verify(x => x.HandleResult(It.IsAny<CommandTerminatedResult>()), Times.Once);
+			_exceptionHandlerMock.Verify(x => x.HandleException(expectedException), Times.Once);
 		}
 
 		[Fact]
 		public void
-			ReceiveCommand_When_unauthorized_exception_is_thrown_by_component_Then_writes_output_for_unauthorizedResult()
+			ReceiveCommand_When_exception_is_thrown_by_component_Then_handles_result_returned_by_exceptionHandler()
 		{
 			_inputProviderMock.Setup(x => x.GetLine()).Returns(ValidCommandText);
 			_commandMock.Setup(x => x.Execute())
-			            .Throws<MixPanelUnauthorizedException>();
+			            .Throws<NotImplementedException>();
 
 			_application.ReadCommand();
 
-			_resultHandlerMock.Verify(x => x.HandleResult(It.IsAny<UnauthorizedResult>()), Times.Once);
+			_resultHandlerMock.Verify(x => x.HandleResult(_exceptionHandlerResult), Times.Once);
+		}
+
+		private class StubResult : CommandResult
+		{
+			public override void Handle(IOutput output)
+			{
+				;
+			}
 		}
 	}
 }

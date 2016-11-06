@@ -9,7 +9,7 @@ namespace CsExport.Application.Logic.Binders
 	{
 		public DateValueBinder(object @object, PropertyInfo propertyInfo) : base(@object, propertyInfo)
 		{
-		} 
+		}
 
 		protected override Date ParseValue(string value)
 		{

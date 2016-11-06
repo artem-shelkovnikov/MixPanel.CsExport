@@ -36,13 +36,15 @@ namespace CsExport.Application.Infrastructure.Tests
 			                                                                     _commandConfigurationRegistryMock.Object,
 			                                                                     _consoleApplicationFactoryMock.Object,
 			                                                                     _stubDependancyConfiguration,
-																				 stubCommandRegistration,
-																				 _applicationConfiguration);
+			                                                                     stubCommandRegistration,
+			                                                                     _applicationConfiguration);
 
 			_dependancyContainerFactoryMock.Setup(x => x.Create()).Returns(_dependancyContainerMock.Object);
 			_consoleApplicationFactoryMock.Setup(
 				                              x =>
-						                              x.Create(_commandConfigurationRegistryMock.Object, _dependancyContainerMock.Object, _applicationConfiguration))
+					                              x.Create(_commandConfigurationRegistryMock.Object,
+					                                       _dependancyContainerMock.Object,
+					                                       _applicationConfiguration))
 			                              .Returns(_consoleApplicationMock.Object);
 
 			_consoleApplicationMock.Setup(x => x.IsTerminated()).Returns(true);
