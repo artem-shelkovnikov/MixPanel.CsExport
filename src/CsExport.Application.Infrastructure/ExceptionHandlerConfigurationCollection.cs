@@ -17,7 +17,7 @@ namespace CsExport.Application.Infrastructure
 		public bool ContainsValueForType(Type type)
 		{
 			if (TypeIsDerivedFromException(type) == false)
-				throw TypeMustDeriveFromException();
+				throw UnexpectedTypeException();
 
 			return _innerConfigurations.ContainsKey(type);
 		}
@@ -25,7 +25,7 @@ namespace CsExport.Application.Infrastructure
 		public Func<Exception, CommandResult> GetForType(Type type)
 		{
 			if (TypeIsDerivedFromException(type) == false)
-				throw TypeMustDeriveFromException();
+				throw UnexpectedTypeException();
 
 			return _innerConfigurations.ContainsKey(type)
 				? _innerConfigurations[type]
@@ -55,7 +55,7 @@ namespace CsExport.Application.Infrastructure
 			return typeof(Exception).IsAssignableFrom(type) == false;
 		}
 
-		private static ArgumentException TypeMustDeriveFromException()
+		private static ArgumentException UnexpectedTypeException()
 		{
 			return new ArgumentException("Argument must derive from Exception class");
 		}
